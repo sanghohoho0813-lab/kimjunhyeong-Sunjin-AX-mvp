@@ -189,7 +189,6 @@ function InventoryContent() {
               <thead>
                 <tr>
                   <th className="pl-6">제품</th>
-                  <th>등급 / 가공</th>
                   <th className="text-right">보유수량</th>
                   <th className="text-right">재고금액</th>
                   <th className="text-right">권장가</th>
@@ -215,31 +214,28 @@ function InventoryContent() {
                         <LeatherSwatch
                           color={product.color}
                           finish={product.finish}
-                          className="h-10 w-10"
+                          className="h-12 w-12"
                         />
                         <span className="min-w-0">
-                          <span className="block font-bold text-ink-900 group-hover:text-brand-700">
+                          <span className="block whitespace-nowrap font-bold text-ink-900 group-hover:text-brand-700">
                             {product.name}
                           </span>
-                          <span className="block text-[0.7rem] text-ink-400">
-                            {product.code}
+                          <span className="mt-0.5 block whitespace-nowrap text-[0.82rem] text-ink-400">
+                            {product.code} · {product.grade} · {product.finish}
                           </span>
                         </span>
                       </Link>
                     </td>
-                    <td className="text-[0.8rem] text-ink-600">
-                      {product.grade} · {product.finish}
-                    </td>
-                    <td className="text-right tabular-nums text-ink-700">
+                    <td className="whitespace-nowrap text-right tabular-nums text-ink-700">
                       {formatNumber(product.stockQty)}평
                     </td>
-                    <td className="text-right font-bold tabular-nums text-ink-900">
+                    <td className="whitespace-nowrap text-right font-bold tabular-nums text-ink-900">
                       {formatKRW(stats.stockValue)}
                     </td>
-                    <td className="text-right tabular-nums text-ink-600">
+                    <td className="whitespace-nowrap text-right tabular-nums text-ink-600">
                       {formatNumber(product.listPricePerUnit)}원
                     </td>
-                    <td className="text-right tabular-nums text-ink-600">
+                    <td className="whitespace-nowrap text-right tabular-nums text-ink-600">
                       {stats.idleDays}일
                     </td>
                     <td className="">
