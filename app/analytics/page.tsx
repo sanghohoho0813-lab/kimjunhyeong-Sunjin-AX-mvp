@@ -195,7 +195,7 @@ export default function AnalyticsPage() {
             {signals.map((signal) => (
               <li
                 key={signal.label}
-                className="flex items-center justify-between gap-3 rounded-xl border border-surface-line bg-surface-subtle px-3.5 py-2.5"
+                className="flex items-center justify-between gap-3 rounded-card border border-surface-line bg-surface-subtle px-4 py-3"
               >
                 <div className="min-w-0">
                   <p className="text-[0.85rem] font-bold text-ink-800">
@@ -234,7 +234,7 @@ export default function AnalyticsPage() {
               return (
                 <div
                   key={change.label}
-                  className="rounded-xl border border-surface-line bg-surface-subtle p-3.5"
+                  className="rounded-card border border-surface-line bg-surface-subtle p-4"
                 >
                   <p className="text-[0.72rem] font-semibold text-ink-400">
                     {change.label}
@@ -264,7 +264,7 @@ export default function AnalyticsPage() {
               );
             })}
           </div>
-          <div className="mt-4 rounded-xl bg-surface-sunken/60 p-4 text-[0.82rem] leading-relaxed text-ink-600">
+          <div className="mt-4 rounded-card bg-surface-sunken/60 p-5 text-[0.82rem] leading-relaxed text-ink-600">
             <p>2025년은 매출과 수익성이 크게 회복되었습니다.</p>
             <p className="mt-1">
               반면 자기자본이 감소하면서 재무 안정성 관련 지표는 약화되었습니다.
@@ -390,7 +390,7 @@ export default function AnalyticsPage() {
             ].map((item) => (
               <div
                 key={item.label}
-                className="rounded-xl border border-surface-line bg-surface-subtle p-3.5"
+                className="rounded-card border border-surface-line bg-surface-subtle p-4"
               >
                 <p className="text-[0.7rem] font-semibold text-ink-400">
                   {item.label}

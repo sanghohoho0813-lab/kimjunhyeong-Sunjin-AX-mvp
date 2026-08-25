@@ -40,7 +40,7 @@ export function FinancialTrendChart({
       <ResponsiveContainer width="100%" height="100%">
         <ComposedChart
           data={data}
-          margin={{ top: 10, right: 6, bottom: 0, left: compact ? -22 : -14 }}
+          margin={{ top: 10, right: 8, bottom: 0, left: 0 }}
           barCategoryGap={compact ? "34%" : "42%"}
         >
           <defs>
@@ -65,7 +65,7 @@ export function FinancialTrendChart({
           <YAxis
             axisLine={false}
             tickLine={false}
-            width={compact ? 44 : 52}
+            width={compact ? 38 : 46}
             tickFormatter={(v: number) => `${v}억`}
             tick={{ fontSize: 11.5, fill: "#94A3B8" }}
           />
@@ -76,7 +76,6 @@ export function FinancialTrendChart({
             height={34}
             iconType="circle"
             iconSize={8}
-            wrapperStyle={{ paddingLeft: compact ? 26 : 20 }}
           />
           <Bar
             dataKey="매출액"

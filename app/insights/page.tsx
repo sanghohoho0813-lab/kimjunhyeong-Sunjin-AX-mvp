@@ -1,7 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ArrowRight, ChevronRight, Sparkles } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { PageHeader } from "@/components/layout/PageHeader";
@@ -139,7 +138,7 @@ export default function InsightsPage() {
                 {selected.connection}
               </p>
               {selected.expectedEffect ? (
-                <p className="mt-2.5 rounded-xl bg-teal-50 px-3.5 py-2.5 text-[0.82rem] font-bold text-teal-700">
+                <p className="mt-2.5 rounded-card bg-teal-50 px-3.5 py-2.5 text-[0.82rem] font-bold text-teal-700">
                   예상 효과 — {selected.expectedEffect}
                 </p>
               ) : null}

@@ -24,6 +24,13 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning>
       <body>
+        {/* 웹폰트 — React가 head로 hoist한다 (CSS @import 체인 대신 병렬 로드) */}
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+        <link
+          rel="stylesheet"
+          precedence="default"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+        />
         <AppShell>{children}</AppShell>
       </body>
     </html>

@@ -191,7 +191,7 @@ export default function InventoryDetailPage() {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.25, delay: i * 0.06 }}
-                        className="rounded-xl border border-surface-line bg-white p-4 shadow-sm"
+                        className="card p-4"
                       >
                         <div className="flex flex-wrap items-center justify-between gap-2">
                           <div className="flex items-center gap-3">
@@ -356,7 +356,7 @@ export default function InventoryDetailPage() {
                   <li key={p.id}>
                     <Link
                       href={`/inventory/${p.id}`}
-                      className="flex items-center gap-3 rounded-xl border border-surface-line p-3 transition-colors hover:border-brand-200 hover:bg-brand-50/40"
+                      className="card-action tap flex items-center gap-3 p-3"
                     >
                       <LeatherSwatch color={p.color} className="h-10 w-10" />
                       <span className="min-w-0 flex-1">

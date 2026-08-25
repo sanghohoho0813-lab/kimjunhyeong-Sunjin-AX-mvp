@@ -145,7 +145,7 @@ export default function CustomerDetailPage() {
             <Sparkles className="h-4 w-4 text-brand-600" aria-hidden />
             AX 인사이트
           </h2>
-          <div className="mt-3 flex items-center gap-3 rounded-xl bg-surface-subtle p-3.5">
+          <div className="mt-3 flex items-center gap-3 rounded-card bg-surface-subtle p-3.5">
             <Score value={score.score} size="lg" />
             <div>
               <p className="text-sm font-bold text-ink-900">
@@ -212,7 +212,7 @@ export default function CustomerDetailPage() {
             {recommendedProducts.map(({ product, match }) => (
               <li
                 key={product.id}
-                className="rounded-xl border border-surface-line bg-surface-subtle p-3.5 transition-colors hover:border-brand-200"
+                className="card-action p-4"
               >
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <Link

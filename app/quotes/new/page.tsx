@@ -157,7 +157,7 @@ function QuoteBuilder() {
               ))}
             </select>
             {product ? (
-              <div className="mt-2 flex items-center gap-3 rounded-xl bg-surface-subtle p-3">
+              <div className="mt-2 flex items-center gap-3 rounded-card bg-surface-subtle p-3">
                 <LeatherSwatch color={product.color} className="h-10 w-10" />
                 <div className="min-w-0 text-[0.75rem] text-ink-500">
                   <p className="font-bold text-ink-800">{product.code}</p>
@@ -252,7 +252,7 @@ function QuoteBuilder() {
 
           {/* 추천 근거 */}
           {recommendation ? (
-            <div className="rounded-xl border border-brand-100 bg-brand-50/50 p-4">
+            <div className="card-insight p-4">
               <p className="flex items-center gap-1.5 text-[0.8rem] font-bold text-brand-800">
                 <Sparkles className="h-4 w-4" aria-hidden />
                 추천가 {formatNumber(recommendation.recommendedPrice)}원/평
@@ -293,7 +293,7 @@ function QuoteBuilder() {
               ) : null}
             </div>
           ) : (
-            <p className="rounded-xl bg-surface-subtle p-4 text-[0.8rem] text-ink-400">
+            <p className="rounded-card bg-surface-subtle p-4 text-[0.8rem] text-ink-400">
               거래처와 제품을 선택하면 추천 단가와 근거가 표시됩니다.
             </p>
           )}
@@ -345,7 +345,7 @@ function QuoteBuilder() {
             </dl>
 
             {belowGuard ? (
-              <p className="mt-3 flex items-start gap-2 rounded-xl bg-amber-50 p-3 text-[0.75rem] leading-relaxed text-amber-700">
+              <p className="mt-3 flex items-start gap-2 rounded-card bg-warning-soft p-3 text-[0.75rem] leading-relaxed text-amber-700">
                 <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
                 목표 마진 {formatPercent(MIN_TARGET_MARGIN * 100, 0)}보다 낮은
                 단가입니다. 가격을 다시 확인해보세요.

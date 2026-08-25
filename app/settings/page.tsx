@@ -234,7 +234,7 @@ export default function SettingsPage() {
               <dd className="font-semibold text-ink-800">{COMPANY.credit}</dd>
             </div>
           </dl>
-          <div className="mt-4 flex items-center justify-center rounded-xl border border-surface-line bg-white px-4 py-3">
+          <div className="mt-4 flex items-center justify-center rounded-card border border-surface-line bg-white px-4 py-3">
             <Image
               src="/brand/mirae-ai-lab.jpg"
               alt="미래에이아이랩 로고"
