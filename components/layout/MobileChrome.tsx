@@ -17,6 +17,7 @@ import {
 } from "./nav";
 import { DesktopModeButton } from "./ViewModeToggle";
 import { Sheet } from "@/components/shared/Sheet";
+import { CustomerFrontCta } from "./CustomerFrontCta";
 
 /** 더보기 시트(밝은 배경)용 아이콘 색조 */
 const MOBILE_SHEET_TONES: Record<string, string> = {
@@ -171,6 +172,15 @@ export function BottomNav() {
         title="더보기"
         side="bottom-only"
       >
+        {/* 사이드바의 고객 Front CTA는 lg 이상에서만 보인다.
+            모바일에서는 여기가 유일한 진입점이므로 맨 위에 둔다. */}
+        <div className="mb-5 border-b border-surface-line pb-5">
+          <CustomerFrontCta
+            variant="light"
+            onClick={() => setMoreOpen(false)}
+          />
+        </div>
+
         <div className="grid grid-cols-3 gap-2.5">
           {MOBILE_MORE_ITEMS.map((item) => {
             const Icon = item.icon;

@@ -98,13 +98,15 @@ export const MOBILE_TONES: Record<string, string> = {
 
 export const MOBILE_MORE_ITEMS: NavItem[] = [
   { href: "/quotes", label: "견적/주문", icon: FileText, tone: "violet" },
+  { href: "/requests", label: "고객 요청", icon: Inbox, tone: "sky" },
   { href: "/analytics", label: "경영분석", icon: BarChart3, tone: "sky" },
   { href: "/settings", label: "설정", icon: Settings, tone: "slate" },
 ];
 
 export function isActivePath(pathname: string, href: string): boolean {
   if (href === "/dashboard") {
-    return pathname === "/" || pathname.startsWith("/dashboard");
+    // "/" 는 이제 고객 Front 홈이다. 내부 대시보드 활성 판정에서 제외한다.
+    return pathname.startsWith("/dashboard");
   }
   return pathname.startsWith(href);
 }

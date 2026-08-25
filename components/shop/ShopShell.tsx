@@ -20,8 +20,6 @@ import { clsx } from "@/lib/utils/clsx";
 import { SunjinMark } from "@/components/layout/BrandMark";
 import {
   useAccount,
-  useAllQuoteRequests,
-  useAllSampleRequests,
   useAppStore,
   useCustomerNotifications,
   useFavorites,
@@ -88,6 +86,26 @@ function AdminReturnPill({ className }: { className?: string }) {
   );
 }
 
+/** 모바일 헤더용 — 관리자에게만 보이는 운영 시스템 복귀 아이콘 */
+function AdminReturnIconButton() {
+  const isInternal = useIsInternal();
+  const returnPath = useAppStore((s) => s.internalReturnPath);
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => setHydrated(true), []);
+  if (!hydrated || !isInternal) return null;
+
+  return (
+    <Link
+      href={returnPath || "/dashboard"}
+      aria-label="관리자 AX로 이동"
+      title="운영 시스템으로 돌아가기"
+      className="relative flex h-11 w-11 items-center justify-center rounded-btn border border-teal-400/35 bg-teal-400/10 text-teal-200 transition-colors hover:bg-teal-400/20 hover:text-white lg:hidden"
+    >
+      <LayoutDashboard className="h-[1.2rem] w-[1.2rem]" strokeWidth={2.2} />
+    </Link>
+  );
+}
+
 export function ShopShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const account = useAccount();
@@ -96,19 +114,9 @@ export function ShopShell({ children }: { children: ReactNode }) {
   const [hydrated, setHydrated] = useState(false);
 
   const favorites = useFavorites(account.customerId);
-  const samples = useAllSampleRequests();
-  const quotes = useAllQuoteRequests();
   const notifications = useCustomerNotifications(account.customerId);
   const readIds = useAppStore((s) => s.readNotificationIds);
   const unread = notifications.filter((n) => !readIds.includes(n.id)).length;
-
-  const openRequests =
-    samples.filter(
-      (r) => r.customerId === account.customerId && r.status !== "회신완료"
-    ).length +
-    quotes.filter(
-      (r) => r.customerId === account.customerId && r.status !== "회신완료"
-    ).length;
 
   useEffect(() => {
     useAppStore.persist.rehydrate();
@@ -128,7 +136,7 @@ export function ShopShell({ children }: { children: ReactNode }) {
     <div className="flex min-h-dvh flex-col bg-ivory">
       {/* ── Header ── */}
       <header className="sticky top-0 z-40 bg-navy-925 text-white">
-        <div className="mx-auto flex h-[var(--shop-header-h)] w-full max-w-shop items-center gap-4 px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto flex h-[var(--shop-header-h)] w-full max-w-shop items-center gap-2 px-4 sm:gap-4 sm:px-6 lg:px-8">
           {/* 모바일 메뉴 */}
           <button
             type="button"
@@ -141,7 +149,7 @@ export function ShopShell({ children }: { children: ReactNode }) {
 
           <Link
             href="/"
-            className="flex shrink-0 items-center gap-2.5"
+            className="flex shrink-0 items-center gap-2 sm:gap-2.5"
             aria-label={`${COMPANY.name} 홈`}
           >
             <SunjinMark className="h-[34px] w-[34px]" />
@@ -192,8 +200,9 @@ export function ShopShell({ children }: { children: ReactNode }) {
             ))}
           </nav>
 
-          <div className="ml-auto flex shrink-0 items-center gap-1">
+          <div className="ml-auto flex shrink-0 items-center gap-0.5 sm:gap-1">
             <AdminReturnPill className="hidden lg:inline-flex" />
+            <AdminReturnIconButton />
 
             <Link
               href="/portal?tab=favorites"
@@ -223,7 +232,7 @@ export function ShopShell({ children }: { children: ReactNode }) {
 
             <Link
               href="/portal"
-              className="ml-1 flex min-h-[2.6rem] items-center gap-2.5 rounded-btn border border-white/12 px-2.5 transition-colors hover:bg-white/[0.07] sm:pr-3.5"
+              className="flex h-11 min-h-[2.75rem] items-center justify-center gap-2.5 rounded-btn transition-colors hover:bg-white/[0.07] sm:ml-1 sm:border sm:border-white/12 sm:px-2.5 sm:pr-3.5"
             >
               <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-leather-400 to-leather-600 text-[0.8rem] font-bold text-white">
                 {account.org.slice(0, 1)}
@@ -277,6 +286,10 @@ export function ShopShell({ children }: { children: ReactNode }) {
                   <X className="h-5 w-5" />
                 </button>
               </div>
+              {/* 관리자에게만. 메뉴를 스크롤해 내려가지 않아도 보이도록 위에 둔다 */}
+              <div className="px-3 pb-3">
+                <AdminReturnPill className="w-full justify-center" />
+              </div>
               <ul className="flex-1 overflow-y-auto px-3 pb-4">
                 {NAV.map((item) => (
                   <li key={item.label}>
@@ -289,9 +302,6 @@ export function ShopShell({ children }: { children: ReactNode }) {
                   </li>
                 ))}
               </ul>
-              <div className="border-t border-white/[0.07] p-4">
-                <AdminReturnPill className="w-full justify-center" />
-              </div>
             </motion.nav>
           </>
         ) : null}
@@ -421,35 +431,7 @@ export function ShopShell({ children }: { children: ReactNode }) {
         </ul>
       </nav>
 
-      {/* 관리자 미리보기 상태 표시 — 고객에게는 렌더링되지 않는다 */}
-      <AdminPreviewBadge count={openRequests} />
       <Toaster />
-    </div>
-  );
-}
-
-/** 관리자가 고객 화면을 미리보기 중임을 알리는 작은 알약 (모바일 전용) */
-function AdminPreviewBadge({ count }: { count: number }) {
-  const isInternal = useIsInternal();
-  const returnPath = useAppStore((s) => s.internalReturnPath);
-  const [hydrated, setHydrated] = useState(false);
-  useEffect(() => setHydrated(true), []);
-  if (!hydrated || !isInternal) return null;
-
-  return (
-    <div className="fixed bottom-[calc(var(--bottom-nav-height)+env(safe-area-inset-bottom)+12px)] right-4 z-40 lg:hidden">
-      <Link
-        href={returnPath || "/dashboard"}
-        className="flex min-h-[2.6rem] items-center gap-2 rounded-pill bg-navy-900 px-4 text-[0.86rem] font-bold text-white shadow-modal"
-      >
-        <LayoutDashboard className="h-4 w-4 text-teal-300" aria-hidden />
-        관리자 AX
-        {count > 0 ? (
-          <span className="flex h-[1.15rem] min-w-[1.15rem] items-center justify-center rounded-full bg-teal-500 px-1 text-[0.72rem] font-bold text-navy-950">
-            {count}
-          </span>
-        ) : null}
-      </Link>
     </div>
   );
 }
