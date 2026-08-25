@@ -21,8 +21,11 @@ export function generateRecommendations(): AxRecommendation[] {
   const recos: AxRecommendation[] = [];
   const inv = getInventorySummary();
 
-  // 1) 장기재고 → 판매처 연결 (제품별)
-  for (const pid of inv.longStockIds) {
+  // 1) 장기재고 → 판매처 연결 (재고금액 큰 순)
+  const longStockSorted = [...inv.longStockIds].sort(
+    (a, b) => getProductStats(b).stockValue - getProductStats(a).stockValue
+  );
+  for (const pid of longStockSorted) {
     const product = getProduct(pid);
     if (!product) continue;
     const stats = getProductStats(pid);
@@ -30,7 +33,8 @@ export function generateRecommendations(): AxRecommendation[] {
     recos.push({
       id: `reco-longstock-${pid}`,
       category: "재고",
-      priority: stats.idleDays >= 150 ? "긴급" : "높음",
+      priority:
+        stats.idleDays >= 150 && stats.stockValue >= 2_000_000 ? "긴급" : "높음",
       title: `장기재고 판매 추천 — ${product.name}`,
       why: `최근 ${stats.idleDays}일간 출고가 없어 재고금액 ${formatKRW(stats.stockValue)}이 묶여 있습니다.`,
       connection: buyers.length

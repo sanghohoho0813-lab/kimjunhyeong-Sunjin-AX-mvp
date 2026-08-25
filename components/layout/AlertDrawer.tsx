@@ -21,18 +21,19 @@ export function AlertDrawer() {
   const open = useAppStore((s) => s.alertsOpen);
   const setOpen = useAppStore((s) => s.setAlertsOpen);
   const markAlertsRead = useAppStore((s) => s.markAlertsRead);
+  const readAlertIds = useAppStore((s) => s.readAlertIds);
   const alerts = generateBusinessAlerts();
+  const unreadIds = alerts
+    .filter((a) => !readAlertIds.includes(a.id))
+    .map((a) => a.id);
+  const unreadKey = unreadIds.join(",");
 
-  // 드로어를 열면 읽음 처리
+  // 드로어를 열면 읽음 처리 (읽지 않은 알림이 있을 때만)
   useEffect(() => {
-    if (open && alerts.length) {
-      const timer = setTimeout(
-        () => markAlertsRead(alerts.map((a) => a.id)),
-        800
-      );
-      return () => clearTimeout(timer);
-    }
-  }, [open, alerts, markAlertsRead]);
+    if (!open || !unreadKey) return;
+    const timer = setTimeout(() => markAlertsRead(unreadKey.split(",")), 800);
+    return () => clearTimeout(timer);
+  }, [open, unreadKey, markAlertsRead]);
 
   return (
     <Sheet
