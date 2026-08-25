@@ -3,8 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --bottom-nav-height: 64px;
-  --sidebar-width: 240px;
+  --bottom-nav-height: 76px;
+  --sidebar-width: 280px;
+  --mobile-header-height: 60px;
   --page-pad-x: 16px;
   --shell-radius: 0px;
 }
@@ -15,15 +16,16 @@
   }
 }
 
-/* 글자 크기 설정 — 설정 화면에서 변경 */
+/* 글자 크기 설정 — 60대 대표자 가독성을 기준으로 상향한 스케일.
+   rem 기반이라 폰트뿐 아니라 여백·아이콘·카드 패딩이 함께 비례 확대된다. */
 html {
-  font-size: 16px;
+  font-size: 20px;
 }
 html[data-font-scale="sm"] {
-  font-size: 14.5px;
+  font-size: 18px;
 }
 html[data-font-scale="lg"] {
-  font-size: 17.5px;
+  font-size: 22.5px;
 }
 
 html,
@@ -147,22 +149,22 @@ body {
 
   /* ── Typography ─────────────────────────────────────────── */
   .t-page-title {
-    @apply text-[1.4rem] font-extrabold leading-tight tracking-[-0.02em] text-ink-900 lg:text-[1.78rem];
+    @apply text-[1.45rem] font-extrabold leading-tight tracking-[-0.02em] text-ink-900 lg:text-[1.8rem];
   }
   .t-section {
-    @apply text-[1.05rem] font-bold tracking-[-0.01em] text-ink-900 lg:text-[1.18rem];
+    @apply text-[1.12rem] font-bold tracking-[-0.01em] text-ink-900 lg:text-[1.24rem];
   }
   .t-card-title {
-    @apply text-[0.94rem] font-bold text-ink-900;
+    @apply text-[1.02rem] font-bold text-ink-900;
   }
   .t-body {
-    @apply text-[0.9rem] leading-relaxed text-ink-600;
+    @apply text-[1rem] leading-relaxed text-ink-600;
   }
   .t-caption {
-    @apply text-[0.78rem] text-ink-500;
+    @apply text-[0.9rem] text-ink-500;
   }
   .t-eyebrow {
-    @apply text-[0.7rem] font-bold uppercase tracking-[0.09em] text-ink-400;
+    @apply text-[0.82rem] font-bold uppercase tracking-[0.08em] text-ink-400;
   }
   /* KPI 숫자 */
   .t-kpi {
@@ -179,9 +181,9 @@ body {
 
   /* ── Button ─────────────────────────────────────────────── */
   .btn {
-    @apply inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-btn text-[0.86rem] font-bold transition-all duration-200 ease-premium;
-    min-height: 44px;
-    padding-inline: 1rem;
+    @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-btn text-[0.95rem] font-bold transition-all duration-200 ease-premium;
+    min-height: 2.7rem;
+    padding-inline: 1.05rem;
   }
   .btn-primary {
     @apply bg-brand-600 text-white;
@@ -204,15 +206,15 @@ body {
     @apply bg-surface-subtle;
   }
   .btn-sm {
-    min-height: 36px;
-    @apply px-3 text-[0.8rem];
+    min-height: 2.3rem;
+    @apply px-3.5 text-[0.9rem];
   }
 
   /* ── Input ──────────────────────────────────────────────── */
   .input {
-    @apply w-full rounded-btn bg-white text-[0.9rem] text-ink-900 transition-colors duration-200 placeholder:text-ink-400;
-    min-height: 44px;
-    padding-inline: 0.9rem;
+    @apply w-full rounded-btn bg-white text-[1rem] text-ink-900 transition-colors duration-200 placeholder:text-ink-400;
+    min-height: 2.7rem;
+    padding-inline: 0.95rem;
     border: 1px solid theme("colors.surface.line");
   }
   .input:focus {
@@ -223,8 +225,8 @@ body {
 
   /* ── Chip / Filter ──────────────────────────────────────── */
   .chip {
-    @apply inline-flex shrink-0 items-center whitespace-nowrap rounded-pill px-3.5 text-[0.8rem] font-semibold transition-all duration-200;
-    min-height: 38px;
+    @apply inline-flex shrink-0 items-center whitespace-nowrap rounded-pill px-4 text-[0.92rem] font-semibold transition-all duration-200;
+    min-height: 2.5rem;
     border: 1px solid theme("colors.surface.line");
     @apply bg-white text-ink-500;
   }
@@ -237,14 +239,14 @@ body {
 
   /* ── Table ──────────────────────────────────────────────── */
   .tbl {
-    @apply w-full text-left text-[0.88rem];
+    @apply w-full text-left text-[0.98rem];
   }
   .tbl thead tr {
     @apply bg-surface-subtle;
     border-bottom: 1px solid theme("colors.surface.line");
   }
   .tbl th {
-    @apply px-4 py-3 text-[0.72rem] font-bold uppercase tracking-[0.05em] text-ink-400;
+    @apply whitespace-nowrap px-4 py-3.5 text-[0.82rem] font-bold uppercase tracking-[0.04em] text-ink-400;
   }
   .tbl td {
     @apply px-4 py-3.5;
@@ -291,10 +293,16 @@ body {
     pointer-events: none;
   }
 
+  /* 그리드 아이템은 기본 min-width:auto 때문에 콘텐츠 고유 폭으로
+     컨테이너를 밀어내 가로 오버플로우를 만든다. 전 화면 공통으로 축소를 허용한다. */
+  .grid > * {
+    min-width: 0;
+  }
+
   /* 사이드바 nav */
   .nav-item {
-    @apply flex items-center gap-3 rounded-btn px-3 text-[0.9rem] font-medium transition-all duration-200 ease-premium;
-    min-height: 44px;
+    @apply flex items-center gap-3 rounded-btn px-2.5 text-[1rem] font-semibold transition-all duration-200 ease-premium;
+    min-height: 3rem;
   }
 }
 
@@ -334,12 +342,12 @@ body {
 
 /* Recharts 기본 스타일 정리 */
 .recharts-cartesian-axis-tick text {
-  fill: #94a3b8;
-  font-size: 0.74rem;
-  font-weight: 500;
+  fill: #7b8aa0;
+  font-size: 0.8rem;
+  font-weight: 600;
 }
 .recharts-legend-item-text {
-  font-size: 0.78rem !important;
+  font-size: 0.9rem !important;
   color: #475569 !important;
   font-weight: 600;
 }

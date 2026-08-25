@@ -205,29 +205,29 @@ export function PageHeader({
   badge?: ReactNode;
 }) {
   return (
-    <header className="mb-6 lg:mb-7">
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-center gap-2.5">
-            <h1 className="t-page-title">{title}</h1>
-            {badge}
-          </div>
-          {subtitle ? (
-            <p className="mt-1.5 max-w-2xl text-[0.86rem] leading-relaxed text-ink-500">
-              {subtitle}
-            </p>
-          ) : null}
-        </div>
-
-        <div className="hidden shrink-0 items-center gap-2 lg:flex">
-          {actions}
-          <HeaderControls withPeriod={withPeriod} />
-        </div>
+    <header className="mb-7 lg:mb-8">
+      {/* 1행 — 우측 상단 유틸리티 (기간·업데이트·알림·기획의도·프로필) */}
+      <div className="mb-5 hidden items-center justify-end gap-2 lg:flex">
+        {actions}
+        <HeaderControls withPeriod={withPeriod} />
       </div>
 
-      {/* 모바일: 필요한 액션만 별도 줄로 */}
+      {/* 2행 — 페이지 제목. 확대된 타이포에서 줄바꿈 없이 전체 폭 사용 */}
+      <div className="min-w-0">
+        <div className="flex flex-wrap items-center gap-3">
+          <h1 className="t-page-title whitespace-nowrap">{title}</h1>
+          {badge}
+        </div>
+        {subtitle ? (
+          <p className="mt-2 max-w-3xl text-[1rem] leading-relaxed text-ink-500">
+            {subtitle}
+          </p>
+        ) : null}
+      </div>
+
+      {/* 모바일 — 필요한 액션만 별도 줄로 */}
       {withPeriod || actions ? (
-        <div className="mt-4 flex items-center gap-2 lg:hidden">
+        <div className="mt-4 flex flex-wrap items-center gap-2 lg:hidden">
           {withPeriod ? <PeriodSelect /> : null}
           {actions}
         </div>

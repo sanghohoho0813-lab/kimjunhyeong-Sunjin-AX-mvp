@@ -48,7 +48,7 @@ export function CashflowCard({ year }: { year: number }) {
       aria-label="현금흐름"
     >
       <div className="flex items-end justify-between gap-3">
-        <div>
+        <div className="min-w-0">
           <h2 className="t-section">현금흐름</h2>
           <p className="mt-1 t-caption">기말 현금성 자산 · 추정</p>
         </div>
@@ -123,7 +123,7 @@ export function InventorySnapshot() {
       aria-label="주의가 필요한 재고"
     >
       <div className="mb-4 flex items-end justify-between gap-3">
-        <div>
+        <div className="min-w-0">
           <h2 className="t-section">주의가 필요한 재고</h2>
           <p className="mt-1 t-caption">
             장기재고 {inv.longStockCount}건 · 관심 {inv.watchCount}건
@@ -131,7 +131,7 @@ export function InventorySnapshot() {
         </div>
         <Link
           href="/inventory"
-          className="inline-flex items-center gap-0.5 text-[0.78rem] font-bold text-brand-600 transition-colors hover:text-brand-700"
+          className="inline-flex shrink-0 items-center gap-0.5 whitespace-nowrap text-[0.9rem] font-bold text-brand-600 transition-colors hover:text-brand-700"
         >
           전체 <ChevronRight className="h-3.5 w-3.5" aria-hidden />
         </Link>

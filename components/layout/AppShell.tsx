@@ -105,7 +105,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <MobileHeader />
 
       {/* Main Workspace — 사이드바를 제외한 남은 폭을 전부 사용 */}
-      <div className="flex min-w-0 flex-1 flex-col pt-[52px] lg:pl-sidebar lg:pt-0">
+      <div className="flex min-w-0 flex-1 flex-col pt-[var(--mobile-header-height)] lg:pl-sidebar lg:pt-0">
         <main className="flex-1">
           <div className="mx-auto w-full max-w-workspace px-4 pb-7 pt-4 sm:px-5 lg:px-6 lg:pb-10 lg:pt-8 2xl:px-8">
             {children}

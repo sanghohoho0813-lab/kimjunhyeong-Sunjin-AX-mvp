@@ -23,7 +23,7 @@ export function TopCustomersCard() {
       aria-label="거래처 TOP 5"
     >
       <div className="mb-4 flex items-end justify-between gap-3">
-        <div>
+        <div className="min-w-0">
           <h2 className="t-section">거래처 TOP 5</h2>
           <p className="mt-1 t-caption">누적 매출 기준</p>
         </div>
@@ -31,7 +31,7 @@ export function TopCustomersCard() {
           <DemoBadge />
           <Link
             href="/customers"
-            className="inline-flex items-center gap-0.5 text-[0.78rem] font-bold text-brand-600 transition-colors hover:text-brand-700"
+            className="inline-flex shrink-0 items-center gap-0.5 whitespace-nowrap text-[0.9rem] font-bold text-brand-600 transition-colors hover:text-brand-700"
           >
             전체 <ChevronRight className="h-3.5 w-3.5" aria-hidden />
           </Link>

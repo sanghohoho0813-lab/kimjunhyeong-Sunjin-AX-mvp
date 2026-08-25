@@ -116,7 +116,7 @@ const config: Config = {
       },
       screens: { xs: "430px", "3xl": "1800px" },
       maxWidth: { workspace: "1720px" },
-      spacing: { sidebar: "240px" },
+      spacing: { sidebar: "280px" },
       transitionTimingFunction: { premium: "cubic-bezier(0.22, 1, 0.36, 1)" },
     },
   },

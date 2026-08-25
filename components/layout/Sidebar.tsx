@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { clsx } from "@/lib/utils/clsx";
 import { COMPANY } from "@/lib/data/seed";
 import { SunjinMark } from "./BrandMark";
-import { isActivePath, NAV_ITEMS } from "./nav";
+import { isActivePath, NAV_ITEMS, NAV_TONES } from "./nav";
 import { generateBusinessAlerts } from "@/lib/insights/alerts";
 import { useAppStore } from "@/lib/store";
 
@@ -51,6 +51,7 @@ export function Sidebar() {
           {NAV_ITEMS.map((item) => {
             const active = isActivePath(pathname, item.href);
             const Icon = item.icon;
+            const tone = NAV_TONES[item.tone];
             const showBadge = item.href === "/insights" && unread > 0;
             return (
               <li key={item.href}>
@@ -70,16 +71,22 @@ export function Sidebar() {
                       className="absolute inset-y-[9px] left-0 w-[3px] rounded-r-full bg-teal-400"
                     />
                   ) : null}
-                  <Icon
+                  <span
                     className={clsx(
-                      "h-[1.08rem] w-[1.08rem] shrink-0 transition-colors",
-                      active
-                        ? "text-teal-300"
-                        : "text-navy-300 group-hover:text-white"
+                      "flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px] transition-colors duration-200",
+                      active ? tone.chipActive : tone.chip,
+                      !active && "group-hover:brightness-125"
                     )}
-                    strokeWidth={active ? 2.2 : 1.9}
-                    aria-hidden
-                  />
+                  >
+                    <Icon
+                      className={clsx(
+                        "h-[1.15rem] w-[1.15rem] transition-colors",
+                        active ? tone.active : tone.idle
+                      )}
+                      strokeWidth={active ? 2.3 : 2}
+                      aria-hidden
+                    />
+                  </span>
                   <span className="truncate">{item.label}</span>
                   {showBadge ? (
                     <span className="ml-auto inline-flex h-[1.3rem] min-w-[1.3rem] items-center justify-center rounded-full bg-teal-500 px-1.5 text-[0.66rem] font-bold text-navy-950">

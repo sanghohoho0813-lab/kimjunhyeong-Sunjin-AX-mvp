@@ -21,22 +21,13 @@ import {
   MetricStrip,
 } from "@/components/dashboard/SideCards";
 import { TopCustomersCard } from "@/components/dashboard/TopCustomersCard";
-import { HeroKpi, MiniKpi } from "@/components/shared/KpiCard";
+import { HeroKpi } from "@/components/shared/KpiCard";
+import { Delta } from "@/components/shared/ui";
 import { COMPANY } from "@/lib/data/seed";
 import { CASH_BY_YEAR, getRatios, getYear } from "@/lib/data/finance";
 import { generateRecommendations } from "@/lib/insights/recommendations";
 import { useAppStore } from "@/lib/store";
 
-/** 데스크톱 헤더용 둘러보기 진입 버튼 (플로팅 배너와 겹치지 않도록 헤더에 배치) */
-function TourButton() {
-  const setTourOpen = useAppStore((s) => s.setTourOpen);
-  return (
-    <button onClick={() => setTourOpen(true)} className="btn btn-ghost btn-sm">
-      <Sparkles className="h-3.5 w-3.5 text-teal-500" aria-hidden />
-      둘러보기
-    </button>
-  );
-}
 
 export default function DashboardPage() {
   const year = useAppStore((s) => s.periodYear);
@@ -82,38 +73,37 @@ export default function DashboardPage() {
           title="경영 대시보드"
           subtitle="매출·재무·거래처·재고를 연결해 오늘 필요한 의사결정을 한눈에 확인합니다."
           withPeriod
-          actions={<TourButton />}
         />
       </div>
 
       {/* ── ROW 2: KPI ── */}
-      {/* 모바일: 핵심 3개만 */}
-      <div className="grid grid-cols-3 gap-2.5 lg:hidden">
-        <MiniKpi
-          label="매출액"
-          value={fin.revenue}
-          unit="억"
-          delta={ratios.revenueYoYPct}
-          accent="brand"
-          index={0}
-        />
-        <MiniKpi
-          label="영업이익"
-          value={fin.operatingProfit}
-          unit="억"
-          delta={ratios.operatingYoYPct}
-          accent="teal"
-          index={1}
-        />
-        <MiniKpi
-          label="당기순이익"
-          value={fin.netProfit}
-          unit="억"
-          delta={ratios.netYoYPct}
-          accent="gold"
-          index={2}
-        />
-      </div>
+      {/* 모바일: 핵심 3개를 한 카드에 행으로 — 큰 숫자를 한눈에 */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
+        className="card divide-y divide-surface-line lg:hidden"
+      >
+        {[
+          { label: "매출액", value: fin.revenue, delta: ratios.revenueYoYPct, rail: "bg-brand-500" },
+          { label: "영업이익", value: fin.operatingProfit, delta: ratios.operatingYoYPct, rail: "bg-teal-500" },
+          { label: "당기순이익", value: fin.netProfit, delta: ratios.netYoYPct, rail: "bg-gold-400" },
+        ].map((k) => (
+          <div key={k.label} className="flex items-center gap-3 px-4 py-3.5">
+            <span aria-hidden className={`h-9 w-1 shrink-0 rounded-full ${k.rail}`} />
+            <span className="w-[5.4rem] shrink-0 whitespace-nowrap text-[0.95rem] font-semibold text-ink-600">
+              {k.label}
+            </span>
+            <span className="flex-1 whitespace-nowrap text-right text-[1.5rem] font-extrabold leading-none tabular-nums tracking-[-0.025em] text-ink-900">
+              {k.value.toFixed(2)}
+              <span className="ml-0.5 text-[0.85rem] font-bold text-ink-500">억</span>
+            </span>
+            <span className="shrink-0 text-right">
+              <Delta value={k.delta} size="sm" />
+            </span>
+          </div>
+        ))}
+      </motion.div>
 
       {/* 데스크톱: Hero KPI 4개 */}
       <div className="hidden gap-4 lg:grid lg:grid-cols-4">
@@ -158,7 +148,7 @@ export default function DashboardPage() {
       {/* ── 모바일: AX 추천을 KPI 바로 다음에 ── */}
       <section className="mt-7 lg:hidden" aria-label="오늘의 AX 추천">
         <div className="mb-3.5 flex items-end justify-between gap-3">
-          <div>
+          <div className="min-w-0">
             <h2 className="t-section">오늘의 AX 추천</h2>
             <p className="mt-1 t-caption">가장 먼저 확인할 행동입니다</p>
           </div>
@@ -182,11 +172,11 @@ export default function DashboardPage() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
-          className="card-data flex flex-col p-5 lg:col-span-8 lg:p-6"
+          className="card-data flex flex-col p-5 lg:col-span-7 lg:p-6"
           aria-label="재무 성과 추이"
         >
           <div className="mb-2 flex items-end justify-between gap-3">
-            <div>
+            <div className="min-w-0">
               <h2 className="t-section">재무 성과 추이</h2>
               <p className="mt-1 t-caption">2023 ~ 2025 · 단위 억원</p>
             </div>
@@ -202,7 +192,7 @@ export default function DashboardPage() {
           </div>
         </motion.section>
 
-        <div className="lg:col-span-4">
+        <div className="min-w-0 lg:col-span-5">
           <BriefingCard year={year} />
         </div>
       </div>
@@ -210,7 +200,7 @@ export default function DashboardPage() {
       {/* ── ROW 4: 데스크톱 AX Actions ── */}
       <section className="mt-8 hidden lg:block" aria-label="오늘의 AX 추천">
         <div className="mb-4 flex items-end justify-between gap-3">
-          <div>
+          <div className="min-w-0">
             <h2 className="t-section">
               <span className="inline-flex items-center gap-2">
                 <Sparkles className="h-[1.05rem] w-[1.05rem] text-teal-500" aria-hidden />
@@ -238,13 +228,13 @@ export default function DashboardPage() {
 
       {/* ── ROW 5: 거래처 / 재고 / 재무 개요 ── */}
       <div className="mt-6 grid gap-4 lg:mt-8 lg:grid-cols-12 lg:gap-5">
-        <div className="lg:col-span-5">
+        <div className="min-w-0 lg:col-span-5">
           <InventorySnapshot />
         </div>
-        <div className="lg:col-span-4">
+        <div className="min-w-0 lg:col-span-4">
           <TopCustomersCard />
         </div>
-        <div className="lg:col-span-3">
+        <div className="min-w-0 lg:col-span-3">
           <CashflowCard year={year} />
         </div>
       </div>
@@ -258,7 +248,7 @@ export default function DashboardPage() {
         aria-label="자산 구성 현황"
       >
         <div className="mb-4 flex items-end justify-between gap-3">
-          <div>
+          <div className="min-w-0">
             <h2 className="t-section">자산 구성 현황</h2>
             <p className="mt-1 t-caption">{year}년 · 단위 억원</p>
           </div>

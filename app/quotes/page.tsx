@@ -63,8 +63,8 @@ export default function QuotesPage() {
       ) : (
         <>
           {/* 데스크톱 테이블 */}
-          <div className="card hidden overflow-hidden lg:block">
-            <table className="tbl">
+          <div className="card hidden overflow-x-auto lg:block">
+            <table className="tbl min-w-[52rem]">
               <thead>
                 <tr>
                   <th className="pl-6">견적번호</th>

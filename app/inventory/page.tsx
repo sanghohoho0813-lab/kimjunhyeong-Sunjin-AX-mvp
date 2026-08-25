@@ -184,8 +184,8 @@ function InventoryContent() {
       ) : (
         <>
           {/* 데스크톱 테이블 */}
-          <div className="card mt-4 hidden overflow-hidden lg:block">
-            <table className="tbl">
+          <div className="card mt-5 hidden overflow-x-auto lg:block">
+            <table className="tbl min-w-[52rem]">
               <thead>
                 <tr>
                   <th className="pl-6">제품</th>

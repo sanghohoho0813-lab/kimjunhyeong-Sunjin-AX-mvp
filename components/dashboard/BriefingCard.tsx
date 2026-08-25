@@ -19,22 +19,17 @@ export function BriefingCard({ year }: { year: number }) {
       className="card-insight flex h-full flex-col p-6"
       aria-label="AI 경영 브리핑"
     >
-      <div className="flex items-center justify-between gap-3">
-        <span className="inline-flex items-center gap-2">
-          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-brand-600 to-teal-500 text-white">
-            <Sparkles className="h-4 w-4" strokeWidth={2.3} aria-hidden />
-          </span>
-          <span>
-            <span className="block text-[0.62rem] font-bold uppercase tracking-[0.14em] text-teal-700">
-              AI Executive Brief
-            </span>
-            <span className="block text-[0.9rem] font-bold text-ink-900">
-              AI 경영 브리핑
-            </span>
-          </span>
+      <div className="flex items-center gap-2.5">
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-brand-600 to-teal-500 text-white">
+          <Sparkles className="h-[1.1rem] w-[1.1rem]" strokeWidth={2.3} aria-hidden />
         </span>
-        <span className="rounded-md bg-white/70 px-2 py-1 text-[0.68rem] font-bold text-ink-400">
-          {year}년 기준
+        <span className="min-w-0 flex-1">
+          <span className="block text-[1.05rem] font-bold text-ink-900">
+            AI 경영 브리핑
+          </span>
+          <span className="block text-[0.82rem] font-semibold text-teal-700">
+            {year}년 기준 · 규칙 기반 인사이트
+          </span>
         </span>
       </div>
 

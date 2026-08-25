@@ -8,9 +8,22 @@ import { COMPANY } from "@/lib/data/seed";
 import { generateBusinessAlerts } from "@/lib/insights/alerts";
 import { useAppStore } from "@/lib/store";
 import { SunjinMark } from "./BrandMark";
-import { isActivePath, MOBILE_MORE_ITEMS, MOBILE_NAV } from "./nav";
+import {
+  isActivePath,
+  MOBILE_MORE_ITEMS,
+  MOBILE_NAV,
+  MOBILE_TONES,
+  NAV_TONES,
+} from "./nav";
 import { DesktopModeButton } from "./ViewModeToggle";
 import { Sheet } from "@/components/shared/Sheet";
+
+/** 더보기 시트(밝은 배경)용 아이콘 색조 */
+const MOBILE_SHEET_TONES: Record<string, string> = {
+  violet: "text-indigo-500",
+  sky: "text-sky-500",
+  slate: "text-ink-500",
+};
 
 /** 모바일 헤더 — Content보다 눈에 띄지 않도록 낮고 차분하게 */
 export function MobileHeader() {
@@ -21,25 +34,25 @@ export function MobileHeader() {
   ).length;
 
   return (
-    <header className="fixed inset-x-0 top-0 z-40 flex h-[52px] items-center justify-between bg-navy-925 px-4 lg:hidden">
+    <header className="fixed inset-x-0 top-0 z-40 flex h-[var(--mobile-header-height)] items-center justify-between bg-navy-925 px-4 lg:hidden">
       <Link
         href="/dashboard"
-        className="flex items-center gap-2"
+        className="flex min-w-0 items-center gap-2"
         aria-label="선진산업 AX 홈"
       >
-        <SunjinMark className="h-[26px] w-[26px]" />
-        <span className="text-[0.92rem] font-extrabold tracking-[-0.01em] text-white">
+        <SunjinMark className="h-8 w-8" />
+        <span className="truncate text-[1.02rem] font-extrabold tracking-[-0.01em] text-white">
           선진산업
-          <span className="ml-1 text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-navy-300">
+          <span className="ml-1 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-navy-300">
             AX
           </span>
         </span>
       </Link>
-      <div className="flex items-center gap-0.5">
+      <div className="flex shrink-0 items-center gap-0.5">
         <Link
           href="/intent"
           aria-label="기획의도 보기"
-          className="relative flex h-11 w-11 items-center justify-center rounded-full text-teal-300"
+          className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-teal-300"
         >
           <span
             aria-hidden
@@ -51,7 +64,7 @@ export function MobileHeader() {
         <button
           onClick={() => setAlertsOpen(true)}
           aria-label={`알림 ${unread}건`}
-          className="relative flex h-11 w-11 items-center justify-center rounded-full text-navy-200 transition-colors active:text-white"
+          className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-navy-200 transition-colors active:text-white"
         >
           <Bell className="h-[1.2rem] w-[1.2rem]" strokeWidth={1.9} aria-hidden />
           {unread > 0 ? (
@@ -63,7 +76,7 @@ export function MobileHeader() {
         <Link
           href="/settings"
           aria-label="설정 및 프로필"
-          className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-teal-500 text-[0.72rem] font-bold text-white"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-teal-500 text-[0.8rem] font-bold text-white"
         >
           손
         </Link>
@@ -88,6 +101,7 @@ export function BottomNav() {
           {MOBILE_NAV.map((item) => {
             const active = isActivePath(pathname, item.href);
             const Icon = item.icon;
+            const toneClass = MOBILE_TONES[item.tone] ?? "text-brand-600";
             return (
               <Link
                 key={item.href}
@@ -98,21 +112,21 @@ export function BottomNav() {
                 {active ? (
                   <span
                     aria-hidden
-                    className="absolute top-0 h-[2.5px] w-9 rounded-b-full bg-brand-600"
+                    className={clsx("absolute top-0 h-[3px] w-10 rounded-b-full bg-current", toneClass)}
                   />
                 ) : null}
                 <Icon
                   className={clsx(
-                    "h-[1.3rem] w-[1.3rem] transition-colors duration-200",
-                    active ? "text-brand-600" : "text-ink-400"
+                    "h-[1.45rem] w-[1.45rem] transition-colors duration-200",
+                    active ? toneClass : "text-ink-400"
                   )}
                   strokeWidth={active ? 2.3 : 1.9}
                   aria-hidden
                 />
                 <span
                   className={clsx(
-                    "text-[0.66rem] leading-none transition-colors duration-200",
-                    active ? "font-bold text-brand-600" : "font-medium text-ink-400"
+                    "text-[0.78rem] leading-none transition-colors duration-200",
+                    active ? clsx("font-bold", toneClass) : "font-medium text-ink-500"
                   )}
                 >
                   {item.label}
@@ -128,12 +142,12 @@ export function BottomNav() {
             {moreActive ? (
               <span
                 aria-hidden
-                className="absolute top-0 h-[2.5px] w-9 rounded-b-full bg-brand-600"
+                className="absolute top-0 h-[3px] w-10 rounded-b-full bg-brand-600"
               />
             ) : null}
             <MoreHorizontal
               className={clsx(
-                "h-[1.3rem] w-[1.3rem]",
+                "h-[1.45rem] w-[1.45rem]",
                 moreActive ? "text-brand-600" : "text-ink-400"
               )}
               strokeWidth={moreActive ? 2.3 : 1.9}
@@ -141,8 +155,8 @@ export function BottomNav() {
             />
             <span
               className={clsx(
-                "text-[0.66rem] leading-none",
-                moreActive ? "font-bold text-brand-600" : "font-medium text-ink-400"
+                "text-[0.78rem] leading-none",
+                moreActive ? "font-bold text-brand-600" : "font-medium text-ink-500"
               )}
             >
               더보기
@@ -160,6 +174,7 @@ export function BottomNav() {
         <div className="grid grid-cols-3 gap-2.5">
           {MOBILE_MORE_ITEMS.map((item) => {
             const Icon = item.icon;
+            const tone = NAV_TONES[item.tone];
             return (
               <Link
                 key={item.href}
@@ -167,10 +182,18 @@ export function BottomNav() {
                 onClick={() => setMoreOpen(false)}
                 className="card-action tap flex flex-col items-center gap-2 px-3 py-4"
               >
-                <span className="flex h-10 w-10 items-center justify-center rounded-[12px] bg-brand-50">
-                  <Icon className="h-[1.15rem] w-[1.15rem] text-brand-600" aria-hidden />
+                <span
+                  className={clsx(
+                    "flex h-11 w-11 items-center justify-center rounded-[12px]",
+                    tone.chipActive
+                  )}
+                >
+                  <Icon
+                    className={clsx("h-[1.3rem] w-[1.3rem]", MOBILE_SHEET_TONES[item.tone])}
+                    aria-hidden
+                  />
                 </span>
-                <span className="text-[0.8rem] font-bold text-ink-800">
+                <span className="text-[0.92rem] font-bold text-ink-800">
                   {item.label}
                 </span>
               </Link>
