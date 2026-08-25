@@ -263,13 +263,13 @@ export default function DashboardPage() {
 
       {/* ── ROW 5: 거래처 / 재고 / 재무 개요 ── */}
       <div className="mt-6 grid gap-4 lg:mt-8 lg:grid-cols-12 lg:gap-5">
-        <div className="min-w-0 lg:col-span-5">
+        <div className="min-w-0 lg:col-span-6 2xl:col-span-5">
           <InventorySnapshot />
         </div>
-        <div className="min-w-0 lg:col-span-4">
+        <div className="min-w-0 lg:col-span-6 2xl:col-span-4">
           <TopCustomersCard />
         </div>
-        <div className="min-w-0 lg:col-span-3">
+        <div className="min-w-0 lg:col-span-12 2xl:col-span-3">
           <CashflowCard year={year} />
         </div>
       </div>

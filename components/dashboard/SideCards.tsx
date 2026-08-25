@@ -167,7 +167,7 @@ export function InventorySnapshot() {
                   className="h-11 w-11"
                 />
                 <span className="min-w-0 flex-1">
-                  <span className="flex items-center gap-2">
+                  <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
                     <span className="truncate text-[0.85rem] font-bold text-ink-900">
                       {product.material} · {product.color}
                     </span>

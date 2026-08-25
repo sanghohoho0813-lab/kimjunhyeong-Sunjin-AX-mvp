@@ -96,7 +96,7 @@ export function AxActionCard({
               <p className="text-[0.8rem] font-bold uppercase tracking-[0.1em] text-ink-400">
                 예상 효과
               </p>
-              <p className="mt-0.5 truncate text-[0.94rem] font-extrabold tabular-nums text-teal-700">
+              <p className="mt-0.5 text-[0.94rem] font-extrabold leading-tight tabular-nums text-teal-700">
                 {reco.expectedEffect}
               </p>
             </>
