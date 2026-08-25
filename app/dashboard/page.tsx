@@ -148,13 +148,13 @@ export default function DashboardPage() {
         />
       </div>
 
-      {/* 차트 로우 */}
+      {/* 차트 + 브리핑 + 추천 (모바일: 재무 성과 → AI 브리핑 → AX 추천 우선) */}
       <div className="mt-4 grid gap-4 lg:grid-cols-12">
         <motion.section
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.32 }}
-          className="card p-5 lg:col-span-5"
+          className="card order-1 p-5 lg:col-span-5"
           aria-label="재무 성과 추이"
         >
           <div className="flex items-baseline justify-between gap-2">
@@ -172,7 +172,7 @@ export default function DashboardPage() {
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.32, delay: 0.05 }}
-          className="card p-5 lg:col-span-4"
+          className="card order-4 p-5 lg:order-2 lg:col-span-4"
           aria-label="자산 구성 현황"
         >
           <div className="flex items-baseline justify-between gap-2">
@@ -186,16 +186,18 @@ export default function DashboardPage() {
           </div>
         </motion.section>
 
-        <div className="lg:col-span-3">
+        <div className="order-5 lg:order-3 lg:col-span-3">
           <CashflowCard year={year} />
         </div>
-      </div>
-
-      {/* 브리핑 + 추천 + TOP5 */}
-      <div className="mt-4 grid gap-4 lg:grid-cols-3">
-        <BriefingCard year={year} />
-        <AxRecoPanel />
-        <TopCustomersCard />
+        <div className="order-2 lg:order-4 lg:col-span-4">
+          <BriefingCard year={year} />
+        </div>
+        <div className="order-3 lg:order-5 lg:col-span-4">
+          <AxRecoPanel />
+        </div>
+        <div className="order-6 lg:col-span-4">
+          <TopCustomersCard />
+        </div>
       </div>
 
       {/* 하단 지표 스트립 */}

@@ -49,8 +49,8 @@ export function AxRecoPanel() {
                   <Icon className="h-4 w-4" aria-hidden />
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span className="flex items-center gap-2">
-                    <span className="truncate text-[0.85rem] font-bold text-navy-900">
+                  <span className="flex min-w-0 items-center gap-2">
+                    <span className="min-w-0 truncate text-[0.85rem] font-bold text-navy-900">
                       {reco.title}
                     </span>
                   </span>

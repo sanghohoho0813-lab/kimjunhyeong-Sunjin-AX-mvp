@@ -67,9 +67,10 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-/* 카드 공통 */
+/* 카드 공통 — min-width:0 으로 grid/flex 아이템의 고유 폭 전파(가로 오버플로우)를 차단 */
 .card {
   @apply rounded-card border border-surface-line bg-white shadow-card;
+  min-width: 0;
 }
 .card-hover {
   @apply transition-all duration-200;
