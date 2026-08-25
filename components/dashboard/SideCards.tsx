@@ -88,7 +88,7 @@ export function CashflowCard({ year }: { year: number }) {
 
       {delta != null ? (
         <div className="mt-4 rounded-card bg-teal-50 px-4 py-3">
-          <p className="text-[0.7rem] font-semibold text-teal-700">
+          <p className="text-[0.82rem] font-semibold text-teal-700">
             연간 현금 순증감
           </p>
           <p className="mt-0.5 text-[1rem] font-extrabold tabular-nums text-teal-700">
@@ -158,7 +158,7 @@ export function InventorySnapshot() {
                     </span>
                     <Badge>{stats.status}</Badge>
                   </span>
-                  <span className="mt-0.5 block truncate text-[0.73rem] tabular-nums text-ink-400">
+                  <span className="mt-0.5 block truncate text-[0.86rem] tabular-nums text-ink-400">
                     {product.thicknessMm}mm · {product.grade} Grade ·{" "}
                     {formatNumber(product.stockQty)}평
                   </span>
@@ -167,7 +167,7 @@ export function InventorySnapshot() {
                   <span className="block text-[0.84rem] font-extrabold tabular-nums text-ink-900">
                     {stats.idleDays}일
                   </span>
-                  <span className="block text-[0.68rem] text-ink-400">무출고</span>
+                  <span className="block text-[0.8rem] text-ink-400">무출고</span>
                 </span>
               </Link>
             </li>
@@ -257,7 +257,7 @@ export function MetricStrip({ year }: { year: number }) {
             i === 2 && "sm:border-l sm:border-surface-line sm:border-t-0"
           )}
         >
-          <span className="flex items-center gap-1.5 text-[0.74rem] font-semibold text-ink-400">
+          <span className="flex items-center gap-1.5 text-[0.86rem] font-semibold text-ink-400">
             <item.icon
               className={clsx(
                 "h-3.5 w-3.5",
@@ -275,7 +275,7 @@ export function MetricStrip({ year }: { year: number }) {
           >
             {item.value}
           </span>
-          <span className="flex items-center gap-0.5 text-[0.72rem] text-ink-400">
+          <span className="flex items-center gap-0.5 text-[0.84rem] text-ink-400">
             {item.note}
             <ChevronRight
               className="h-3 w-3 opacity-0 transition-opacity duration-200 group-hover:opacity-100"

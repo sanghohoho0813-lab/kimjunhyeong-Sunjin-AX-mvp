@@ -126,7 +126,7 @@ function QuoteBuilder() {
               ))}
             </select>
             {customer ? (
-              <p className="mt-1.5 text-[0.72rem] text-ink-400">
+              <p className="mt-1.5 text-[0.84rem] text-ink-400">
                 누적 {formatKRW(getCustomerStats(customer.id).totalRevenue)} ·
                 평균 주문 {formatKRW(getCustomerStats(customer.id).avgOrderValue)}
               </p>
@@ -209,7 +209,7 @@ function QuoteBuilder() {
                 </button>
               </div>
               {product ? (
-                <p className="mt-1.5 text-[0.72rem] text-ink-400">
+                <p className="mt-1.5 text-[0.84rem] text-ink-400">
                   보유 재고 {formatNumber(product.stockQty)}평 이내
                 </p>
               ) : null}
@@ -241,7 +241,7 @@ function QuoteBuilder() {
                     setPriceTouched(false);
                     setPrice(recommendation.recommendedPrice);
                   }}
-                  className="mt-1.5 text-[0.72rem] font-bold text-brand-600 hover:text-brand-700"
+                  className="mt-1.5 text-[0.84rem] font-bold text-brand-600 hover:text-brand-700"
                 >
                   추천가 {formatNumber(recommendation.recommendedPrice)}원 다시
                   적용
@@ -286,7 +286,7 @@ function QuoteBuilder() {
               {match && match.score >= 35 ? (
                 <div className="mt-3 flex items-center gap-2 border-t border-brand-100 pt-3">
                   <Score value={match.score} size="sm" />
-                  <span className="text-[0.72rem] font-semibold text-ink-500">
+                  <span className="text-[0.84rem] font-semibold text-ink-500">
                     이 거래처의 구매 가능성 지수 {match.score}점 ({match.label})
                   </span>
                 </div>
@@ -365,7 +365,7 @@ function QuoteBuilder() {
               <Check className="h-4 w-4" aria-hidden />
               견적 저장
             </button>
-            <p className="mt-3 hidden text-center text-[0.68rem] text-ink-400 lg:block">
+            <p className="mt-3 hidden text-center text-[0.8rem] text-ink-400 lg:block">
               추천가는 시연용 참고 가격이며, 저장 후 목록에서 확인할 수 있습니다.
             </p>
           </div>
@@ -376,7 +376,7 @@ function QuoteBuilder() {
       <div className="fixed inset-x-0 bottom-[calc(var(--bottom-nav-height)+env(safe-area-inset-bottom))] z-40 border-t border-surface-line bg-white/95 px-4 py-3 backdrop-blur lg:hidden">
         <div className="flex items-center justify-between gap-3">
           <div className="min-w-0">
-            <p className="text-[0.68rem] text-ink-400">예상 매출 / 마진율</p>
+            <p className="text-[0.8rem] text-ink-400">예상 매출 / 마진율</p>
             <p className="truncate text-[0.95rem] font-extrabold tabular-nums text-ink-900">
               {totals ? formatKRW(totals.revenue) : "—"}
               <span

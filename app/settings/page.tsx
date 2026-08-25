@@ -199,7 +199,7 @@ export default function SettingsPage() {
               </button>
             )}
           </div>
-          <p className="mt-2 text-[0.7rem] text-ink-400">
+          <p className="mt-2 text-[0.82rem] text-ink-400">
             초기화 시 시연 중 생성한 견적·영업 활동·설정이 초기 상태로
             돌아갑니다.
           </p>

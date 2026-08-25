@@ -11,7 +11,7 @@ export function EokTooltip({
   if (!active || !payload?.length) return null;
   return (
     <div className="rounded-xl border border-surface-line bg-white/95 px-4 py-3 shadow-modal backdrop-blur-sm">
-      <p className="mb-2 text-[0.74rem] font-bold text-ink-900">{label}년</p>
+      <p className="mb-2 text-[0.86rem] font-bold text-ink-900">{label}년</p>
       <ul className="space-y-1.5">
         {payload.map((entry) => (
           <li
@@ -30,7 +30,7 @@ export function EokTooltip({
               {typeof entry.value === "number"
                 ? entry.value.toFixed(2)
                 : entry.value}
-              <span className="ml-0.5 text-[0.68rem] font-semibold text-ink-400">
+              <span className="ml-0.5 text-[0.8rem] font-semibold text-ink-400">
                 억
               </span>
             </span>

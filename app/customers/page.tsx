@@ -134,7 +134,7 @@ function CustomersContent() {
                         <span className="font-bold text-ink-900 group-hover:text-brand-700">
                           {customer.name}
                         </span>
-                        <span className="mt-0.5 block text-[0.72rem] text-ink-400">
+                        <span className="mt-0.5 block text-[0.84rem] text-ink-400">
                           {customer.contactName} · {customer.segment}
                         </span>
                       </Link>
@@ -194,7 +194,7 @@ function CustomersContent() {
                       <p className="truncate text-[0.95rem] font-bold text-ink-900">
                         {customer.name}
                       </p>
-                      <p className="mt-0.5 text-[0.72rem] text-ink-400">
+                      <p className="mt-0.5 text-[0.84rem] text-ink-400">
                         {customer.contactName} · {customer.segment}
                       </p>
                     </div>
@@ -202,19 +202,19 @@ function CustomersContent() {
                   </div>
                   <div className="mt-3 grid grid-cols-3 gap-2 border-t border-surface-line pt-3 text-center">
                     <div>
-                      <p className="text-[0.66rem] text-ink-400">누적 매출</p>
+                      <p className="text-[0.8rem] text-ink-400">누적 매출</p>
                       <p className="mt-0.5 text-[0.82rem] font-bold tabular-nums text-ink-900">
                         {formatKRW(stats.totalRevenue)}
                       </p>
                     </div>
                     <div>
-                      <p className="text-[0.66rem] text-ink-400">최근 구매</p>
+                      <p className="text-[0.8rem] text-ink-400">최근 구매</p>
                       <p className="mt-0.5 text-[0.82rem] font-bold tabular-nums text-ink-900">
                         {stats.elapsedDays != null ? `${stats.elapsedDays}일 전` : "—"}
                       </p>
                     </div>
                     <div>
-                      <p className="text-[0.66rem] text-ink-400">재구매 가능성</p>
+                      <p className="text-[0.8rem] text-ink-400">재구매 가능성</p>
                       <p className="mt-0.5 flex items-center justify-center">
                         <Score value={score.score} size="sm" />
                       </p>

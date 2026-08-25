@@ -53,14 +53,14 @@ export function BriefingCard({ year }: { year: number }) {
       </ul>
 
       <div className="mt-5 rounded-card border border-teal-500/10 bg-white/80 px-4 py-3.5">
-        <p className="text-[0.66rem] font-bold uppercase tracking-[0.12em] text-ink-400">
+        <p className="text-[0.8rem] font-bold uppercase tracking-[0.12em] text-ink-400">
           핵심 모니터링 지표
         </p>
         <div className="mt-2 flex flex-wrap gap-1.5">
           {briefing.monitoringPoints.map((point) => (
             <span
               key={point}
-              className="rounded-md border border-surface-line bg-white px-2.5 py-1 text-[0.74rem] font-semibold text-ink-700"
+              className="rounded-md border border-surface-line bg-white px-2.5 py-1 text-[0.86rem] font-semibold text-ink-700"
             >
               {point}
             </span>

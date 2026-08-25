@@ -89,7 +89,7 @@ export default function QuotesPage() {
                     <td className="pl-6 font-bold tabular-nums text-ink-900">
                       {quote.number}
                       {quote.source === "ax" ? (
-                        <span className="ml-2 rounded-full bg-brand-50 px-2 py-0.5 text-[0.62rem] font-bold text-brand-600">
+                        <span className="ml-2 rounded-full bg-brand-50 px-2 py-0.5 text-[0.78rem] font-bold text-brand-600">
                           AX
                         </span>
                       ) : null}
@@ -119,7 +119,7 @@ export default function QuotesPage() {
                     >
                       {formatPercent(totals.marginRate, 1)}
                       {lowMargin ? (
-                        <span className="ml-1 text-[0.62rem] font-semibold text-amber-500">
+                        <span className="ml-1 text-[0.78rem] font-semibold text-amber-500">
                           평균↓
                         </span>
                       ) : null}
@@ -148,10 +148,10 @@ export default function QuotesPage() {
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
-                    <p className="text-[0.72rem] font-bold tabular-nums text-ink-400">
+                    <p className="text-[0.84rem] font-bold tabular-nums text-ink-400">
                       {quote.number}
                       {quote.source === "ax" ? (
-                        <span className="ml-1.5 rounded-full bg-brand-50 px-1.5 py-0.5 text-[0.6rem] font-bold text-brand-600">
+                        <span className="ml-1.5 rounded-full bg-brand-50 px-1.5 py-0.5 text-[0.76rem] font-bold text-brand-600">
                           AX
                         </span>
                       ) : null}
@@ -170,19 +170,19 @@ export default function QuotesPage() {
                 </div>
                 <div className="mt-3 grid grid-cols-3 gap-2 border-t border-surface-line pt-3 text-center">
                   <div>
-                    <p className="text-[0.66rem] text-ink-400">예상 매출</p>
+                    <p className="text-[0.8rem] text-ink-400">예상 매출</p>
                     <p className="mt-0.5 text-[0.82rem] font-bold tabular-nums text-ink-900">
                       {formatKRW(totals.revenue)}
                     </p>
                   </div>
                   <div>
-                    <p className="text-[0.66rem] text-ink-400">예상 마진</p>
+                    <p className="text-[0.8rem] text-ink-400">예상 마진</p>
                     <p className="mt-0.5 text-[0.82rem] font-bold tabular-nums text-ink-900">
                       {formatKRW(totals.margin)}
                     </p>
                   </div>
                   <div>
-                    <p className="text-[0.66rem] text-ink-400">마진율</p>
+                    <p className="text-[0.8rem] text-ink-400">마진율</p>
                     <p
                       className={clsx(
                         "mt-0.5 text-[0.82rem] font-bold tabular-nums",

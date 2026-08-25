@@ -124,7 +124,7 @@ export function HeroKpi({
             label="전년 대비"
           />
         ) : note ? (
-          <span className="text-[0.74rem] text-ink-400">{note}</span>
+          <span className="text-[0.86rem] text-ink-400">{note}</span>
         ) : null}
       </div>
     </motion.div>
@@ -166,7 +166,7 @@ export function MiniKpi({
           tone.rail
         )}
       />
-      <p className="truncate text-[0.74rem] font-semibold text-ink-500">
+      <p className="truncate text-[0.86rem] font-semibold text-ink-500">
         {label}
       </p>
       <p className="mt-1.5 t-kpi-sm">
@@ -178,7 +178,7 @@ export function MiniKpi({
           <Delta value={delta} size="sm" />
         </p>
       ) : (
-        <p className="mt-1.5 text-[0.7rem] text-ink-400">—</p>
+        <p className="mt-1.5 text-[0.82rem] text-ink-400">—</p>
       )}
     </motion.div>
   );

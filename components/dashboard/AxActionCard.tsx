@@ -45,7 +45,7 @@ export function AxActionCard({
           <span className="flex h-6 w-6 items-center justify-center rounded-md bg-teal-500/10 text-teal-600">
             <Sparkles className="h-3.5 w-3.5" strokeWidth={2.4} aria-hidden />
           </span>
-          <span className="text-[0.66rem] font-bold uppercase tracking-[0.14em] text-teal-700">
+          <span className="text-[0.8rem] font-bold uppercase tracking-[0.14em] text-teal-700">
             AX Insight
           </span>
         </span>
@@ -60,7 +60,7 @@ export function AxActionCard({
       {/* 근거 */}
       <dl className="mt-3 space-y-2 border-t border-teal-500/10 pt-3">
         <div className="flex gap-2.5">
-          <dt className="w-11 shrink-0 text-[0.72rem] font-bold text-ink-400">
+          <dt className="w-11 shrink-0 text-[0.84rem] font-bold text-ink-400">
             근거
           </dt>
           <dd className="min-w-0 flex-1 text-[0.8rem] leading-relaxed text-ink-600">
@@ -68,7 +68,7 @@ export function AxActionCard({
           </dd>
         </div>
         <div className="flex gap-2.5">
-          <dt className="w-11 shrink-0 text-[0.72rem] font-bold text-ink-400">
+          <dt className="w-11 shrink-0 text-[0.84rem] font-bold text-ink-400">
             연결
           </dt>
           <dd className="min-w-0 flex-1 text-[0.8rem] leading-relaxed text-ink-600">
@@ -82,7 +82,7 @@ export function AxActionCard({
         <div className="min-w-0">
           {reco.expectedEffect ? (
             <>
-              <p className="text-[0.68rem] font-bold uppercase tracking-[0.1em] text-ink-400">
+              <p className="text-[0.8rem] font-bold uppercase tracking-[0.1em] text-ink-400">
                 예상 효과
               </p>
               <p className="mt-0.5 truncate text-[0.94rem] font-extrabold tabular-nums text-teal-700">

@@ -97,7 +97,7 @@ export default function InsightsPage() {
           <div className="space-y-5">
             <div>
               <div className="flex items-center gap-2">
-                <span className="rounded-full bg-surface px-2.5 py-1 text-[0.68rem] font-bold text-ink-500">
+                <span className="rounded-full bg-surface px-2.5 py-1 text-[0.8rem] font-bold text-ink-500">
                   {selected.category}
                 </span>
                 <Badge>{selected.priority}</Badge>
@@ -108,7 +108,7 @@ export default function InsightsPage() {
             </div>
 
             <div>
-              <p className="text-[0.72rem] font-bold uppercase tracking-wide text-ink-400">
+              <p className="text-[0.84rem] font-bold uppercase tracking-wide text-ink-400">
                 발견된 신호
               </p>
               <ul className="mt-2 space-y-1.5">
@@ -128,7 +128,7 @@ export default function InsightsPage() {
             </div>
 
             <div>
-              <p className="text-[0.72rem] font-bold uppercase tracking-wide text-ink-400">
+              <p className="text-[0.84rem] font-bold uppercase tracking-wide text-ink-400">
                 왜 중요한가
               </p>
               <p className="mt-1.5 text-[0.85rem] leading-relaxed text-ink-600">
@@ -146,7 +146,7 @@ export default function InsightsPage() {
 
             {selected.relatedCustomerIds?.length ? (
               <div>
-                <p className="text-[0.72rem] font-bold uppercase tracking-wide text-ink-400">
+                <p className="text-[0.84rem] font-bold uppercase tracking-wide text-ink-400">
                   관련 거래처
                 </p>
                 <div className="mt-2 flex flex-wrap gap-1.5">
@@ -166,7 +166,7 @@ export default function InsightsPage() {
 
             {selected.relatedProductIds?.length ? (
               <div>
-                <p className="text-[0.72rem] font-bold uppercase tracking-wide text-ink-400">
+                <p className="text-[0.84rem] font-bold uppercase tracking-wide text-ink-400">
                   관련 제품
                 </p>
                 <div className="mt-2 flex flex-wrap gap-1.5">

@@ -62,7 +62,7 @@ export function Delta({
       <span
         className={clsx(
           "inline-flex items-center gap-0.5 rounded-md px-1.5 py-0.5 font-bold tabular-nums",
-          size === "sm" ? "text-[0.7rem]" : "text-[0.76rem]",
+          size === "sm" ? "text-[0.82rem]" : "text-[0.76rem]",
           good
             ? "bg-positive-soft text-positive"
             : "bg-critical-soft text-critical"
@@ -74,7 +74,7 @@ export function Delta({
         {suffix}
       </span>
       {label ? (
-        <span className="text-[0.72rem] text-ink-400">{label}</span>
+        <span className="text-[0.84rem] text-ink-400">{label}</span>
       ) : null}
     </span>
   );
@@ -122,7 +122,7 @@ export function Badge({
   return (
     <span
       className={clsx(
-        "inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-md px-2 py-1 text-[0.72rem] font-bold leading-none",
+        "inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-md px-2 py-1 text-[0.84rem] font-bold leading-none",
         TONES[tone ?? key] ?? "bg-ink-200/60 text-ink-500",
         className
       )}
@@ -166,7 +166,7 @@ export function Score({
             ? "h-12 w-12 text-[1.05rem]"
             : size === "md"
               ? "h-9 w-9 text-[0.85rem]"
-              : "h-7 w-7 text-[0.74rem]"
+              : "h-7 w-7 text-[0.86rem]"
         )}
       >
         {value}
@@ -199,7 +199,7 @@ export function DemoBadge({ className }: { className?: string }) {
   return (
     <span
       className={clsx(
-        "inline-flex items-center gap-1 rounded-md border border-gold-200 bg-gold-100/70 px-2 py-0.5 text-[0.66rem] font-bold tracking-wide text-gold-600",
+        "inline-flex items-center gap-1 rounded-md border border-gold-200 bg-gold-100/70 px-2 py-0.5 text-[0.8rem] font-bold tracking-wide text-gold-600",
         className
       )}
       title="개별 거래·재고 데이터는 시연용 샘플입니다"

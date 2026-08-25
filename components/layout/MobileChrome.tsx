@@ -43,7 +43,7 @@ export function MobileHeader() {
         <SunjinMark className="h-8 w-8" />
         <span className="truncate text-[1.02rem] font-extrabold tracking-[-0.01em] text-white">
           선진산업
-          <span className="ml-1 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-navy-300">
+          <span className="ml-1 text-[0.82rem] font-semibold uppercase tracking-[0.14em] text-navy-300">
             AX
           </span>
         </span>
@@ -68,7 +68,7 @@ export function MobileHeader() {
         >
           <Bell className="h-[1.2rem] w-[1.2rem]" strokeWidth={1.9} aria-hidden />
           {unread > 0 ? (
-            <span className="absolute right-1.5 top-1.5 flex h-[1rem] min-w-[1rem] items-center justify-center rounded-full bg-critical px-1 text-[0.6rem] font-bold text-white">
+            <span className="absolute right-1.5 top-1.5 flex h-[1rem] min-w-[1rem] items-center justify-center rounded-full bg-critical px-1 text-[0.76rem] font-bold text-white">
               {unread}
             </span>
           ) : null}
@@ -203,11 +203,11 @@ export function BottomNav() {
 
         <div className="mt-5 border-t border-surface-line pt-5">
           <DesktopModeButton onSwitched={() => setMoreOpen(false)} />
-          <p className="mt-2.5 text-center text-[0.72rem] leading-relaxed text-ink-400">
+          <p className="mt-2.5 text-center text-[0.84rem] leading-relaxed text-ink-400">
             휴대폰에서도 PC와 동일한 화면으로 볼 수 있습니다.
           </p>
         </div>
-        <p className="mt-5 border-t border-surface-line pt-4 text-center text-[0.72rem] text-ink-400">
+        <p className="mt-5 border-t border-surface-line pt-4 text-center text-[0.84rem] text-ink-400">
           {COMPANY.ceoTitle} · {COMPANY.credit}
         </p>
       </Sheet>

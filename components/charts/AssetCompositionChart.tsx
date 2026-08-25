@@ -64,10 +64,10 @@ export function AssetCompositionChart({
           </PieChart>
         </ResponsiveContainer>
         <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-[0.68rem] font-semibold text-ink-400">총 자산</span>
+          <span className="text-[0.8rem] font-semibold text-ink-400">총 자산</span>
           <span className="mt-0.5 text-[1.32rem] font-extrabold leading-none tabular-nums tracking-[-0.02em] text-ink-900">
             {fin.assets.toFixed(2)}
-            <span className="ml-0.5 text-[0.7rem] font-bold text-ink-500">억</span>
+            <span className="ml-0.5 text-[0.82rem] font-bold text-ink-500">억</span>
           </span>
         </div>
       </div>
@@ -88,7 +88,7 @@ export function AssetCompositionChart({
             </span>
             <span className="shrink-0 text-[0.84rem] font-bold tabular-nums text-ink-900">
               {d.value.toFixed(2)}억
-              <span className="ml-1.5 text-[0.74rem] font-semibold text-ink-400">
+              <span className="ml-1.5 text-[0.86rem] font-semibold text-ink-400">
                 {Math.round((d.value / fin.assets) * 100)}%
               </span>
             </span>

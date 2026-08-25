@@ -49,7 +49,7 @@ export function TopCustomersCard() {
                 <span className="flex min-w-0 items-center gap-2.5">
                   <span
                     className={clsx(
-                      "flex h-5 w-5 shrink-0 items-center justify-center rounded-md text-[0.66rem] font-bold tabular-nums",
+                      "flex h-5 w-5 shrink-0 items-center justify-center rounded-md text-[0.8rem] font-bold tabular-nums",
                       i === 0
                         ? "bg-brand-600 text-white"
                         : "bg-surface-sunken text-ink-500"
@@ -71,7 +71,7 @@ export function TopCustomersCard() {
                   className="flex-1"
                   tone={i === 0 ? "brand" : "teal"}
                 />
-                <span className="w-10 shrink-0 text-right text-[0.72rem] font-semibold tabular-nums text-ink-400">
+                <span className="w-10 shrink-0 text-right text-[0.84rem] font-semibold tabular-nums text-ink-400">
                   {((stats.totalRevenue / total) * 100).toFixed(1)}%
                 </span>
               </div>

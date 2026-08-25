@@ -180,7 +180,7 @@ export default function DashboardPage() {
               <h2 className="t-section">재무 성과 추이</h2>
               <p className="mt-1 t-caption">2023 ~ 2025 · 단위 억원</p>
             </div>
-            <span className="hidden rounded-md bg-surface-sunken px-2.5 py-1 text-[0.7rem] font-bold text-ink-500 sm:inline">
+            <span className="hidden rounded-md bg-surface-sunken px-2.5 py-1 text-[0.82rem] font-bold text-ink-500 sm:inline">
               3개년
             </span>
           </div>

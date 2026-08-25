@@ -123,7 +123,7 @@ export default function CustomerDetailPage() {
             { label: "평균 재구매 주기", value: `${stats.cycleDays}일` },
           ].map((item) => (
             <div key={item.label}>
-              <dt className="text-[0.7rem] text-ink-400">{item.label}</dt>
+              <dt className="text-[0.82rem] text-ink-400">{item.label}</dt>
               <dd className="mt-0.5 text-[0.95rem] font-bold tabular-nums text-ink-900">
                 {item.value}
               </dd>
@@ -151,7 +151,7 @@ export default function CustomerDetailPage() {
               <p className="text-sm font-bold text-ink-900">
                 재구매 가능성 {score.label}
               </p>
-              <p className="text-[0.7rem] text-ink-400">
+              <p className="text-[0.82rem] text-ink-400">
                 구매 주기·빈도·규모·추세 기반 지수
               </p>
             </div>
@@ -171,7 +171,7 @@ export default function CustomerDetailPage() {
             ))}
           </ul>
           <div className="mt-4 border-t border-surface-line pt-3.5">
-            <p className="text-[0.7rem] font-bold uppercase tracking-wide text-ink-400">
+            <p className="text-[0.82rem] font-bold uppercase tracking-wide text-ink-400">
               선호 피혁
             </p>
             <div className="mt-1.5 flex flex-wrap gap-1.5">
@@ -204,7 +204,7 @@ export default function CustomerDetailPage() {
             <h2 className="text-[1.02rem] font-bold text-ink-900">
               이 거래처에 추천할 재고
             </h2>
-            <span className="text-[0.7rem] text-ink-400">
+            <span className="text-[0.82rem] text-ink-400">
               AX 매칭 점수 기준 상위 3개
             </span>
           </div>
@@ -220,7 +220,7 @@ export default function CustomerDetailPage() {
                     className="min-w-0 font-bold text-ink-900 transition-colors hover:text-brand-700"
                   >
                     {product.name}
-                    <span className="ml-2 text-[0.7rem] font-medium text-ink-400">
+                    <span className="ml-2 text-[0.82rem] font-medium text-ink-400">
                       {product.code}
                     </span>
                   </Link>
@@ -283,7 +283,7 @@ export default function CustomerDetailPage() {
                       <p className="truncate text-[0.85rem] font-semibold text-ink-800">
                         {product?.name ?? tx.productId}
                       </p>
-                      <p className="mt-0.5 text-[0.72rem] tabular-nums text-ink-400">
+                      <p className="mt-0.5 text-[0.84rem] tabular-nums text-ink-400">
                         {formatDate(tx.date)} · {formatNumber(tx.qty)}평 ×{" "}
                         {formatNumber(tx.unitPrice)}원
                       </p>
@@ -332,7 +332,7 @@ export default function CustomerDetailPage() {
                   <div className="min-w-0">
                     <p className="text-[0.8rem] font-bold text-ink-800">
                       {activity.type}
-                      <span className="ml-2 text-[0.68rem] font-medium tabular-nums text-ink-400">
+                      <span className="ml-2 text-[0.8rem] font-medium tabular-nums text-ink-400">
                         {formatDate(activity.date)}
                       </span>
                     </p>

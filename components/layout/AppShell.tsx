@@ -118,13 +118,13 @@ export function AppShell({ children }: { children: ReactNode }) {
         ) : (
           <div className="mx-auto w-full max-w-workspace px-4 pb-[calc(var(--bottom-nav-height)+env(safe-area-inset-bottom)+20px)] sm:px-5 lg:hidden">
             <DesktopModeButton />
-            <p className="mt-3 text-center text-[0.7rem] text-ink-400">
+            <p className="mt-3 text-center text-[0.82rem] text-ink-400">
               © 선진산업 Business AX · 미래에이아이랩 x 김준형
             </p>
           </div>
         )}
 
-        <footer className="hidden px-6 pb-7 text-[0.72rem] text-ink-400 lg:block 2xl:px-8">
+        <footer className="hidden px-6 pb-7 text-[0.84rem] text-ink-400 lg:block 2xl:px-8">
           <div className="mx-auto flex w-full max-w-workspace items-center justify-between border-t border-surface-line pt-5">
             <span>© 선진산업 Business AX</span>
             <span>미래에이아이랩 x 김준형</span>

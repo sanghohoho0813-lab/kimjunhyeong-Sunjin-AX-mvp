@@ -100,7 +100,7 @@ function IconButton({
     >
       {children}
       {badge && badge > 0 ? (
-        <span className="absolute -right-1 -top-1 flex h-[1.1rem] min-w-[1.1rem] items-center justify-center rounded-full bg-critical px-1 text-[0.64rem] font-bold text-white ring-2 ring-surface">
+        <span className="absolute -right-1 -top-1 flex h-[1.1rem] min-w-[1.1rem] items-center justify-center rounded-full bg-critical px-1 text-[0.78rem] font-bold text-white ring-2 ring-surface">
           {badge}
         </span>
       ) : null}
@@ -178,7 +178,7 @@ export function HeaderControls({ withPeriod = false }: { withPeriod?: boolean })
           <span className="block text-[0.82rem] font-bold text-ink-900">
             {COMPANY.ceoTitle}
           </span>
-          <span className="block text-[0.72rem] text-ink-400">
+          <span className="block text-[0.84rem] text-ink-400">
             {COMPANY.credit}
           </span>
         </span>

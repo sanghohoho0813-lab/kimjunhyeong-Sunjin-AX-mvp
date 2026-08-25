@@ -175,7 +175,7 @@ export default function AnalyticsPage() {
             <h2 className="text-[1.02rem] font-bold text-ink-900">
               3개년 재무 성과
             </h2>
-            <span className="text-[0.7rem] text-ink-400">단위: 억원</span>
+            <span className="text-[0.82rem] text-ink-400">단위: 억원</span>
           </div>
           <div className="mt-2 min-h-[260px] flex-1">
             <FinancialTrendChart fill />
@@ -201,7 +201,7 @@ export default function AnalyticsPage() {
                   <p className="text-[0.85rem] font-bold text-ink-800">
                     {signal.label}
                   </p>
-                  <p className="text-[0.72rem] tabular-nums text-ink-400">
+                  <p className="text-[0.84rem] tabular-nums text-ink-400">
                     {signal.note}
                   </p>
                 </div>
@@ -209,7 +209,7 @@ export default function AnalyticsPage() {
               </li>
             ))}
           </ul>
-          <p className="mt-3 text-[0.68rem] leading-relaxed text-ink-400">
+          <p className="mt-3 text-[0.8rem] leading-relaxed text-ink-400">
             시연용 룰 기반 평가입니다. 정밀한 판단은 결산자료 확인이 필요합니다.
           </p>
         </motion.section>
@@ -236,7 +236,7 @@ export default function AnalyticsPage() {
                   key={change.label}
                   className="rounded-card border border-surface-line bg-surface-subtle p-4"
                 >
-                  <p className="text-[0.72rem] font-semibold text-ink-400">
+                  <p className="text-[0.84rem] font-semibold text-ink-400">
                     {change.label}
                   </p>
                   <div className="mt-1.5 flex items-center gap-1.5 text-[0.9rem] font-bold tabular-nums">
@@ -248,7 +248,7 @@ export default function AnalyticsPage() {
                   </div>
                   <p
                     className={clsx(
-                      "mt-1 flex items-center gap-1 text-[0.72rem] font-bold",
+                      "mt-1 flex items-center gap-1 text-[0.84rem] font-bold",
                       good ? "text-emerald-600" : "text-amber-600"
                     )}
                   >
@@ -355,7 +355,7 @@ export default function AnalyticsPage() {
                 className="mt-2 w-full accent-brand-600"
               />
             </div>
-            <p className="text-[0.68rem] leading-relaxed text-ink-400">
+            <p className="text-[0.8rem] leading-relaxed text-ink-400">
               단순화된 시연용 계산입니다. 실제 재무 계획은 세무·회계 전문가와
               함께 검토가 필요합니다.
             </p>
@@ -392,7 +392,7 @@ export default function AnalyticsPage() {
                 key={item.label}
                 className="rounded-card border border-surface-line bg-surface-subtle p-4"
               >
-                <p className="text-[0.7rem] font-semibold text-ink-400">
+                <p className="text-[0.82rem] font-semibold text-ink-400">
                   {item.label}
                 </p>
                 <p
@@ -403,7 +403,7 @@ export default function AnalyticsPage() {
                 >
                   {item.value}
                 </p>
-                <p className="mt-0.5 text-[0.68rem] text-ink-400">{item.sub}</p>
+                <p className="mt-0.5 text-[0.8rem] text-ink-400">{item.sub}</p>
               </div>
             ))}
           </div>

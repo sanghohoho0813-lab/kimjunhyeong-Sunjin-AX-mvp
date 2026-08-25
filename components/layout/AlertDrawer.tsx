@@ -57,13 +57,13 @@ export function AlertDrawer() {
                   <div className="flex items-center gap-2">
                     <span
                       className={clsx(
-                        "inline-flex shrink-0 rounded-full px-2 py-0.5 text-[0.66rem] font-bold",
+                        "inline-flex shrink-0 rounded-full px-2 py-0.5 text-[0.8rem] font-bold",
                         CATEGORY_TONE[alert.category] ?? "bg-surface-sunken text-ink-500"
                       )}
                     >
                       {alert.category}
                     </span>
-                    <span className="text-[0.68rem] text-ink-400">
+                    <span className="text-[0.8rem] text-ink-400">
                       {formatDate(alert.date)}
                     </span>
                   </div>

@@ -109,7 +109,7 @@ function BeforeAfter({
   return (
     <div className="grid gap-4 md:grid-cols-2">
       <div className="card p-5">
-        <p className="text-[0.7rem] font-bold uppercase tracking-[0.12em] text-ink-400">
+        <p className="text-[0.82rem] font-bold uppercase tracking-[0.12em] text-ink-400">
           {beforeLabel}
         </p>
         <ul className="mt-3 space-y-2.5">
@@ -128,7 +128,7 @@ function BeforeAfter({
         </ul>
       </div>
       <div className="card-insight p-5">
-        <p className="text-[0.7rem] font-bold uppercase tracking-[0.12em] text-teal-700">
+        <p className="text-[0.82rem] font-bold uppercase tracking-[0.12em] text-teal-700">
           {afterLabel}
         </p>
         <ul className="mt-3 space-y-2.5">
@@ -150,7 +150,7 @@ function BeforeAfter({
 function SunjinNote({ children }: { children: ReactNode }) {
   return (
     <div className="mt-5 rounded-card border-l-[3px] border-teal-400 bg-teal-50/60 px-4 py-3.5">
-      <p className="text-[0.7rem] font-bold uppercase tracking-[0.1em] text-teal-700">
+      <p className="text-[0.82rem] font-bold uppercase tracking-[0.1em] text-teal-700">
         선진산업이라면
       </p>
       <p className="mt-1.5 text-[0.86rem] leading-relaxed text-ink-700">{children}</p>
@@ -230,7 +230,7 @@ function PolicyAccordion() {
                           key={f.label}
                           className="rounded-card bg-surface-subtle px-4 py-3"
                         >
-                          <dt className="text-[0.7rem] font-bold uppercase tracking-[0.08em] text-ink-400">
+                          <dt className="text-[0.82rem] font-bold uppercase tracking-[0.08em] text-ink-400">
                             {f.label}
                           </dt>
                           <dd className="mt-1 text-[0.84rem] font-bold text-ink-800">
@@ -329,7 +329,7 @@ export default function IntentPage() {
         <div className="relative">
           <span className="inline-flex items-center gap-2 rounded-pill border border-white/10 bg-white/[0.06] px-3 py-1.5">
             <Sparkles className="h-3.5 w-3.5 text-teal-300" aria-hidden />
-            <span className="text-[0.66rem] font-bold uppercase tracking-[0.14em] text-teal-200">
+            <span className="text-[0.8rem] font-bold uppercase tracking-[0.14em] text-teal-200">
               {INTENT_HERO.eyebrow}
             </span>
           </span>
@@ -419,7 +419,7 @@ export default function IntentPage() {
           transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="mb-4">
-            <span className="inline-flex items-center rounded-md bg-navy-925 px-2.5 py-1 text-[0.66rem] font-bold uppercase tracking-[0.12em] text-teal-300">
+            <span className="inline-flex items-center rounded-md bg-navy-925 px-2.5 py-1 text-[0.8rem] font-bold uppercase tracking-[0.12em] text-teal-300">
               필독
             </span>
             <h2 className="mt-3 text-[1.15rem] font-extrabold tracking-[-0.015em] text-ink-900 lg:text-[1.4rem]">
@@ -615,7 +615,7 @@ export default function IntentPage() {
                 <span className="min-w-0 flex-1">
                   <span
                     className={clsx(
-                      "inline-block rounded-md px-2 py-0.5 text-[0.7rem] font-bold",
+                      "inline-block rounded-md px-2 py-0.5 text-[0.82rem] font-bold",
                       s.done ? "bg-teal-500 text-white" : "bg-surface-sunken text-ink-500"
                     )}
                   >
@@ -694,7 +694,7 @@ export default function IntentPage() {
                 AX 추천 보기
               </Link>
             </div>
-            <p className="mt-7 text-[0.72rem] text-navy-300">
+            <p className="mt-7 text-[0.84rem] text-navy-300">
               {COMPANY.productName} · {COMPANY.credit}
             </p>
           </div>

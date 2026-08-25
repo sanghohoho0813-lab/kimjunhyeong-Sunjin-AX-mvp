@@ -113,7 +113,7 @@ export default function InventoryDetailPage() {
                 },
               ].map((item) => (
                 <div key={item.label}>
-                  <dt className="text-[0.7rem] text-ink-400">{item.label}</dt>
+                  <dt className="text-[0.82rem] text-ink-400">{item.label}</dt>
                   <dd
                     className={
                       item.warn
@@ -200,7 +200,7 @@ export default function InventoryDetailPage() {
                               <p className="font-bold text-ink-900">
                                 {customer.name}
                               </p>
-                              <p className="text-[0.7rem] text-ink-400">
+                              <p className="text-[0.82rem] text-ink-400">
                                 {customer.segment} · 구매 가능성 {match.label}
                               </p>
                             </div>
@@ -240,7 +240,7 @@ export default function InventoryDetailPage() {
                           {match.breakdown.map((b) => (
                             <span
                               key={b.key}
-                              className="rounded-full bg-surface px-2.5 py-1 text-[0.68rem] font-semibold tabular-nums text-ink-500"
+                              className="rounded-full bg-surface px-2.5 py-1 text-[0.8rem] font-semibold tabular-nums text-ink-500"
                             >
                               {b.label} {b.earned}/{b.max}
                             </span>
@@ -324,7 +324,7 @@ export default function InventoryDetailPage() {
                         {formatKRW(tx.qty * tx.unitPrice)}
                       </span>
                     </div>
-                    <p className="mt-0.5 text-[0.7rem] tabular-nums text-ink-400">
+                    <p className="mt-0.5 text-[0.82rem] tabular-nums text-ink-400">
                       {formatDate(tx.date)} · {formatNumber(tx.qty)}평 ×{" "}
                       {formatNumber(tx.unitPrice)}원
                     </p>
@@ -363,7 +363,7 @@ export default function InventoryDetailPage() {
                         <span className="block truncate text-[0.82rem] font-bold text-ink-900">
                           {p.name}
                         </span>
-                        <span className="block text-[0.7rem] tabular-nums text-ink-400">
+                        <span className="block text-[0.82rem] tabular-nums text-ink-400">
                           {formatNumber(p.stockQty)}평 · {s.idleDays}일 무출고
                         </span>
                       </span>

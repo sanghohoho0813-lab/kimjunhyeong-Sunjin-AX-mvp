@@ -122,14 +122,14 @@ function InventoryContent() {
               <card.icon className="h-5 w-5" aria-hidden />
             </span>
             <span className="min-w-0">
-              <span className="block truncate text-[0.72rem] font-semibold text-ink-500 sm:text-[0.74rem]">
+              <span className="block truncate text-[0.84rem] font-semibold text-ink-500 sm:text-[0.86rem]">
                 <span className="sm:hidden">{card.short}</span>
                 <span className="hidden sm:inline">{card.label}</span>
               </span>
               <span className="mt-1 block truncate text-[1.05rem] font-extrabold tabular-nums tracking-[-0.02em] text-ink-900 sm:text-[1.28rem]">
                 {card.value}
               </span>
-              <span className="mt-0.5 hidden text-[0.72rem] text-ink-400 sm:block">
+              <span className="mt-0.5 hidden text-[0.84rem] text-ink-400 sm:block">
                 {card.note}
               </span>
             </span>
@@ -282,7 +282,7 @@ function InventoryContent() {
                           <span className="block truncate text-[0.94rem] font-bold tracking-[-0.01em] text-ink-900">
                             {product.material} Leather
                           </span>
-                          <span className="mt-0.5 block truncate text-[0.7rem] font-semibold uppercase tracking-[0.07em] text-ink-400">
+                          <span className="mt-0.5 block truncate text-[0.82rem] font-semibold uppercase tracking-[0.07em] text-ink-400">
                             {product.color} · {product.thicknessMm}mm ·{" "}
                             {product.grade} Grade
                           </span>
@@ -295,18 +295,18 @@ function InventoryContent() {
                   <span className="mt-3.5 flex items-end justify-between gap-3 border-t border-surface-line pt-3">
                     <span className="flex gap-5">
                       <span>
-                        <span className="block text-[0.68rem] text-ink-400">
+                        <span className="block text-[0.8rem] text-ink-400">
                           보유
                         </span>
                         <span className="block text-[0.92rem] font-extrabold tabular-nums text-ink-900">
                           {formatNumber(product.stockQty)}
-                          <span className="ml-0.5 text-[0.7rem] font-bold text-ink-400">
+                          <span className="ml-0.5 text-[0.82rem] font-bold text-ink-400">
                             평
                           </span>
                         </span>
                       </span>
                       <span>
-                        <span className="block text-[0.68rem] text-ink-400">
+                        <span className="block text-[0.8rem] text-ink-400">
                           무출고
                         </span>
                         <span
@@ -316,7 +316,7 @@ function InventoryContent() {
                           )}
                         >
                           {stats.idleDays}
-                          <span className="ml-0.5 text-[0.7rem] font-bold text-ink-400">
+                          <span className="ml-0.5 text-[0.82rem] font-bold text-ink-400">
                             일
                           </span>
                         </span>
@@ -350,7 +350,7 @@ function FilterGroup<T extends string>({
 }) {
   return (
     <div className="flex shrink-0 items-center gap-1.5">
-      <span className="text-[0.7rem] font-bold text-ink-400">{label}</span>
+      <span className="text-[0.82rem] font-bold text-ink-400">{label}</span>
       <div className="flex gap-1">
         {options.map((option) => (
           <button

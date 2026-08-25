@@ -36,7 +36,7 @@ export function Sidebar() {
           <span className="block text-[1.06rem] font-extrabold leading-tight tracking-[-0.01em] text-white">
             선진산업
           </span>
-          <span className="block text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-navy-300">
+          <span className="block text-[0.8rem] font-semibold uppercase tracking-[0.16em] text-navy-300">
             Business AX
           </span>
         </span>
@@ -44,7 +44,7 @@ export function Sidebar() {
 
       {/* 내비게이션 */}
       <nav className="flex-1 overflow-y-auto px-3" aria-label="주요 메뉴">
-        <p className="px-3 pb-2 text-[0.62rem] font-bold uppercase tracking-[0.16em] text-navy-400">
+        <p className="px-3 pb-2 text-[0.78rem] font-bold uppercase tracking-[0.16em] text-navy-400">
           Workspace
         </p>
         <ul className="space-y-0.5">
@@ -89,7 +89,7 @@ export function Sidebar() {
                   </span>
                   <span className="truncate">{item.label}</span>
                   {showBadge ? (
-                    <span className="ml-auto inline-flex h-[1.3rem] min-w-[1.3rem] items-center justify-center rounded-full bg-teal-500 px-1.5 text-[0.66rem] font-bold text-navy-950">
+                    <span className="ml-auto inline-flex h-[1.3rem] min-w-[1.3rem] items-center justify-center rounded-full bg-teal-500 px-1.5 text-[0.8rem] font-bold text-navy-950">
                       {unread}
                     </span>
                   ) : null}
@@ -109,7 +109,7 @@ export function Sidebar() {
           />
           <p className="text-[0.86rem] font-bold text-white">{COMPANY.name}</p>
         </div>
-        <dl className="mt-2.5 space-y-1.5 text-[0.72rem] leading-none text-navy-300">
+        <dl className="mt-2.5 space-y-1.5 text-[0.84rem] leading-none text-navy-300">
           <div className="flex gap-2">
             <dt className="w-10 shrink-0 text-navy-400">대표자</dt>
             <dd className="text-navy-100">{COMPANY.ceo}</dd>
@@ -135,7 +135,7 @@ export function Sidebar() {
             <p className="truncate text-[0.86rem] font-bold text-white">
               {COMPANY.ceoTitle}
             </p>
-            <p className="truncate text-[0.7rem] text-navy-300">
+            <p className="truncate text-[0.82rem] text-navy-300">
               {COMPANY.credit}
             </p>
           </div>
