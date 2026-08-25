@@ -31,9 +31,9 @@ import { useAppStore } from "@/lib/store";
 function TourButton() {
   const setTourOpen = useAppStore((s) => s.setTourOpen);
   return (
-    <button onClick={() => setTourOpen(true)} className="btn btn-ghost">
-      <Sparkles className="h-4 w-4 text-teal-500" aria-hidden />
-      AX 둘러보기
+    <button onClick={() => setTourOpen(true)} className="btn btn-ghost btn-sm">
+      <Sparkles className="h-3.5 w-3.5 text-teal-500" aria-hidden />
+      둘러보기
     </button>
   );
 }

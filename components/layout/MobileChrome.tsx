@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Bell, MoreHorizontal } from "lucide-react";
+import { Bell, MoreHorizontal, Sparkles } from "lucide-react";
 import { clsx } from "@/lib/utils/clsx";
 import { COMPANY } from "@/lib/data/seed";
 import { generateBusinessAlerts } from "@/lib/insights/alerts";
@@ -35,7 +35,19 @@ export function MobileHeader() {
           </span>
         </span>
       </Link>
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-0.5">
+        <Link
+          href="/intent"
+          aria-label="기획의도 보기"
+          className="relative flex h-11 w-11 items-center justify-center rounded-full text-teal-300"
+        >
+          <span
+            aria-hidden
+            className="absolute h-8 w-8 rounded-full bg-teal-400/16 blur-[6px]"
+            style={{ animation: "intent-glow-dot 4.2s ease-in-out infinite" }}
+          />
+          <Sparkles className="relative h-[1.15rem] w-[1.15rem]" strokeWidth={2.1} aria-hidden />
+        </Link>
         <button
           onClick={() => setAlertsOpen(true)}
           aria-label={`알림 ${unread}건`}
@@ -70,7 +82,7 @@ export function BottomNav() {
     <>
       <nav
         aria-label="모바일 내비게이션"
-        className="fixed inset-x-0 bottom-0 z-50 border-t border-surface-line bg-white/95 pb-safe backdrop-blur-xl lg:hidden"
+        className="fixed inset-x-0 bottom-0 z-50 border-t border-surface-line bg-white pb-safe shadow-[0_-6px_20px_-12px_rgba(11,33,69,0.18)] lg:hidden"
       >
         <div className="grid h-[var(--bottom-nav-height)] grid-cols-5">
           {MOBILE_NAV.map((item) => {

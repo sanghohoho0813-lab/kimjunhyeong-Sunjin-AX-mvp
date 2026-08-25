@@ -1,6 +1,8 @@
 "use client";
 
-import { Bell, CalendarDays, ChevronDown, RefreshCw } from "lucide-react";
+import { Bell, CalendarDays, ChevronDown, RefreshCw, Sparkles } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { clsx } from "@/lib/utils/clsx";
 import { COMPANY } from "@/lib/data/seed";
@@ -37,8 +39,8 @@ export function PeriodSelect() {
         className="btn btn-ghost !text-[0.82rem] !font-semibold"
       >
         <CalendarDays className="h-4 w-4 text-ink-400" aria-hidden />
-        <span className="hidden xl:inline">{PERIOD_LABELS[periodYear]}</span>
-        <span className="xl:hidden">{periodYear}년</span>
+        <span className="hidden 2xl:inline">{PERIOD_LABELS[periodYear]}</span>
+        <span className="2xl:hidden">{periodYear}년 누적</span>
         <ChevronDown
           className={clsx(
             "h-3.5 w-3.5 text-ink-400 transition-transform duration-200",
@@ -106,6 +108,30 @@ function IconButton({
   );
 }
 
+/** 기획의도 진입 — 우측 상단에 은은하게 빛나는 버튼 */
+export function IntentButton({ compact = false }: { compact?: boolean }) {
+  const pathname = usePathname();
+  if (pathname.startsWith("/intent")) return null;
+
+  return (
+    <Link
+      href="/intent"
+      aria-label="기획의도 보기"
+      className={clsx(
+        "btn btn-intent !font-bold",
+        compact && "!min-h-[38px] !px-3 !text-[0.78rem]"
+      )}
+    >
+      <Sparkles
+        className={compact ? "h-3.5 w-3.5" : "h-4 w-4"}
+        strokeWidth={2.2}
+        aria-hidden
+      />
+      기획의도
+    </Link>
+  );
+}
+
 /** 데스크톱 헤더 우측 컨트롤 */
 export function HeaderControls({ withPeriod = false }: { withPeriod?: boolean }) {
   const pushToast = useAppStore((s) => s.pushToast);
@@ -141,6 +167,8 @@ export function HeaderControls({ withPeriod = false }: { withPeriod?: boolean })
       >
         <Bell className="h-[1.05rem] w-[1.05rem]" aria-hidden />
       </IconButton>
+
+      <IntentButton />
 
       <div className="ml-1 hidden items-center gap-2.5 rounded-btn border border-surface-line bg-white py-1.5 pl-2 pr-3.5 xl:flex">
         <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-teal-500 text-[0.76rem] font-bold text-white">
@@ -179,7 +207,7 @@ export function PageHeader({
   return (
     <header className="mb-6 lg:mb-7">
       <div className="flex flex-wrap items-start justify-between gap-4">
-        <div className="min-w-0">
+        <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2.5">
             <h1 className="t-page-title">{title}</h1>
             {badge}
@@ -191,7 +219,7 @@ export function PageHeader({
           ) : null}
         </div>
 
-        <div className="hidden items-center gap-2 lg:flex">
+        <div className="hidden shrink-0 items-center gap-2 lg:flex">
           {actions}
           <HeaderControls withPeriod={withPeriod} />
         </div>

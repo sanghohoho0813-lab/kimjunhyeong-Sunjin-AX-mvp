@@ -262,10 +262,73 @@ body {
     }
   }
 
+  /* 기획의도 진입 버튼 — 아주 은은한 앰비언트 글로우 */
+  .btn-intent {
+    @apply relative overflow-hidden;
+    border-color: theme("colors.teal.200");
+    background: linear-gradient(180deg, #f2fbfa 0%, #ffffff 100%);
+    color: theme("colors.teal.700");
+    animation: intent-glow 4.2s ease-in-out infinite;
+  }
+  .btn-intent:hover {
+    border-color: theme("colors.teal.400");
+    background: linear-gradient(180deg, #e9f8f6 0%, #f7fdfc 100%);
+    color: theme("colors.teal.800");
+  }
+  /* 좌→우로 천천히 지나가는 옅은 광택 */
+  .btn-intent::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      110deg,
+      transparent 30%,
+      rgba(20, 184, 166, 0.14) 48%,
+      transparent 66%
+    );
+    transform: translateX(-120%);
+    animation: intent-sheen 4.2s ease-in-out infinite;
+    pointer-events: none;
+  }
+
   /* 사이드바 nav */
   .nav-item {
     @apply flex items-center gap-3 rounded-btn px-3 text-[0.9rem] font-medium transition-all duration-200 ease-premium;
     min-height: 44px;
+  }
+}
+
+@keyframes intent-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(20, 184, 166, 0), 0 0 10px -3px rgba(20, 184, 166, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.09),
+      0 0 18px -3px rgba(20, 184, 166, 0.5);
+  }
+}
+
+@keyframes intent-glow-dot {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.12);
+  }
+}
+
+@keyframes intent-sheen {
+  0%,
+  62% {
+    transform: translateX(-120%);
+  }
+  92%,
+  100% {
+    transform: translateX(120%);
   }
 }
 
