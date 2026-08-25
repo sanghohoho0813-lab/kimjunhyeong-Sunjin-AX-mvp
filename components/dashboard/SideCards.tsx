@@ -65,17 +65,17 @@ export function CashflowCard({ year }: { year: number }) {
             key={row.label}
             className="flex items-center justify-between gap-3 text-[0.84rem]"
           >
-            <span className="flex items-center gap-2 text-ink-500">
+            <span className="flex min-w-0 items-center gap-2 text-ink-500">
               {row.value >= 0 ? (
-                <ArrowUpRight className="h-3.5 w-3.5 text-teal-500" aria-hidden />
+                <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-teal-500" aria-hidden />
               ) : (
-                <ArrowDownRight className="h-3.5 w-3.5 text-ink-300" aria-hidden />
+                <ArrowDownRight className="h-3.5 w-3.5 shrink-0 text-ink-300" aria-hidden />
               )}
-              {row.label}
+              <span className="truncate">{row.label}</span>
             </span>
             <span
               className={clsx(
-                "font-bold tabular-nums",
+                "shrink-0 whitespace-nowrap font-bold tabular-nums",
                 row.value >= 0 ? "text-teal-700" : "text-ink-500"
               )}
             >

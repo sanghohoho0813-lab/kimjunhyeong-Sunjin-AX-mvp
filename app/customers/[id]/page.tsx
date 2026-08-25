@@ -92,17 +92,17 @@ export default function CustomerDetailPage() {
               거래 시작 {customer.since}
             </p>
           </div>
-          <div className="flex w-full gap-2 sm:w-auto">
+          <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
             <button
               onClick={() => setActionOpen(true)}
-              className="btn btn-ghost flex-1 sm:flex-none"
+              className="btn btn-ghost w-full sm:w-auto"
             >
               <PhoneCall className="h-4 w-4 text-brand-600" aria-hidden />
               영업 액션 등록
             </button>
             <Link
               href={`/quotes/new?customer=${customer.id}`}
-              className="btn btn-primary flex-1 sm:flex-none"
+              className="btn btn-primary w-full sm:w-auto"
             >
               <FilePlus2 className="h-4 w-4" aria-hidden />
               견적 만들기

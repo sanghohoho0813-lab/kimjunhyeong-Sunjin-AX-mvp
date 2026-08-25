@@ -91,14 +91,14 @@ export default function DashboardPage() {
         ].map((k) => (
           <div key={k.label} className="flex items-center gap-3 px-4 py-3.5">
             <span aria-hidden className={`h-9 w-1 shrink-0 rounded-full ${k.rail}`} />
-            <span className="w-[5.4rem] shrink-0 whitespace-nowrap text-[0.95rem] font-semibold text-ink-600">
+            <span className="min-w-0 flex-1 truncate whitespace-nowrap text-[0.95rem] font-semibold text-ink-600">
               {k.label}
             </span>
-            <span className="flex-1 whitespace-nowrap text-right text-[1.5rem] font-extrabold leading-none tabular-nums tracking-[-0.025em] text-ink-900">
+            <span className="shrink-0 whitespace-nowrap text-right text-[1.45rem] font-extrabold leading-none tabular-nums tracking-[-0.025em] text-ink-900">
               {k.value.toFixed(2)}
               <span className="ml-0.5 text-[0.85rem] font-bold text-ink-500">억</span>
             </span>
-            <span className="shrink-0 text-right">
+            <span className="shrink-0">
               <Delta value={k.delta} size="sm" />
             </span>
           </div>
