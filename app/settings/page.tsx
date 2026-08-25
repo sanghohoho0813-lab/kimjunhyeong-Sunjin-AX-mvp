@@ -2,9 +2,18 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Building2, Database, Play, RotateCcw, Type, UserRound } from "lucide-react";
+import {
+  Building2,
+  Database,
+  MonitorSmartphone,
+  Play,
+  RotateCcw,
+  Type,
+  UserRound,
+} from "lucide-react";
 import { useState } from "react";
 import { PageHeader } from "@/components/layout/PageHeader";
+import { ViewModeSetting } from "@/components/layout/ViewModeToggle";
 import { COMPANY } from "@/lib/data/seed";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
 import { useAppStore, type FontScale } from "@/lib/store";
@@ -120,6 +129,26 @@ export default function SettingsPage() {
                 {option.label}
               </button>
             ))}
+          </div>
+        </motion.section>
+
+        {/* 화면 모드 */}
+        <motion.section
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.25, delay: 0.1 }}
+          className="card p-5"
+        >
+          <h2 className="flex items-center gap-2 text-[0.95rem] font-bold text-navy-900">
+            <MonitorSmartphone className="h-4 w-4 text-brand-600" aria-hidden />
+            화면 모드
+          </h2>
+          <p className="mt-1 text-[0.75rem] text-navy-400">
+            휴대폰에서도 PC와 동일한 화면으로 볼 수 있습니다. 설정은 다음 접속
+            시에도 유지됩니다.
+          </p>
+          <div className="mt-3">
+            <ViewModeSetting />
           </div>
         </motion.section>
 

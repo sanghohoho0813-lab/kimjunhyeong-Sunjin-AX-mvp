@@ -19,6 +19,10 @@ interface AppState {
   fontScale: FontScale;
   setFontScale: (scale: FontScale) => void;
 
+  /** PC 버전으로 보기 — 모바일에서 viewport를 고정폭으로 바꿔 데스크톱 레이아웃을 표시 */
+  desktopMode: boolean;
+  setDesktopMode: (on: boolean) => void;
+
   // 기간 선택 (대시보드)
   periodYear: PeriodYear;
   setPeriodYear: (year: PeriodYear) => void;
@@ -62,6 +66,9 @@ export const useAppStore = create<AppState>()(
     (set, get) => ({
       fontScale: "base",
       setFontScale: (fontScale) => set({ fontScale }),
+
+      desktopMode: false,
+      setDesktopMode: (desktopMode) => set({ desktopMode }),
 
       periodYear: 2025,
       setPeriodYear: (periodYear) => set({ periodYear }),
@@ -128,6 +135,7 @@ export const useAppStore = create<AppState>()(
           activities: [],
           readAlertIds: [],
           fontScale: "base",
+          desktopMode: false,
           periodYear: 2025,
           tourDone: false,
         }),
@@ -137,6 +145,7 @@ export const useAppStore = create<AppState>()(
       skipHydration: true,
       partialize: (state) => ({
         fontScale: state.fontScale,
+        desktopMode: state.desktopMode,
         savedQuotes: state.savedQuotes,
         activities: state.activities,
         readAlertIds: state.readAlertIds,

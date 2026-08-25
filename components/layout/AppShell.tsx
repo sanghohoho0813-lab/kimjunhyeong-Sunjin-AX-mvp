@@ -8,7 +8,11 @@ import { AlertDrawer } from "./AlertDrawer";
 import { DemoTour } from "./DemoTour";
 import { BottomNav, MobileHeader } from "./MobileChrome";
 import { Sidebar } from "./Sidebar";
+import { DesktopModeButton, MobileModeReturnBar } from "./ViewModeToggle";
 import { Toaster } from "@/components/shared/Toaster";
+
+/** PC 버전으로 볼 때 적용하는 고정 viewport 폭 (데스크톱 레이아웃 최소 기준) */
+const DESKTOP_VIEWPORT_WIDTH = 1280;
 
 /** 첫 방문 시 노출되는 작은 둘러보기 배너 (사용을 방해하지 않는 형태) */
 function TourPrompt() {
@@ -48,6 +52,7 @@ function TourPrompt() {
 
 export function AppShell({ children }: { children: ReactNode }) {
   const fontScale = useAppStore((s) => s.fontScale);
+  const desktopMode = useAppStore((s) => s.desktopMode);
   const pathname = usePathname();
 
   // 저장된 상태 복원 (skipHydration 대응)
@@ -60,6 +65,23 @@ export function AppShell({ children }: { children: ReactNode }) {
     document.documentElement.dataset.fontScale = fontScale;
   }, [fontScale]);
 
+  // PC 버전으로 보기 — viewport 폭을 고정해 모바일에서도 데스크톱 레이아웃을 렌더링
+  useEffect(() => {
+    const meta = document.querySelector<HTMLMetaElement>(
+      'meta[name="viewport"]'
+    );
+    if (!meta) return;
+    meta.setAttribute(
+      "content",
+      desktopMode
+        ? `width=${DESKTOP_VIEWPORT_WIDTH}, viewport-fit=cover`
+        : "width=device-width, initial-scale=1, viewport-fit=cover"
+    );
+    document.documentElement.dataset.viewMode = desktopMode
+      ? "desktop"
+      : "responsive";
+  }, [desktopMode]);
+
   // 페이지 전환 시 스크롤 상단 이동
   useEffect(() => {
     window.scrollTo({ top: 0 });
@@ -70,9 +92,22 @@ export function AppShell({ children }: { children: ReactNode }) {
       <Sidebar />
       <MobileHeader />
       <main className="pt-[54px] lg:pl-[236px] lg:pt-0">
-        <div className="mx-auto w-full max-w-shell px-4 pb-[calc(var(--bottom-nav-height)+env(safe-area-inset-bottom)+24px)] pt-4 sm:px-6 lg:px-8 lg:pb-12 lg:pt-7">
+        <div className="mx-auto w-full max-w-shell px-4 pb-6 pt-4 sm:px-6 lg:px-8 lg:pb-12 lg:pt-7">
           {children}
         </div>
+
+        {/* 모바일 푸터 — PC 버전 전환 (견적 빌더는 자체 하단 CTA가 있어 제외) */}
+        {pathname.startsWith("/quotes/new") ? (
+          <div className="h-[calc(var(--bottom-nav-height)+env(safe-area-inset-bottom))] lg:hidden" />
+        ) : (
+          <div className="mx-auto w-full max-w-shell px-4 pb-[calc(var(--bottom-nav-height)+env(safe-area-inset-bottom)+20px)] sm:px-6 lg:hidden">
+            <DesktopModeButton />
+            <p className="mt-3 text-center text-[0.68rem] text-navy-300">
+              © 선진산업 Business AX · 미래에이아이랩 x 김준형
+            </p>
+          </div>
+        )}
+
         <footer className="hidden pb-6 text-center text-[0.7rem] text-navy-300 lg:block">
           © 선진산업 Business AX · 미래에이아이랩 x 김준형
         </footer>
@@ -81,6 +116,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <AlertDrawer />
       <DemoTour />
       <TourPrompt />
+      <MobileModeReturnBar />
       <Toaster />
     </div>
   );

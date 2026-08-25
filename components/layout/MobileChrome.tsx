@@ -9,6 +9,7 @@ import { generateBusinessAlerts } from "@/lib/insights/alerts";
 import { useAppStore } from "@/lib/store";
 import { SunjinMark } from "./BrandMark";
 import { isActivePath, MOBILE_MORE_ITEMS, MOBILE_NAV } from "./nav";
+import { DesktopModeButton } from "./ViewModeToggle";
 import { Sheet } from "@/components/shared/Sheet";
 
 export function MobileHeader() {
@@ -140,7 +141,13 @@ export function BottomNav() {
             );
           })}
         </div>
-        <p className="mt-3 border-t border-surface-line pt-3 text-center text-[0.7rem] text-navy-400">
+        <div className="mt-4 border-t border-surface-line pt-4">
+          <DesktopModeButton onSwitched={() => setMoreOpen(false)} />
+          <p className="mt-2 text-center text-[0.7rem] leading-relaxed text-navy-400">
+            휴대폰에서도 PC와 동일한 화면으로 볼 수 있습니다.
+          </p>
+        </div>
+        <p className="mt-4 border-t border-surface-line pt-3 text-center text-[0.7rem] text-navy-400">
           {COMPANY.ceoTitle} · {COMPANY.credit}
         </p>
       </Sheet>
