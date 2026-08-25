@@ -66,12 +66,6 @@ function useRiskSignals(year: number) {
   }, [year]);
 }
 
-const LEVEL_BADGE: Record<string, string> = {
-  양호: "안정",
-  관찰: "관심",
-  주의: "재접촉 필요",
-};
-
 export default function AnalyticsPage() {
   const year = useAppStore((s) => s.periodYear);
   const pushToast = useAppStore((s) => s.pushToast);
@@ -201,10 +195,7 @@ export default function AnalyticsPage() {
                     {signal.note}
                   </p>
                 </div>
-                <StatusBadge
-                  status={LEVEL_BADGE[signal.level]}
-                  className="!px-3"
-                />
+                <StatusBadge status={signal.level} className="!px-3" />
               </li>
             ))}
           </ul>

@@ -16,10 +16,13 @@ function TourPrompt() {
   const tourOpen = useAppStore((s) => s.tourOpen);
   const setTourOpen = useAppStore((s) => s.setTourOpen);
   const finishTour = useAppStore((s) => s.finishTour);
+  const pathname = usePathname();
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => setHydrated(true), []);
-  if (!hydrated || tourDone || tourOpen) return null;
+  // 견적 빌더의 하단 고정 저장 바와 겹치지 않도록 해당 화면에서는 숨김
+  if (!hydrated || tourDone || tourOpen || pathname.startsWith("/quotes/new"))
+    return null;
 
   return (
     <div className="fixed bottom-[calc(var(--bottom-nav-height)+env(safe-area-inset-bottom)+14px)] right-4 z-50 lg:bottom-6 lg:right-6">

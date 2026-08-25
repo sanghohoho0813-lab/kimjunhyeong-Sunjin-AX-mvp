@@ -83,6 +83,10 @@ const STATUS_STYLES: Record<string, string> = {
   긴급: "bg-rose-50 text-rose-600 border-rose-100",
   높음: "bg-amber-50 text-amber-700 border-amber-100",
   보통: "bg-navy-50 text-navy-500 border-navy-100",
+  // 재무 신호
+  양호: "bg-emerald-50 text-emerald-700 border-emerald-100",
+  관찰: "bg-navy-50 text-navy-500 border-navy-100",
+  주의: "bg-amber-50 text-amber-700 border-amber-100",
 };
 
 export function StatusBadge({
