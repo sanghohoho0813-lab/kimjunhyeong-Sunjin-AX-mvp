@@ -67,19 +67,35 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   // PC 버전으로 보기 — viewport 폭을 고정해 모바일에서도 데스크톱 레이아웃을 렌더링
   useEffect(() => {
-    const meta = document.querySelector<HTMLMetaElement>(
-      'meta[name="viewport"]'
-    );
-    if (!meta) return;
-    meta.setAttribute(
-      "content",
-      desktopMode
-        ? `width=${DESKTOP_VIEWPORT_WIDTH}, viewport-fit=cover`
-        : "width=device-width, initial-scale=1, viewport-fit=cover"
-    );
+    const desired = desktopMode
+      ? `width=${DESKTOP_VIEWPORT_WIDTH}, viewport-fit=cover`
+      : "width=device-width, initial-scale=1, viewport-fit=cover";
+
+    const apply = () => {
+      const meta = document.querySelector<HTMLMetaElement>(
+        'meta[name="viewport"]'
+      );
+      // 값이 같으면 건드리지 않아 감시 → 재설정 루프를 방지한다.
+      if (meta && meta.getAttribute("content") !== desired) {
+        meta.setAttribute("content", desired);
+      }
+    };
+
+    apply();
     document.documentElement.dataset.viewMode = desktopMode
       ? "desktop"
       : "responsive";
+
+    // 페이지 이동 시 Next.js가 layout의 viewport 메타데이터를 다시 적용해
+    // 선택한 화면 모드가 풀리므로, head 변경을 감시해 계속 유지한다.
+    const observer = new MutationObserver(apply);
+    observer.observe(document.head, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["content"],
+    });
+    return () => observer.disconnect();
   }, [desktopMode]);
 
   // 페이지 전환 시 스크롤 상단 이동
