@@ -168,3 +168,113 @@ export interface PriceRecommendation {
   minPriceByMarginGuard: number; // 목표 마진 하한 가격
   notes: string[];
 }
+
+
+/* ────────────────────────────────────────────────────────────
+   Customer Front / Portal — 고객이 만드는 데이터
+   내부 AX의 Customer(거래처)와 customerId로 연결된다.
+   ──────────────────────────────────────────────────────────── */
+
+export type UserRole = "admin" | "staff" | "customer";
+
+export interface UserAccount {
+  id: string;
+  role: UserRole;
+  /** 표시 이름 (담당자명 또는 대표명) */
+  name: string;
+  /** 소속 — 고객은 거래처명, 내부는 선진산업 */
+  org: string;
+  /** customer 역할일 때 연결되는 내부 거래처 id */
+  customerId?: string;
+}
+
+/** 고객이 화면에서 하는 모든 행동 — 내부 AX의 영업 신호가 된다 */
+export type ActivityKind =
+  | "view"
+  | "favorite"
+  | "search"
+  | "sample"
+  | "quote"
+  | "order"
+  | "reorder";
+
+export interface CustomerActivity {
+  id: string;
+  customerId: string;
+  kind: ActivityKind;
+  /** 대상 제품 (검색 등 대상이 없으면 비움) */
+  productId?: string;
+  /** 화면에 그대로 쓰는 한 줄 설명 */
+  label: string;
+  date: string; // YYYY-MM-DD
+}
+
+export type RequestStatus = "접수" | "검토중" | "회신완료" | "취소";
+
+export interface SampleRequest {
+  id: string;
+  number: string; // SR-2026-001
+  customerId: string;
+  productIds: string[];
+  qty: number; // 요청 샘플 수
+  contactName: string;
+  note?: string;
+  status: RequestStatus;
+  createdAt: string;
+}
+
+export interface QuoteRequestItem {
+  productId: string;
+  qty: number; // 평
+}
+
+export interface QuoteRequest {
+  id: string;
+  number: string; // QR-2026-001
+  customerId: string;
+  items: QuoteRequestItem[];
+  /** 희망 납기 */
+  dueDate?: string;
+  note?: string;
+  status: RequestStatus;
+  createdAt: string;
+  /** 내부에서 이 요청으로 만든 견적 id */
+  linkedQuoteId?: string;
+}
+
+export type OrderStatus = "접수" | "생산중" | "출고완료" | "배송중" | "완료";
+
+export interface CustomerOrderItem {
+  productId: string;
+  qty: number;
+  unitPrice: number;
+}
+
+export interface CustomerOrder {
+  id: string;
+  number: string; // SO-2026-001
+  customerId: string;
+  items: CustomerOrderItem[];
+  status: OrderStatus;
+  orderedAt: string;
+  deliveredAt?: string;
+  /** 재주문으로 생성된 건인지 */
+  reorderOf?: string;
+}
+
+export type NotificationKind =
+  | "restock"
+  | "reorder"
+  | "similar"
+  | "quote"
+  | "sample";
+
+export interface CustomerNotification {
+  id: string;
+  customerId: string;
+  kind: NotificationKind;
+  title: string;
+  body: string;
+  date: string;
+  href?: string;
+}

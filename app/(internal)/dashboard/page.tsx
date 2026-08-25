@@ -9,6 +9,7 @@ import { FinancialTrendChart } from "@/components/charts/FinancialTrendChart";
 import { AxActionCard } from "@/components/dashboard/AxActionCard";
 import { BriefingCard } from "@/components/dashboard/BriefingCard";
 import { CurrentStatus, TopActions } from "@/components/dashboard/CurrentStatus";
+import { CustomerFrontActivity } from "@/components/dashboard/CustomerFrontActivity";
 import { DecisionCard } from "@/components/dashboard/DecisionCard";
 import { InventorySnapshot } from "@/components/dashboard/SideCards";
 import { TopCustomersCard } from "@/components/dashboard/TopCustomersCard";
@@ -136,7 +137,12 @@ export default function DashboardPage() {
         </div>
       </section>
 
-      {/* ── ④ 운영 판단 — 재고·거래처·견적·자본 ── */}
+      {/* ── ④ 고객 화면 활동 — 외부에서 들어온 신호 ── */}
+      <section className="mt-9" aria-label="고객 Front 활동 요약">
+        <CustomerFrontActivity />
+      </section>
+
+      {/* ── ⑤ 운영 판단 — 재고·거래처·견적·자본 ── */}
       <section className="mt-9" aria-label="운영 의사결정">
         <SectionHead
           eyebrow="Operation"

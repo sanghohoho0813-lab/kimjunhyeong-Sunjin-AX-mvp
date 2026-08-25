@@ -17,6 +17,7 @@ import { ViewModeSetting } from "@/components/layout/ViewModeToggle";
 import { COMPANY } from "@/lib/data/seed";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
 import { useAppStore, type FontScale } from "@/lib/store";
+import { AccountSwitch } from "@/components/settings/AccountSwitch";
 import { clsx } from "@/lib/utils/clsx";
 
 const FONT_OPTIONS: Array<{ value: FontScale; label: string }> = [
@@ -151,6 +152,8 @@ export default function SettingsPage() {
             <ViewModeSetting />
           </div>
         </motion.section>
+
+        <AccountSwitch />
 
         {/* 시연 도구 */}
         <motion.section

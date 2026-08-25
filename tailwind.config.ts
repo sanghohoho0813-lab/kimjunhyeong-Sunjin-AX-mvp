@@ -54,7 +54,27 @@ const config: Config = {
           800: "#115E59",
         },
         // Gold — 아주 소량만 사용
-        gold: {
+        /* 고객용 B2B Front — 가죽 팔레트.
+         내부 AX(Navy/Blue/Teal)와 Navy·타이포·Radius는 공유하고
+         메인 톤만 가죽 계열로 분리해 같은 플랫폼의 다른 면처럼 보이게 한다. */
+      leather: {
+        50: "#FBF7F2",
+        100: "#F4ECE1",
+        200: "#E6D6C2",
+        300: "#D2B896",
+        400: "#B98A50",
+        500: "#9C6B39",
+        600: "#7E522B",
+        700: "#603D21",
+        800: "#432A17",
+        900: "#2A1A0E",
+      },
+      ivory: {
+        DEFAULT: "#FAF7F2",
+        deep: "#F2ECE3",
+        line: "#E7DED1",
+      },
+      gold: {
           100: "#FAF3E0",
           200: "#F0DFB0",
           300: "#E7C36A",
@@ -115,7 +135,7 @@ const config: Config = {
         inset: "inset 0 1px 0 rgba(255, 255, 255, 0.06)",
       },
       screens: { xs: "430px", "3xl": "1800px" },
-      maxWidth: { workspace: "1720px" },
+      maxWidth: { workspace: "1720px", shop: "1560px" },
       spacing: { sidebar: "280px" },
       transitionTimingFunction: { premium: "cubic-bezier(0.22, 1, 0.36, 1)" },
     },

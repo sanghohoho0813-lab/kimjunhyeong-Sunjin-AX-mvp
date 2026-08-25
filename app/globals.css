@@ -7,6 +7,8 @@
   --sidebar-width: 280px;
   --mobile-header-height: 60px;
   --page-pad-x: 16px;
+  /* 고객용 B2B Front */
+  --shop-header-h: 76px;
   --shell-radius: 0px;
 }
 

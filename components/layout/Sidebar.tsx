@@ -8,6 +8,7 @@ import { COMPANY } from "@/lib/data/seed";
 import { SunjinMark } from "./BrandMark";
 import { isActivePath, NAV_ITEMS, NAV_TONES } from "./nav";
 import { generateBusinessAlerts } from "@/lib/insights/alerts";
+import { CustomerFrontCta } from "./CustomerFrontCta";
 import { useAppStore } from "@/lib/store";
 
 export function Sidebar() {
@@ -99,6 +100,11 @@ export function Sidebar() {
           })}
         </ul>
       </nav>
+
+      {/* 고객용 B2B Front — 일반 메뉴와 구분되는 CTA */}
+      <div className="px-3 pb-3 pt-2">
+        <CustomerFrontCta />
+      </div>
 
       {/* 회사 정보 */}
       <div className="mx-3 mb-3 rounded-card border border-white/[0.07] bg-white/[0.035] px-4 py-3 [@media(max-height:820px)]:hidden">

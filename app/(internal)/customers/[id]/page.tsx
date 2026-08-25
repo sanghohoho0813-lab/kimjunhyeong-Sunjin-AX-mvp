@@ -13,6 +13,7 @@ import Link from "next/link";
 import { notFound, useParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { Sheet } from "@/components/shared/Sheet";
+import { DigitalActivity } from "@/components/customers/DigitalActivity";
 import {
   DemoBadge,
   EmptyState,
@@ -131,6 +132,11 @@ export default function CustomerDetailPage() {
           ))}
         </dl>
       </motion.section>
+
+      {/* 고객 화면 활동 — 거래가 일어나기 전의 신호 */}
+      <div className="mt-4">
+        <DigitalActivity customerId={customer.id} />
+      </div>
 
       <div className="mt-4 grid gap-4 lg:grid-cols-3">
         {/* AX 인사이트 */}

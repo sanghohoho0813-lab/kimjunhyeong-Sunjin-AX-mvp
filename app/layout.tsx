@@ -1,14 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { AppShell } from "@/components/layout/AppShell";
 
 export const metadata: Metadata = {
   title: {
-    default: "선진산업 Business AX",
-    template: "%s · 선진산업 Business AX",
+    default: "선진산업 — 제품에 맞는 최적의 피혁",
+    template: "%s · 선진산업",
   },
   description:
-    "피혁 거래·재고·영업·경영 의사결정 시스템 — 매출·재무·거래처·재고를 연결해 오늘 필요한 의사결정을 지원합니다.",
+    "소재·색상·두께·등급으로 피혁을 빠르게 찾고 샘플과 견적을 요청하세요. 선진산업의 안정적 품질과 납기로 공급합니다.",
 };
 
 export const viewport: Viewport = {
@@ -31,7 +30,7 @@ export default function RootLayout({
           precedence="default"
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
         />
-        <AppShell>{children}</AppShell>
+        {children}
       </body>
     </html>
   );
