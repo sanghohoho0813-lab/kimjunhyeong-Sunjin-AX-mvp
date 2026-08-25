@@ -126,6 +126,23 @@ body {
     }
   }
 
+  /* ── Card Art — 카드 배경 장식 레이어 ─────────────────────
+     콘텐츠 뒤(z-index:-1)에 깔리는 순수 장식.
+     부모 카드에 `isolate`를 주어야 카드 배경보다 뒤로 빠지지 않는다.
+     레이어 자체가 overflow:hidden + border-radius:inherit 이므로
+     카드에 overflow-hidden을 걸지 않아도 모서리를 넘지 않는다.
+     (차트 카드의 Tooltip이 잘리지 않게 하기 위한 구조) */
+  .card-art {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    border-radius: inherit;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    user-select: none;
+  }
+
   /* Interactive Card만 hover elevation (정적 KPI는 제외) */
   .card-interactive {
     @apply transition-all duration-200 ease-premium;

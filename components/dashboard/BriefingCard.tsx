@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import { generateFinancialBriefing } from "@/lib/insights/financialBriefing";
+import { CardArt } from "@/components/shared/CardArt";
 
 /**
  * AI Executive Brief — 대표가 10초 안에 읽는 브리핑.
@@ -16,9 +17,16 @@ export function BriefingCard({ year }: { year: number }) {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.34, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-      className="card-insight flex h-full flex-col p-6"
+      className="card-insight isolate flex h-full flex-col p-6"
       aria-label="AI 경영 브리핑"
     >
+      <CardArt
+        src="ai-briefing"
+        size="80% auto"
+        position="right -26px top -8px"
+        opacity={0.62}
+      />
+
       <div className="flex items-center gap-2.5">
         <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-brand-600 to-teal-500 text-white">
           <Sparkles className="h-[1.1rem] w-[1.1rem]" strokeWidth={2.3} aria-hidden />

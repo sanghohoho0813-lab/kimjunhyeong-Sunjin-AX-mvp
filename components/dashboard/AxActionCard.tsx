@@ -12,6 +12,7 @@ import {
 import Link from "next/link";
 import { clsx } from "@/lib/utils/clsx";
 import { Badge } from "@/components/shared/ui";
+import { CardArt, type CardArtSrc } from "@/components/shared/CardArt";
 import type { AxRecommendation, RecoCategory } from "@/types";
 
 const CATEGORY_ICON: Record<RecoCategory, typeof Boxes> = {
@@ -21,6 +22,9 @@ const CATEGORY_ICON: Record<RecoCategory, typeof Boxes> = {
   수익성: LineChart,
   "재무 모니터링": ShieldCheck,
 };
+
+/** 카드 배경 가죽 텍스처 — 순서대로 순환시켜 카드가 나란히 놓여도 겹치지 않게 한다 */
+const ART_CYCLE: CardArtSrc[] = ["ax-cow-black", "ax-cow-navy", "ax-goat-navy"];
 
 /**
  * AX Action Card — 일반 데이터 카드와 명확히 구별되는 Insight 전용 스타일.
@@ -39,6 +43,13 @@ export function AxActionCard({
 
   const body = (
     <>
+      <CardArt
+        src={ART_CYCLE[index % ART_CYCLE.length]}
+        size="112% auto"
+        position="right -18px bottom -26px"
+        opacity={0.72}
+      />
+
       {/* Eyebrow */}
       <div className="flex items-center justify-between gap-2">
         <span className="inline-flex items-center gap-1.5">
@@ -105,7 +116,7 @@ export function AxActionCard({
   );
 
   const shell = clsx(
-    "card-insight group flex h-full flex-col p-5 text-left transition-all duration-200 ease-premium",
+    "card-insight group isolate flex h-full flex-col p-5 text-left transition-all duration-200 ease-premium",
     "hover:-translate-y-[3px] hover:border-teal-300 hover:shadow-card-hover"
   );
 

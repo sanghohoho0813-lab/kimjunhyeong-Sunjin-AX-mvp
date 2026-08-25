@@ -199,7 +199,7 @@ export function DemoBadge({ className }: { className?: string }) {
   return (
     <span
       className={clsx(
-        "inline-flex items-center gap-1 rounded-md border border-gold-200 bg-gold-100/70 px-2 py-0.5 text-[0.8rem] font-bold tracking-wide text-gold-600",
+        "inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-md border border-gold-200 bg-gold-100/70 px-2 py-0.5 text-[0.8rem] font-bold tracking-wide text-gold-600",
         className
       )}
       title="개별 거래·재고 데이터는 시연용 샘플입니다"

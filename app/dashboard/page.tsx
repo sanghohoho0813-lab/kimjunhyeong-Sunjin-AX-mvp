@@ -21,6 +21,7 @@ import {
   MetricStrip,
 } from "@/components/dashboard/SideCards";
 import { TopCustomersCard } from "@/components/dashboard/TopCustomersCard";
+import { CardArt } from "@/components/shared/CardArt";
 import { HeroKpi } from "@/components/shared/KpiCard";
 import { Delta } from "@/components/shared/ui";
 import { COMPANY } from "@/lib/data/seed";
@@ -90,16 +91,19 @@ export default function DashboardPage() {
           { label: "당기순이익", value: fin.netProfit, delta: ratios.netYoYPct, rail: "bg-gold-400" },
         ].map((k) => (
           <div key={k.label} className="flex items-center gap-3 px-4 py-3.5">
-            <span aria-hidden className={`h-9 w-1 shrink-0 rounded-full ${k.rail}`} />
-            <span className="min-w-0 flex-1 truncate whitespace-nowrap text-[0.95rem] font-semibold text-ink-600">
-              {k.label}
-            </span>
-            <span className="shrink-0 whitespace-nowrap text-right text-[1.45rem] font-extrabold leading-none tabular-nums tracking-[-0.025em] text-ink-900">
+            <span aria-hidden className={`h-11 w-1 shrink-0 rounded-full ${k.rail}`} />
+            {/* 좁은 폭에서 지표명이 잘리지 않도록 라벨/증감을 왼쪽 한 칼럼으로 묶는다 */}
+            <div className="min-w-0 flex-1">
+              <p className="truncate whitespace-nowrap text-[0.95rem] font-semibold text-ink-600">
+                {k.label}
+              </p>
+              <p className="mt-1.5">
+                <Delta value={k.delta} size="sm" />
+              </p>
+            </div>
+            <span className="shrink-0 whitespace-nowrap text-right text-[1.6rem] font-extrabold leading-none tabular-nums tracking-[-0.025em] text-ink-900">
               {k.value.toFixed(2)}
-              <span className="ml-0.5 text-[0.85rem] font-bold text-ink-500">억</span>
-            </span>
-            <span className="shrink-0">
-              <Delta value={k.delta} size="sm" />
+              <span className="ml-0.5 text-[0.9rem] font-bold text-ink-500">억</span>
             </span>
           </div>
         ))}
@@ -114,6 +118,12 @@ export default function DashboardPage() {
           unit="억원"
           delta={ratios.revenueYoYPct}
           accent="brand"
+          art={{
+            src: "revenue",
+            size: "46% auto",
+            position: "right -12px bottom -14px",
+            opacity: 0.85,
+          }}
           index={0}
         />
         <HeroKpi
@@ -123,6 +133,12 @@ export default function DashboardPage() {
           unit="억원"
           delta={ratios.operatingYoYPct}
           accent="teal"
+          art={{
+            src: "operating-profit",
+            size: "46% auto",
+            position: "right -12px center",
+            opacity: 0.85,
+          }}
           index={1}
         />
         <HeroKpi
@@ -132,6 +148,12 @@ export default function DashboardPage() {
           unit="억원"
           delta={ratios.netYoYPct}
           accent="gold"
+          art={{
+            src: "net-income",
+            size: "46% auto",
+            position: "right -12px center",
+            opacity: 0.82,
+          }}
           index={2}
         />
         <HeroKpi
@@ -141,6 +163,12 @@ export default function DashboardPage() {
           unit="억원"
           delta={cashDelta}
           accent="navy"
+          art={{
+            src: "cash-assets",
+            size: "46% auto",
+            position: "right -12px center",
+            opacity: 0.8,
+          }}
           index={3}
         />
       </div>
@@ -172,9 +200,16 @@ export default function DashboardPage() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
-          className="card-data flex flex-col p-5 lg:col-span-7 lg:p-6"
+          className="card-data isolate flex flex-col p-5 lg:col-span-7 lg:p-6"
           aria-label="재무 성과 추이"
         >
+          <CardArt
+            src="financial-trend"
+            size="38% auto"
+            position="right -18px top -24px"
+            opacity={0.45}
+          />
+
           <div className="mb-2 flex items-end justify-between gap-3">
             <div className="min-w-0">
               <h2 className="t-section">재무 성과 추이</h2>
@@ -244,9 +279,16 @@ export default function DashboardPage() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.32, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
-        className="card-data mt-4 p-5 lg:mt-5 lg:p-6"
+        className="card-data isolate mt-4 p-5 lg:mt-5 lg:p-6"
         aria-label="자산 구성 현황"
       >
+        <CardArt
+          src="asset-composition"
+          size="72% auto"
+          position="right -60px bottom -34px"
+          opacity={0.28}
+        />
+
         <div className="mb-4 flex items-end justify-between gap-3">
           <div className="min-w-0">
             <h2 className="t-section">자산 구성 현황</h2>

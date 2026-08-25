@@ -23,6 +23,7 @@ import { SEED_QUOTES } from "@/lib/data/seed";
 import { formatKRW, formatNumber, formatPercent } from "@/lib/utils/format";
 import { clsx } from "@/lib/utils/clsx";
 import { Badge } from "@/components/shared/ui";
+import { CardArt, type CardArtSrc } from "@/components/shared/CardArt";
 import { LeatherSwatch } from "@/components/inventory/LeatherSwatch";
 
 /** 현금흐름 요약 (시연용 추정) */
@@ -44,9 +45,16 @@ export function CashflowCard({ year }: { year: number }) {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.32, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
-      className="card-data flex h-full flex-col p-6"
+      className="card-data isolate flex h-full flex-col p-6"
       aria-label="현금흐름"
     >
+      <CardArt
+        src="cashflow"
+        size="60% auto"
+        position="right -14px center"
+        opacity={0.45}
+      />
+
       <div className="flex items-end justify-between gap-3">
         <div className="min-w-0">
           <h2 className="t-section">현금흐름</h2>
@@ -119,9 +127,16 @@ export function InventorySnapshot() {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.32, delay: 0.14, ease: [0.22, 1, 0.36, 1] }}
-      className="card-data flex h-full flex-col p-6"
+      className="card-data isolate flex h-full flex-col p-6"
       aria-label="주의가 필요한 재고"
     >
+      <CardArt
+        src="inventory-alert"
+        size="54% auto"
+        position="right -14px bottom -18px"
+        opacity={0.42}
+      />
+
       <div className="mb-4 flex items-end justify-between gap-3">
         <div className="min-w-0">
           <h2 className="t-section">주의가 필요한 재고</h2>
@@ -188,7 +203,16 @@ export function MetricStrip({ year }: { year: number }) {
     ["작성중", "발송", "검토"].includes(q.status)
   );
 
-  const items = [
+  const items: {
+    icon: typeof ShieldAlert;
+    label: string;
+    value: string;
+    note: string;
+    warn: boolean;
+    href: string;
+    art: CardArtSrc;
+    artOpacity: number;
+  }[] = [
     {
       icon: ShieldAlert,
       label: "자기자본비율",
@@ -196,6 +220,8 @@ export function MetricStrip({ year }: { year: number }) {
       note: fin.equity < 1 ? "자본 변동 모니터링" : "안정 구간",
       warn: ratios.equityRatioPct < 30,
       href: "/analytics",
+      art: "equity-ratio",
+      artOpacity: 0.55,
     },
     {
       icon: Layers,
@@ -204,6 +230,8 @@ export function MetricStrip({ year }: { year: number }) {
       note: `${inv.itemCount}개 품목`,
       warn: false,
       href: "/inventory",
+      art: "inventory-value",
+      artOpacity: 0.5,
     },
     {
       icon: PackageOpen,
@@ -212,6 +240,8 @@ export function MetricStrip({ year }: { year: number }) {
       note: `전체의 ${Math.round((inv.longStockValue / inv.totalValue) * 100)}% · ${inv.longStockCount}건`,
       warn: inv.longStockCount > 0,
       href: "/inventory?status=장기재고",
+      art: "aging-stock",
+      artOpacity: 0.58,
     },
     {
       icon: FileText,
@@ -225,6 +255,8 @@ export function MetricStrip({ year }: { year: number }) {
       )}`,
       warn: false,
       href: "/quotes",
+      art: "open-quotes",
+      artOpacity: 0.5,
     },
     {
       icon: Users,
@@ -233,6 +265,8 @@ export function MetricStrip({ year }: { year: number }) {
       note: "재구매 시점 경과",
       warn: overdue.length > 0,
       href: "/customers?filter=재접촉 필요",
+      art: "recontact",
+      artOpacity: 0.55,
     },
   ];
 
@@ -249,7 +283,7 @@ export function MetricStrip({ year }: { year: number }) {
           key={item.label}
           href={item.href}
           className={clsx(
-            "group flex flex-col gap-1.5 px-5 py-4 transition-colors duration-200 hover:bg-surface-subtle",
+            "group relative isolate flex flex-col gap-1.5 px-5 py-4 transition-colors duration-200 hover:bg-surface-subtle",
             i > 0 && "lg:border-l lg:border-surface-line",
             i % 2 === 1 && "border-l border-surface-line sm:border-l-0",
             i >= 2 && "border-t border-surface-line lg:border-t-0",
@@ -257,6 +291,13 @@ export function MetricStrip({ year }: { year: number }) {
             i === 2 && "sm:border-l sm:border-surface-line sm:border-t-0"
           )}
         >
+          <CardArt
+            src={item.art}
+            size="52% auto"
+            position="right -8px bottom -6px"
+            opacity={item.artOpacity}
+          />
+
           <span className="flex items-center gap-1.5 text-[0.86rem] font-semibold text-ink-400">
             <item.icon
               className={clsx(

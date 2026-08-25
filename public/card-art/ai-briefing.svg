@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="540" height="320" viewBox="0 0 540 320" fill="none">
+  <defs>
+    <linearGradient id="w" x1="0" y1="0" x2="540" y2="320" gradientUnits="userSpaceOnUse"><stop stop-color="#ECFEFF" stop-opacity=".08"/><stop offset=".64" stop-color="#14B8A6" stop-opacity=".16"/><stop offset="1" stop-color="#2563EB" stop-opacity=".09"/></linearGradient>
+    <filter id="g" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="12"/></filter>
+  </defs>
+  <rect width="540" height="320" fill="transparent"/>
+  <circle cx="405" cy="116" r="132" fill="url(#w)"/>
+  <g stroke="#0F766E" stroke-width="1.6" opacity=".25"><path d="M285 93l57-38 68 41 58-46"/><path d="M342 55l34 97 92-102"/><path d="M285 93l91 59 86 42"/><path d="M376 152l34-56 52 98"/></g>
+  <g fill="#0F766E" opacity=".36"><circle cx="285" cy="93" r="4"/><circle cx="342" cy="55" r="4"/><circle cx="410" cy="96" r="4"/><circle cx="468" cy="50" r="4"/><circle cx="376" cy="152" r="4"/><circle cx="462" cy="194" r="4"/></g>
+  <path d="M330 240c36-20 66-1 100-33 25-23 51-21 76-43" stroke="#2563EB" stroke-opacity=".18" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="405" cy="116" r="76" fill="#14B8A6" opacity=".055" filter="url(#g)"/>
+</svg>

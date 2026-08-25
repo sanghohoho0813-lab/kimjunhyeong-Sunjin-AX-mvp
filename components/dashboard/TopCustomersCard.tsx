@@ -6,6 +6,7 @@ import Link from "next/link";
 import { getTopCustomers } from "@/lib/data/derived";
 import { formatKRW } from "@/lib/utils/format";
 import { DemoBadge, Meter } from "@/components/shared/ui";
+import { CardArt } from "@/components/shared/CardArt";
 import { clsx } from "@/lib/utils/clsx";
 
 /** 거래처 TOP 5 — 누적 매출 기준 Data Card */
@@ -19,23 +20,30 @@ export function TopCustomersCard() {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.32, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-      className="card-data flex h-full flex-col p-6"
+      className="card-data isolate flex h-full flex-col p-6"
       aria-label="거래처 TOP 5"
     >
+      <CardArt
+        src="customer-top5"
+        size="56% auto"
+        position="right -26px bottom -30px"
+        opacity={0.3}
+      />
+
       <div className="mb-4 flex items-end justify-between gap-3">
         <div className="min-w-0">
-          <h2 className="t-section">거래처 TOP 5</h2>
-          <p className="mt-1 t-caption">누적 매출 기준</p>
+          <h2 className="t-section whitespace-nowrap">거래처 TOP 5</h2>
+          <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1">
+            <p className="t-caption">누적 매출 기준</p>
+            <DemoBadge />
+          </div>
         </div>
-        <div className="flex items-center gap-2">
-          <DemoBadge />
-          <Link
-            href="/customers"
-            className="inline-flex shrink-0 items-center gap-0.5 whitespace-nowrap text-[0.9rem] font-bold text-brand-600 transition-colors hover:text-brand-700"
-          >
-            전체 <ChevronRight className="h-3.5 w-3.5" aria-hidden />
-          </Link>
-        </div>
+        <Link
+          href="/customers"
+          className="inline-flex shrink-0 items-center gap-0.5 whitespace-nowrap text-[0.9rem] font-bold text-brand-600 transition-colors hover:text-brand-700"
+        >
+          전체 <ChevronRight className="h-3.5 w-3.5" aria-hidden />
+        </Link>
       </div>
 
       <ol className="flex-1 space-y-3.5">
@@ -71,7 +79,7 @@ export function TopCustomersCard() {
                   className="flex-1"
                   tone={i === 0 ? "brand" : "teal"}
                 />
-                <span className="w-10 shrink-0 text-right text-[0.84rem] font-semibold tabular-nums text-ink-400">
+                <span className="w-14 shrink-0 whitespace-nowrap text-right text-[0.84rem] font-semibold tabular-nums text-ink-400">
                   {((stats.totalRevenue / total) * 100).toFixed(1)}%
                 </span>
               </div>

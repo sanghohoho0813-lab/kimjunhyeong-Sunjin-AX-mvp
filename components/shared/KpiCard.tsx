@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { clsx } from "@/lib/utils/clsx";
+import { CardArt, type CardArtProps } from "./CardArt";
 import { Delta } from "./ui";
 
 const ACCENTS = {
@@ -66,6 +67,7 @@ export function HeroKpi({
   deltaGoodWhenUp = true,
   accent = "brand",
   note,
+  art,
   index = 0,
 }: {
   icon: LucideIcon;
@@ -78,6 +80,8 @@ export function HeroKpi({
   deltaGoodWhenUp?: boolean;
   accent?: KpiAccent;
   note?: string;
+  /** 카드 배경 장식 (지표별 SVG) */
+  art?: CardArtProps;
   index?: number;
 }) {
   const animated = useCountUp(value);
@@ -88,8 +92,10 @@ export function HeroKpi({
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.32, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
-      className="card-kpi px-5 py-5"
+      className="card-kpi isolate px-5 py-5"
     >
+      {art ? <CardArt {...art} /> : null}
+
       {/* 상단 accent rail */}
       <span
         aria-hidden
