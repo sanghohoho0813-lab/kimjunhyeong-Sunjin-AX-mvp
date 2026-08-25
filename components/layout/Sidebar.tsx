@@ -111,15 +111,15 @@ export function Sidebar() {
         </div>
         <dl className="mt-2.5 space-y-1.5 text-[0.84rem] leading-none text-navy-300">
           <div className="flex gap-2">
-            <dt className="w-10 shrink-0 text-navy-400">대표자</dt>
+            <dt className="w-14 shrink-0 whitespace-nowrap text-navy-400">대표자</dt>
             <dd className="text-navy-100">{COMPANY.ceo}</dd>
           </div>
           <div className="flex gap-2">
-            <dt className="w-10 shrink-0 text-navy-400">업종</dt>
+            <dt className="w-14 shrink-0 whitespace-nowrap text-navy-400">업종</dt>
             <dd className="min-w-0 truncate text-navy-100">피혁 제조·도소매</dd>
           </div>
           <div className="flex gap-2">
-            <dt className="w-10 shrink-0 text-navy-400">지역</dt>
+            <dt className="w-14 shrink-0 whitespace-nowrap text-navy-400">지역</dt>
             <dd className="text-navy-100">경기 동두천</dd>
           </div>
         </dl>
