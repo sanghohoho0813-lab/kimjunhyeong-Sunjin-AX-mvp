@@ -121,34 +121,38 @@ function StatCard({ d, index }: { d: Decision; index: number }) {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.32, delay: index * 0.05, ease: EASE }}
-      className="card-kpi isolate flex min-w-0 flex-col px-5 py-5"
+      className="card-kpi isolate flex min-w-0 flex-col px-4 py-4 sm:px-5 sm:py-5"
     >
-      <div className="flex items-start justify-between gap-2">
-        <p className="text-[0.95rem] font-bold text-ink-500">{d.label}</p>
-        {d.estimated ? (
-          <span className="shrink-0 whitespace-nowrap rounded-md bg-surface-sunken px-2 py-0.5 text-[0.78rem] font-bold text-ink-400">
-            추정
-          </span>
-        ) : null}
-      </div>
+      {/* 라벨은 한 줄을 온전히 쓴다. 좁은 폭에서 "추정" 칩과 경합하면
+          "누적 / 매출"로 쪼개져 지표명이 읽히지 않는다. */}
+      <p className="truncate whitespace-nowrap text-[0.88rem] font-bold text-ink-500 sm:text-[0.95rem]">
+        {d.label}
+      </p>
 
-      <p className="mt-3 flex items-baseline gap-1 tabular-nums">
-        <span className="text-[2.1rem] font-extrabold leading-none tracking-[-0.03em] text-ink-900">
+      <p className="mt-3 flex flex-wrap items-baseline gap-x-1 gap-y-1.5 tabular-nums">
+        <span className="text-[1.6rem] font-extrabold leading-none tracking-[-0.03em] text-ink-900 sm:text-[2.1rem]">
           {d.value}
         </span>
         {d.unit ? (
-          <span className="text-[1rem] font-bold text-ink-500">{d.unit}</span>
+          <span className="text-[0.9rem] font-bold text-ink-500 sm:text-[1rem]">{d.unit}</span>
+        ) : null}
+        {d.estimated ? (
+          <span className="ml-0.5 shrink-0 whitespace-nowrap rounded-md bg-surface-sunken px-1.5 py-0.5 text-[0.75rem] font-bold text-ink-400 sm:px-2 sm:text-[0.78rem]">
+            추정
+          </span>
         ) : null}
       </p>
 
       <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1">
         <Delta pct={d.deltaPct} goodWhenUp={d.goodWhenUp} />
-        <span className="text-[0.86rem] text-ink-400">{d.comparedTo}</span>
+        <span className="text-[0.84rem] text-ink-400 sm:text-[0.86rem]">
+          {d.comparedTo}
+        </span>
       </div>
 
       <p
         className={clsx(
-          "mt-3.5 flex-1 text-[0.95rem] font-semibold leading-relaxed",
+          "mt-3 flex-1 text-[0.88rem] font-semibold leading-relaxed sm:mt-3.5 sm:text-[0.95rem]",
           toneText
         )}
       >
@@ -179,7 +183,8 @@ export function CurrentStatus() {
         transition={{ duration: 0.3, ease: EASE }}
         className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-2"
       >
-        <span className="inline-flex items-center gap-2 rounded-btn border border-surface-line bg-white px-3 py-1.5 text-[0.92rem] font-bold text-ink-700">
+        {/* 모바일 Hero가 이미 기준일을 말한다. 중복을 피해 데스크톱에서만 노출 */}
+        <span className="hidden items-center gap-2 rounded-btn border border-surface-line bg-white px-3 py-1.5 text-[0.92rem] font-bold text-ink-700 lg:inline-flex">
           <CalendarClock className="h-4 w-4 text-brand-600" aria-hidden />
           {formatDateKo(DEMO_TODAY)} 기준
         </span>
@@ -189,7 +194,7 @@ export function CurrentStatus() {
         </span>
       </motion.div>
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
         {cards.map((d, i) => (
           <StatCard key={d.id} d={d} index={i} />
         ))}
