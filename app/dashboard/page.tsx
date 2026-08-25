@@ -186,16 +186,16 @@ export default function DashboardPage() {
           </div>
         </motion.section>
 
-        <div className="order-5 lg:order-3 lg:col-span-3">
+        <div className="order-5 min-w-0 lg:order-3 lg:col-span-3">
           <CashflowCard year={year} />
         </div>
-        <div className="order-2 lg:order-4 lg:col-span-4">
+        <div className="order-2 min-w-0 lg:order-4 lg:col-span-4">
           <BriefingCard year={year} />
         </div>
-        <div className="order-3 lg:order-5 lg:col-span-4">
+        <div className="order-3 min-w-0 lg:order-5 lg:col-span-4">
           <AxRecoPanel />
         </div>
-        <div className="order-6 lg:col-span-4">
+        <div className="order-6 min-w-0 lg:col-span-4">
           <TopCustomersCard />
         </div>
       </div>
