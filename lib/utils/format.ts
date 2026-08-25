@@ -1,7 +1,13 @@
 /** 숫자·날짜 포맷 유틸 — 시연 데이터는 고정 기준일을 사용해 SSR/CSR 결과를 일치시킨다. */
 
-/** 시연 기준일 (2025년 누적 데이터 기준) */
-export const DEMO_TODAY = "2025-12-10";
+/** 시연 기준일 — 화면의 "현재"는 모두 이 날짜를 기준으로 계산한다. */
+export const DEMO_TODAY = "2026-08-25";
+
+/** 진행 중인 연도 / 직전 완료 연도 */
+export const CURRENT_YEAR = Number(DEMO_TODAY.slice(0, 4));
+export const CURRENT_MONTH = Number(DEMO_TODAY.slice(5, 7));
+/** 감사받은 연간 실적이 존재하는 마지막 연도 */
+export const LAST_CLOSED_YEAR = CURRENT_YEAR - 1;
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
@@ -60,6 +66,18 @@ export function formatDaysAgo(date: string): string {
   if (days < 30) return `${days}일 전`;
   if (days < 365) return `${Math.floor(days / 30)}개월 전`;
   return `${Math.floor(days / 365)}년 전`;
+}
+
+/** "2026-08-25" → "2026년 8월 25일" */
+export function formatDateKo(date: string): string {
+  const [y, m, d] = date.split("-");
+  return `${y}년 ${Number(m)}월 ${Number(d)}일`;
+}
+
+/** "2026-08-25" → "2026년 8월" */
+export function formatMonthKo(date: string): string {
+  const [y, m] = date.split("-");
+  return `${y}년 ${Number(m)}월`;
 }
 
 export function clamp(n: number, min: number, max: number): number {

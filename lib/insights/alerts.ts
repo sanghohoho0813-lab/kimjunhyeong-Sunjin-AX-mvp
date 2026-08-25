@@ -1,7 +1,14 @@
 import { getInventorySummary, getOverdueCustomers } from "@/lib/data/derived";
 import { getRatios, LATEST_YEAR } from "@/lib/data/finance";
 import { SEED_QUOTES } from "@/lib/data/seed";
-import { DEMO_TODAY, formatKRW } from "@/lib/utils/format";
+import { DEMO_TODAY, LAST_CLOSED_YEAR, formatKRW } from "@/lib/utils/format";
+
+/** 기준일에서 n일 전 — 알림 날짜를 상대적으로 만든다 */
+function daysAgo(n: number): string {
+  const d = new Date(`${DEMO_TODAY}T00:00:00`);
+  d.setDate(d.getDate() - n);
+  return d.toISOString().slice(0, 10);
+}
 import type { BusinessAlert } from "@/types";
 
 /** 규칙 기반 알림 생성 — 데이터 상태에서 파생된다. */
@@ -44,7 +51,7 @@ export function generateBusinessAlerts(): BusinessAlert[] {
       category: "견적",
       title: `검토 대기 견적 ${reviewQuotes.length}건`,
       body: `${reviewQuotes.map((q) => q.number).join(", ")}이 검토 단계에 있습니다.`,
-      date: "2025-12-08",
+      date: daysAgo(2),
       href: "/quotes",
     });
   }
@@ -55,8 +62,8 @@ export function generateBusinessAlerts(): BusinessAlert[] {
       id: "alert-equity",
       category: "재무",
       title: "자본 안정성 모니터링",
-      body: "2025년 자기자본 변동폭이 큽니다. 경영분석에서 재무 시나리오를 확인해보세요.",
-      date: "2025-12-05",
+      body: `${LAST_CLOSED_YEAR}년 자기자본 변동폭이 큽니다. 경영분석에서 재무 시나리오를 확인해보세요.`,
+      date: daysAgo(5),
       href: "/analytics",
     });
   }
@@ -67,7 +74,7 @@ export function generateBusinessAlerts(): BusinessAlert[] {
       category: "재고",
       title: `장기화 조짐 재고 ${inv.watchCount}건`,
       body: "90일 이상 출고되지 않은 품목이 있습니다. 조기 판매 대상으로 검토해보세요.",
-      date: "2025-12-03",
+      date: daysAgo(7),
       href: "/inventory?status=관심",
     });
   }

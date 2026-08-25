@@ -5,12 +5,12 @@ import {
   getProduct,
   getProductStats,
 } from "@/lib/data/derived";
-import { getRatios, LATEST_YEAR } from "@/lib/data/finance";
+import { getRatios, getYear, LATEST_YEAR } from "@/lib/data/finance";
 import { getRecommendedBuyers } from "@/lib/scoring/match";
 import { marginRateFor } from "@/lib/pricing/recommend";
 import { SEED_QUOTES } from "@/lib/data/seed";
 import { getCustomer } from "@/lib/data/derived";
-import { formatKRW } from "@/lib/utils/format";
+import { LAST_CLOSED_YEAR, formatKRW } from "@/lib/utils/format";
 import type { AxRecommendation } from "@/types";
 
 /**
@@ -42,6 +42,16 @@ export function generateRecommendations(): AxRecommendation[] {
             .map((b) => b.customer.name)
             .join(", ")})과 연결됩니다.`
         : "구매 가능성이 있는 거래처를 탐색 중입니다.",
+      subject: {
+        title: product.name,
+        meta: `${product.grade} Grade · 보유 ${product.stockQty.toLocaleString()}평`,
+        flag: `${stats.idleDays}일 무출고`,
+      },
+      impact: {
+        label: "잠재 매출",
+        amount: stats.potentialRevenue,
+        note: `보유 ${product.stockQty.toLocaleString()}평 x 권장가 ${product.listPricePerUnit.toLocaleString()}원`,
+      },
       expectedEffect: `잠재 매출 ${formatKRW(stats.potentialRevenue)}`,
       actionLabel: "판매처 보기",
       href: `/inventory/${pid}`,
@@ -67,6 +77,21 @@ export function generateRecommendations(): AxRecommendation[] {
         .map((c) => c.customer.name)
         .join(", ")} 등이 평균 재구매 주기를 지나 접촉 적기입니다.`,
       connection: "각 거래처의 선호 품목과 현재 보유 재고가 연결됩니다.",
+      subject: {
+        title: recontact.map((c) => c.customer.name).slice(0, 2).join(", ") +
+          (recontact.length > 2 ? ` 외 ${recontact.length - 2}곳` : ""),
+        meta: `평균 재구매 주기 ${Math.round(
+          recontact.reduce((s, c) => s + c.stats.cycleDays, 0) / recontact.length
+        )}일`,
+        flag: `주기 대비 최대 ${Math.round(
+          Math.max(...recontact.map((c) => (c.stats.cycleRatio ?? 0) * 100))
+        )}% 경과`,
+      },
+      impact: {
+        label: "잠재 매출",
+        amount: recontact.reduce((s, c) => s + c.stats.avgOrderValue, 0),
+        note: `${recontact.length}곳 과거 평균 주문금액 합계`,
+      },
       expectedEffect: `평균 주문금액 기준 잠재 매출 ${formatKRW(
         recontact.reduce((s, c) => s + c.stats.avgOrderValue, 0)
       )}`,
@@ -96,6 +121,18 @@ export function generateRecommendations(): AxRecommendation[] {
         .map((c) => c.customer.name)
         .join(", ")}의 마지막 거래 이후 시간이 길게 경과했습니다.`,
       connection: "과거 구매 품목 기준 재제안 리스트가 준비되어 있습니다.",
+      subject: {
+        title: dormant.map((c) => c.customer.name).slice(0, 2).join(", ") +
+          (dormant.length > 2 ? ` 외 ${dormant.length - 2}곳` : ""),
+        meta: `마지막 거래 후 최대 ${Math.max(
+          ...dormant.map((c) => c.stats.elapsedDays ?? 0)
+        )}일 경과`,
+      },
+      impact: {
+        label: "회복 가능 매출",
+        amount: dormant.reduce((s, c) => s + c.stats.avgOrderValue, 0),
+        note: `${dormant.length}곳 과거 평균 주문금액 합계`,
+      },
       actionLabel: "거래처 확인",
       href: "/customers?filter=휴면 가능",
       signals: dormant.map(
@@ -145,6 +182,19 @@ export function generateRecommendations(): AxRecommendation[] {
       title: `장기화 조짐이 있는 재고 ${inv.watchIds.length}건`,
       why: `${names} 품목이 90일 이상 출고되지 않았습니다.`,
       connection: "장기재고 전환 전 우선 판매 대상으로 관리할 수 있습니다.",
+      subject: {
+        title: getProduct(inv.watchIds[0])?.name ?? "관심 재고",
+        meta:
+          inv.watchIds.length > 1
+            ? `외 ${inv.watchIds.length - 1}개 품목`
+            : undefined,
+        flag: `${getProductStats(inv.watchIds[0]).idleDays}일 무출고`,
+      },
+      impact: {
+        label: "묶일 수 있는 재고금액",
+        amount: inv.watchIds.reduce((s, id) => s + getProductStats(id).stockValue, 0),
+        note: `${inv.watchIds.length}개 품목 매입가 기준 합계`,
+      },
       actionLabel: "재고 확인",
       href: "/inventory?status=관심",
       signals: inv.watchIds.map((id) => {
@@ -164,14 +214,14 @@ export function generateRecommendations(): AxRecommendation[] {
       category: "재무 모니터링",
       priority: "높음",
       title: "자본 안정성 모니터링 필요",
-      why: `2025년 자기자본이 전년 대비 ${Math.abs(ratios.equityChangeEok).toFixed(
+      why: `${LAST_CLOSED_YEAR}년 자기자본이 전년 대비 ${Math.abs(ratios.equityChangeEok).toFixed(
         2
       )}억원 감소했습니다. 변동폭이 커 상세 원인은 결산자료 확인이 필요합니다.`,
       connection: "경영분석의 재무 시나리오에서 이익 유보·부채 상환 영향을 확인할 수 있습니다.",
       actionLabel: "경영분석 보기",
       href: "/analytics",
       signals: [
-        "자기자본 3.86억 → 0.09억 (2024 → 2025)",
+        `자기자본 ${getYear(LAST_CLOSED_YEAR - 1).equity.toFixed(2)}억 → ${getYear(LAST_CLOSED_YEAR).equity.toFixed(2)}억 (${LAST_CLOSED_YEAR - 1} → ${LAST_CLOSED_YEAR})`,
         `자기자본비율 ${ratios.equityRatioPct.toFixed(1)}%`,
       ],
     });

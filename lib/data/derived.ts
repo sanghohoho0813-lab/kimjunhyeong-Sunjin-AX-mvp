@@ -1,5 +1,5 @@
 import { CUSTOMERS, PRODUCTS, TRANSACTIONS } from "./seed";
-import { DEMO_TODAY, daysBetween } from "@/lib/utils/format";
+import { CURRENT_YEAR, DEMO_TODAY, daysBetween } from "@/lib/utils/format";
 import type {
   Customer,
   CustomerStatus,
@@ -40,15 +40,16 @@ export interface CustomerStats {
   elapsedDays: number | null; // 마지막 구매 후 경과일
   cycleDays: number; // 평균 재구매 주기
   cycleRatio: number | null; // 경과일 / 주기
-  revenue2025: number;
+  /** 진행 중인 연도의 누적 매출 */
+  revenueThisYear: number;
 }
 
 export function getCustomerStats(customerId: string): CustomerStats {
   const customer = getCustomer(customerId);
   const txs = customerTransactions(customerId);
   const totalRevenue = txs.reduce((sum, t) => sum + t.qty * t.unitPrice, 0);
-  const revenue2025 = txs
-    .filter((t) => t.date.startsWith("2025"))
+  const revenueThisYear = txs
+    .filter((t) => t.date.startsWith(String(CURRENT_YEAR)))
     .reduce((sum, t) => sum + t.qty * t.unitPrice, 0);
   const last = txs[0] ?? null;
   const first = txs[txs.length - 1] ?? null;
@@ -64,7 +65,7 @@ export function getCustomerStats(customerId: string): CustomerStats {
     elapsedDays,
     cycleDays,
     cycleRatio: elapsedDays != null ? elapsedDays / cycleDays : null,
-    revenue2025,
+    revenueThisYear,
   };
 }
 
@@ -95,7 +96,8 @@ export interface ProductStats {
   status: InventoryStatus;
   recentAvgPrice: number; // 최근 판매 평균 단가 (판매 이력 없으면 권장가)
   buyerIds: string[]; // 이 제품을 구매한 거래처
-  soldQty2025: number;
+  /** 진행 중인 연도의 누적 출고량 */
+  soldQtyThisYear: number;
 }
 
 /** 재고 리스크 판정 (시연용 룰: 90일 이상 '관심', 120일 이상 '장기재고') */
@@ -127,8 +129,8 @@ export function getProductStats(productId: string): ProductStats {
     status: calculateInventoryRisk(idleDays),
     recentAvgPrice,
     buyerIds: Array.from(new Set(txs.map((t) => t.customerId))),
-    soldQty2025: txs
-      .filter((t) => t.date.startsWith("2025"))
+    soldQtyThisYear: txs
+      .filter((t) => t.date.startsWith(String(CURRENT_YEAR)))
       .reduce((s, t) => s + t.qty, 0),
   };
 }

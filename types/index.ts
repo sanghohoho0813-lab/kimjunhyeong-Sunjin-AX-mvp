@@ -96,6 +96,24 @@ export interface BusinessAlert {
 export type RecoPriority = "긴급" | "높음" | "보통";
 export type RecoCategory = "매출 기회" | "재고" | "거래처" | "수익성" | "재무 모니터링";
 
+/** 추천이 다루는 대상 — 카드에서 가장 크게 보여줄 "무엇" */
+export interface RecoSubject {
+  /** 품목명 또는 거래처명 */
+  title: string;
+  /** 두께·등급·보유량 같은 식별 보조 정보 */
+  meta?: string;
+  /** 이 대상이 왜 걸렸는지 한 마디 (예: 153일 무출고) */
+  flag?: string;
+}
+
+/** 금액으로 환산한 기대 효과 — 카드에서 가장 크게 보여줄 "얼마" */
+export interface RecoImpact {
+  label: string; // 예: 잠재 매출
+  amount: number; // 원 단위
+  /** 금액 산출 근거 한 줄 */
+  note?: string;
+}
+
 export interface AxRecommendation {
   id: string;
   category: RecoCategory;
@@ -103,7 +121,9 @@ export interface AxRecommendation {
   title: string; // 무엇을 발견했는지
   why: string; // 왜 중요한지
   connection: string; // 누구/무엇과 연결되는지
-  expectedEffect?: string; // 예상 효과
+  subject?: RecoSubject;
+  impact?: RecoImpact;
+  expectedEffect?: string; // 예상 효과 (문자열 표기용 · impact 우선)
   actionLabel: string;
   href: string;
   signals: string[]; // 발견된 signal 목록

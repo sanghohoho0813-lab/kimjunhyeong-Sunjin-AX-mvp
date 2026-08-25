@@ -56,9 +56,9 @@ export function calculateRepurchaseScore(customerId: string): ScoreResult {
   // 3) 거래 규모 (20점) — 누적 매출 1.2억 기준 만점
   const value = clamp((stats.totalRevenue / 120_000_000) * 20, 3, 20);
 
-  // 4) 최근 추세 (15점) — 2025년 매출 비중
+  // 4) 최근 추세 (15점) — 올해 매출 비중
   const trendRatio =
-    stats.totalRevenue > 0 ? stats.revenue2025 / stats.totalRevenue : 0;
+    stats.totalRevenue > 0 ? stats.revenueThisYear / stats.totalRevenue : 0;
   const trend = clamp(trendRatio * 15, 0, 15);
   if (trendRatio >= 0.7 && stats.orderCount >= 3) {
     reasons.push("올해 거래 비중이 높아 관계가 활발히 유지되고 있습니다.");

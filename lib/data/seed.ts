@@ -10,6 +10,7 @@ import type {
  * 선진산업 Business AX — 중앙 시연 데이터
  * 거래처·제품·거래이력·견적은 이 파일에서만 정의하고,
  * 누적 매출·최근 거래일·재고 상태 등 파생 값은 lib/data/derived.ts 에서 계산한다.
+ * 모든 날짜는 시연 기준일(DEMO_TODAY)에 맞춰 정렬돼 있다.
  * (개별 거래처·재고 데이터는 시연용 샘플이며 재무 실적은 lib/data/finance.ts 참고)
  */
 
@@ -204,7 +205,7 @@ export const PRODUCTS: LeatherProduct[] = [
     stockQty: 420,
     costPerUnit: 9500,
     listPricePerUnit: 13500,
-    receivedDate: "2025-08-06",
+    receivedDate: "2026-04-21",
   },
   {
     id: "p02",
@@ -219,7 +220,7 @@ export const PRODUCTS: LeatherProduct[] = [
     stockQty: 280,
     costPerUnit: 8800,
     listPricePerUnit: 12800,
-    receivedDate: "2025-10-20",
+    receivedDate: "2026-07-05",
   },
   {
     id: "p03",
@@ -234,7 +235,7 @@ export const PRODUCTS: LeatherProduct[] = [
     stockQty: 150,
     costPerUnit: 12800,
     listPricePerUnit: 17500,
-    receivedDate: "2025-11-02",
+    receivedDate: "2026-07-18",
   },
   {
     id: "p04",
@@ -249,7 +250,7 @@ export const PRODUCTS: LeatherProduct[] = [
     stockQty: 190,
     costPerUnit: 9200,
     listPricePerUnit: 13200,
-    receivedDate: "2025-09-18",
+    receivedDate: "2026-06-03",
   },
   {
     id: "p05",
@@ -264,7 +265,7 @@ export const PRODUCTS: LeatherProduct[] = [
     stockQty: 120,
     costPerUnit: 9000,
     listPricePerUnit: 13000,
-    receivedDate: "2025-07-25",
+    receivedDate: "2026-04-09",
   },
   {
     id: "p06",
@@ -279,7 +280,7 @@ export const PRODUCTS: LeatherProduct[] = [
     stockQty: 240,
     costPerUnit: 6800,
     listPricePerUnit: 9800,
-    receivedDate: "2025-06-30",
+    receivedDate: "2026-03-15",
   },
   {
     id: "p07",
@@ -294,7 +295,7 @@ export const PRODUCTS: LeatherProduct[] = [
     stockQty: 90,
     costPerUnit: 9600,
     listPricePerUnit: 13800,
-    receivedDate: "2025-11-12",
+    receivedDate: "2026-07-28",
   },
   {
     id: "p08",
@@ -309,7 +310,7 @@ export const PRODUCTS: LeatherProduct[] = [
     stockQty: 110,
     costPerUnit: 13200,
     listPricePerUnit: 18200,
-    receivedDate: "2025-10-08",
+    receivedDate: "2026-06-23",
   },
   {
     id: "p09",
@@ -324,7 +325,7 @@ export const PRODUCTS: LeatherProduct[] = [
     stockQty: 160,
     costPerUnit: 15500,
     listPricePerUnit: 21000,
-    receivedDate: "2025-11-05",
+    receivedDate: "2026-07-21",
   },
   {
     id: "p10",
@@ -339,7 +340,7 @@ export const PRODUCTS: LeatherProduct[] = [
     stockQty: 130,
     costPerUnit: 13800,
     listPricePerUnit: 18800,
-    receivedDate: "2025-10-15",
+    receivedDate: "2026-06-30",
   },
   {
     id: "p11",
@@ -354,7 +355,7 @@ export const PRODUCTS: LeatherProduct[] = [
     stockQty: 95,
     costPerUnit: 13500,
     listPricePerUnit: 18400,
-    receivedDate: "2025-09-22",
+    receivedDate: "2026-06-07",
   },
   {
     id: "p12",
@@ -369,7 +370,7 @@ export const PRODUCTS: LeatherProduct[] = [
     stockQty: 75,
     costPerUnit: 14200,
     listPricePerUnit: 19400,
-    receivedDate: "2025-08-14",
+    receivedDate: "2026-04-29",
   },
   {
     id: "p13",
@@ -384,7 +385,7 @@ export const PRODUCTS: LeatherProduct[] = [
     stockQty: 210,
     costPerUnit: 11800,
     listPricePerUnit: 16200,
-    receivedDate: "2025-11-20",
+    receivedDate: "2026-08-05",
   },
   {
     id: "p14",
@@ -399,7 +400,7 @@ export const PRODUCTS: LeatherProduct[] = [
     stockQty: 140,
     costPerUnit: 11200,
     listPricePerUnit: 15600,
-    receivedDate: "2025-10-28",
+    receivedDate: "2026-07-13",
   },
   {
     id: "p15",
@@ -414,7 +415,7 @@ export const PRODUCTS: LeatherProduct[] = [
     stockQty: 85,
     costPerUnit: 8900,
     listPricePerUnit: 12600,
-    receivedDate: "2025-07-10",
+    receivedDate: "2026-03-25",
   },
   {
     id: "p16",
@@ -429,7 +430,7 @@ export const PRODUCTS: LeatherProduct[] = [
     stockQty: 520,
     costPerUnit: 4200,
     listPricePerUnit: 6400,
-    receivedDate: "2025-11-08",
+    receivedDate: "2026-07-24",
   },
   {
     id: "p17",
@@ -444,7 +445,7 @@ export const PRODUCTS: LeatherProduct[] = [
     stockQty: 380,
     costPerUnit: 4000,
     listPricePerUnit: 6100,
-    receivedDate: "2025-10-05",
+    receivedDate: "2026-06-20",
   },
   {
     id: "p18",
@@ -459,7 +460,7 @@ export const PRODUCTS: LeatherProduct[] = [
     stockQty: 300,
     costPerUnit: 3800,
     listPricePerUnit: 5800,
-    receivedDate: "2025-09-02",
+    receivedDate: "2026-05-18",
   },
   {
     id: "p19",
@@ -474,7 +475,7 @@ export const PRODUCTS: LeatherProduct[] = [
     stockQty: 260,
     costPerUnit: 8600,
     listPricePerUnit: 12400,
-    receivedDate: "2025-11-15",
+    receivedDate: "2026-07-31",
   },
   {
     id: "p20",
@@ -489,7 +490,7 @@ export const PRODUCTS: LeatherProduct[] = [
     stockQty: 175,
     costPerUnit: 9100,
     listPricePerUnit: 13100,
-    receivedDate: "2025-12-01",
+    receivedDate: "2026-08-16",
   },
   {
     id: "p21",
@@ -504,7 +505,7 @@ export const PRODUCTS: LeatherProduct[] = [
     stockQty: 60,
     costPerUnit: 11800,
     listPricePerUnit: 16000,
-    receivedDate: "2025-08-28",
+    receivedDate: "2026-05-13",
   },
   {
     id: "p22",
@@ -519,7 +520,7 @@ export const PRODUCTS: LeatherProduct[] = [
     stockQty: 105,
     costPerUnit: 12400,
     listPricePerUnit: 17000,
-    receivedDate: "2025-11-25",
+    receivedDate: "2026-08-10",
   },
 ];
 
@@ -538,80 +539,80 @@ function t(
 
 export const TRANSACTIONS: SalesTransaction[] = [
   // 한성패션 — Cow Black 1.2~1.4mm 반복 구매 (평균 주기 52일)
-  t("2024-08-20", "c01", "p01", 380, 12800),
-  t("2024-10-11", "c01", "p03", 160, 16800),
-  t("2024-12-05", "c01", "p19", 300, 11900),
-  t("2025-02-04", "c01", "p01", 420, 13000),
-  t("2025-03-28", "c01", "p03", 180, 17000),
-  t("2025-05-20", "c01", "p01", 450, 13200),
-  t("2025-07-14", "c01", "p02", 260, 12400),
-  t("2025-08-25", "c01", "p19", 340, 12000),
-  t("2025-10-01", "c01", "p03", 200, 17200),
+  t("2025-05-05", "c01", "p01", 380, 12800),
+  t("2025-06-26", "c01", "p03", 160, 16800),
+  t("2025-08-20", "c01", "p19", 300, 11900),
+  t("2025-10-20", "c01", "p01", 420, 13000),
+  t("2025-12-11", "c01", "p03", 180, 17000),
+  t("2026-02-02", "c01", "p01", 450, 13200),
+  t("2026-03-29", "c01", "p02", 260, 12400),
+  t("2026-05-10", "c01", "p19", 340, 12000),
+  t("2026-06-16", "c01", "p03", 200, 17200),
 
   // 동아레더 — 도매 (Split/Cow 대량, 단가 민감)
-  t("2025-03-08", "c02", "p16", 900, 5900),
-  t("2025-04-22", "c02", "p17", 750, 5700),
-  t("2025-06-05", "c02", "p06", 520, 9200),
-  t("2025-07-18", "c02", "p16", 1100, 5800),
-  t("2025-09-02", "c02", "p18", 680, 5400),
-  t("2025-10-20", "c02", "p19", 400, 11600),
-  t("2025-11-28", "c02", "p16", 950, 5900),
+  t("2025-11-21", "c02", "p16", 900, 5900),
+  t("2026-01-05", "c02", "p17", 750, 5700),
+  t("2026-02-18", "c02", "p06", 520, 9200),
+  t("2026-04-02", "c02", "p16", 1100, 5800),
+  t("2026-05-18", "c02", "p18", 680, 5400),
+  t("2026-07-05", "c02", "p19", 400, 11600),
+  t("2026-08-13", "c02", "p16", 950, 5900),
 
   // 제이앤백 — 핸드백 (Cow/Goat, Premium 선호)
-  t("2025-02-14", "c03", "p08", 90, 17600),
-  t("2025-04-18", "c03", "p13", 150, 15800),
-  t("2025-06-20", "c03", "p03", 120, 17300),
-  t("2025-08-22", "c03", "p04", 160, 12900),
-  t("2025-10-16", "c03", "p08", 100, 17800),
+  t("2025-10-30", "c03", "p08", 90, 17600),
+  t("2026-01-01", "c03", "p13", 150, 15800),
+  t("2026-03-05", "c03", "p03", 120, 17300),
+  t("2026-05-07", "c03", "p04", 160, 12900),
+  t("2026-07-01", "c03", "p08", 100, 17800),
 
   // 모던슈즈 — 제화 (1.4~1.6mm)
-  t("2025-01-15", "c04", "p19", 320, 12100),
-  t("2025-04-02", "c04", "p16", 600, 6100),
-  t("2025-06-18", "c04", "p01", 280, 13100),
-  t("2025-09-05", "c04", "p17", 450, 5900),
+  t("2025-09-30", "c04", "p19", 320, 12100),
+  t("2025-12-16", "c04", "p16", 600, 6100),
+  t("2026-03-03", "c04", "p01", 280, 13100),
+  t("2026-05-21", "c04", "p17", 450, 5900),
 
   // 세진인터내셔널 — 수출 (분기 대형 발주)
-  t("2024-11-10", "c05", "p09", 300, 20200),
-  t("2025-02-20", "c05", "p01", 520, 13400),
-  t("2025-05-28", "c05", "p10", 280, 18400),
-  t("2025-09-10", "c05", "p09", 350, 20500),
+  t("2025-07-26", "c05", "p09", 300, 20200),
+  t("2025-11-05", "c05", "p01", 520, 13400),
+  t("2026-02-10", "c05", "p10", 280, 18400),
+  t("2026-05-26", "c05", "p09", 350, 20500),
 
   // 더온컴퍼니 — 잡화 (Camel/Navy 1.0~1.2)
-  t("2025-06-10", "c06", "p14", 120, 15200),
-  t("2025-08-01", "c06", "p05", 100, 12700),
-  t("2025-09-25", "c06", "p22", 90, 16600),
-  t("2025-11-18", "c06", "p04", 130, 13000),
+  t("2026-02-23", "c06", "p14", 120, 15200),
+  t("2026-04-16", "c06", "p05", 100, 12700),
+  t("2026-06-10", "c06", "p22", 90, 16600),
+  t("2026-08-03", "c06", "p04", 130, 13000),
 
   // 미르패션 — 의류 (Lamb 0.8~1.0)
-  t("2025-03-15", "c07", "p09", 140, 20600),
-  t("2025-05-25", "c07", "p10", 110, 18500),
-  t("2025-08-05", "c07", "p12", 95, 19000),
-  t("2025-10-10", "c07", "p09", 120, 20800),
+  t("2025-11-28", "c07", "p09", 140, 20600),
+  t("2026-02-07", "c07", "p10", 110, 18500),
+  t("2026-04-20", "c07", "p12", 95, 19000),
+  t("2026-06-25", "c07", "p09", 120, 20800),
 
   // 에이스레더 — 도매 (짧은 주기)
-  t("2025-07-25", "c08", "p17", 500, 5800),
-  t("2025-09-08", "c08", "p06", 380, 9300),
-  t("2025-10-15", "c08", "p13", 220, 15600),
-  t("2025-11-25", "c08", "p16", 700, 6000),
+  t("2026-04-09", "c08", "p17", 500, 5800),
+  t("2026-05-24", "c08", "p06", 380, 9300),
+  t("2026-06-30", "c08", "p13", 220, 15600),
+  t("2026-08-10", "c08", "p16", 700, 6000),
 
   // 한빛가방 — 2025년 상반기 이후 중단 (휴면 신호)
-  t("2024-09-15", "c09", "p01", 260, 12900),
-  t("2024-11-25", "c09", "p05", 140, 12500),
-  t("2025-02-10", "c09", "p19", 200, 12000),
-  t("2025-04-28", "c09", "p01", 240, 13100),
+  t("2025-05-31", "c09", "p01", 260, 12900),
+  t("2025-08-10", "c09", "p05", 140, 12500),
+  t("2025-10-26", "c09", "p19", 200, 12000),
+  t("2026-01-11", "c09", "p01", 240, 13100),
 
   // 유진트레이딩 — 유통
-  t("2025-05-12", "c10", "p14", 160, 15300),
-  t("2025-07-03", "c10", "p02", 200, 12500),
-  t("2025-10-08", "c10", "p04", 140, 13000),
+  t("2026-01-25", "c10", "p14", 160, 15300),
+  t("2026-03-18", "c10", "p02", 200, 12500),
+  t("2026-06-23", "c10", "p04", 140, 13000),
 
   // 제이에스컴퍼니 — 신규 (2025.11 첫 거래)
-  t("2025-11-14", "c11", "p19", 150, 12600),
+  t("2026-07-30", "c11", "p19", 150, 12600),
 
   // 대성패션 — 2025년 초 이후 거래 중단 (휴면)
-  t("2024-08-30", "c12", "p09", 100, 20300),
-  t("2024-11-05", "c12", "p12", 80, 19200),
-  t("2025-01-20", "c12", "p10", 90, 18600),
+  t("2025-05-15", "c12", "p09", 100, 20300),
+  t("2025-07-21", "c12", "p12", 80, 19200),
+  t("2025-10-05", "c12", "p10", 90, 18600),
 ];
 
 export const SEED_QUOTES: Quote[] = [
@@ -621,7 +622,7 @@ export const SEED_QUOTES: Quote[] = [
     customerId: "c02",
     items: [{ productId: "p16", qty: 800, unitPrice: 5600 }],
     status: "검토",
-    createdAt: "2025-12-04",
+    createdAt: "2026-08-19",
     memo: "12월 도매 물량 재발주 협의 중",
   },
   {
@@ -630,7 +631,7 @@ export const SEED_QUOTES: Quote[] = [
     customerId: "c03",
     items: [{ productId: "p08", qty: 120, unitPrice: 17400 }],
     status: "발송",
-    createdAt: "2025-12-02",
+    createdAt: "2026-08-17",
   },
   {
     id: "q03",
@@ -638,7 +639,7 @@ export const SEED_QUOTES: Quote[] = [
     customerId: "c06",
     items: [{ productId: "p22", qty: 100, unitPrice: 15400 }],
     status: "검토",
-    createdAt: "2025-11-28",
+    createdAt: "2026-08-13",
     memo: "단가 조정 요청 접수",
   },
   {
@@ -650,7 +651,7 @@ export const SEED_QUOTES: Quote[] = [
       { productId: "p10", qty: 200, unitPrice: 18300 },
     ],
     status: "승인",
-    createdAt: "2025-11-24",
+    createdAt: "2026-08-09",
   },
   {
     id: "q05",
@@ -658,7 +659,7 @@ export const SEED_QUOTES: Quote[] = [
     customerId: "c08",
     items: [{ productId: "p18", qty: 500, unitPrice: 4300 }],
     status: "보류",
-    createdAt: "2025-11-19",
+    createdAt: "2026-08-04",
     memo: "단가 인하 요청으로 마진 재검토 필요",
   },
   {
@@ -667,7 +668,7 @@ export const SEED_QUOTES: Quote[] = [
     customerId: "c01",
     items: [{ productId: "p03", qty: 180, unitPrice: 17300 }],
     status: "승인",
-    createdAt: "2025-11-14",
+    createdAt: "2026-07-30",
   },
   {
     id: "q07",
@@ -675,7 +676,7 @@ export const SEED_QUOTES: Quote[] = [
     customerId: "c11",
     items: [{ productId: "p19", qty: 160, unitPrice: 12800 }],
     status: "발송",
-    createdAt: "2025-11-12",
+    createdAt: "2026-07-28",
   },
   {
     id: "q08",
@@ -683,7 +684,7 @@ export const SEED_QUOTES: Quote[] = [
     customerId: "c04",
     items: [{ productId: "p17", qty: 420, unitPrice: 4400 }],
     status: "작성중",
-    createdAt: "2025-11-08",
+    createdAt: "2026-07-24",
     memo: "수량 확정 대기",
   },
 ];
@@ -691,28 +692,28 @@ export const SEED_QUOTES: Quote[] = [
 export const SEED_ACTIVITIES: SalesActivity[] = [
   {
     id: "a01",
-    date: "2025-12-08",
+    date: "2026-08-23",
     customerId: "c02",
     type: "전화",
     memo: "12월 도매 물량 견적(Q-2025-041) 단가 협의",
   },
   {
     id: "a02",
-    date: "2025-12-05",
+    date: "2026-08-20",
     customerId: "c05",
     type: "샘플 발송",
     memo: "Lamb Black 0.8mm 신규 로트 샘플 발송",
   },
   {
     id: "a03",
-    date: "2025-12-02",
+    date: "2026-08-17",
     customerId: "c03",
     type: "견적 발송",
     memo: "Burgundy 1.4mm Premium 120평 견적 발송",
   },
   {
     id: "a04",
-    date: "2025-11-27",
+    date: "2026-08-12",
     customerId: "c11",
     type: "방문",
     memo: "신규 거래처 방문 — 내년 상반기 물량 논의",

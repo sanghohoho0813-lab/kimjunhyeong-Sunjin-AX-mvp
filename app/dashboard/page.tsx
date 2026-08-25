@@ -1,307 +1,242 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  ArrowRight,
-  BadgeDollarSign,
-  LineChart,
-  Sparkles,
-  TrendingUp,
-  Wallet,
-} from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
-import { PageHeader, PeriodSelect } from "@/components/layout/PageHeader";
+import { PageHeader } from "@/components/layout/PageHeader";
 import { AssetCompositionChart } from "@/components/charts/AssetCompositionChart";
 import { FinancialTrendChart } from "@/components/charts/FinancialTrendChart";
 import { AxActionCard } from "@/components/dashboard/AxActionCard";
 import { BriefingCard } from "@/components/dashboard/BriefingCard";
-import {
-  CashflowCard,
-  InventorySnapshot,
-  MetricStrip,
-} from "@/components/dashboard/SideCards";
+import { CurrentStatus, TopActions } from "@/components/dashboard/CurrentStatus";
+import { DecisionCard } from "@/components/dashboard/DecisionCard";
+import { InventorySnapshot } from "@/components/dashboard/SideCards";
 import { TopCustomersCard } from "@/components/dashboard/TopCustomersCard";
 import { CardArt } from "@/components/shared/CardArt";
-import { HeroKpi } from "@/components/shared/KpiCard";
-import { Delta } from "@/components/shared/ui";
 import { COMPANY } from "@/lib/data/seed";
-import { CASH_BY_YEAR, getRatios, getYear } from "@/lib/data/finance";
+import { getOperationDecisions } from "@/lib/insights/decisions";
 import { generateRecommendations } from "@/lib/insights/recommendations";
+import {
+  CURRENT_MONTH,
+  CURRENT_YEAR,
+  LAST_CLOSED_YEAR,
+  formatDateKo,
+  DEMO_TODAY,
+} from "@/lib/utils/format";
 import { useAppStore } from "@/lib/store";
 
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+/** 섹션 머리 — 이 블록이 어떤 질문에 답하는지 먼저 말한다 */
+function SectionHead({
+  eyebrow,
+  title,
+  desc,
+  right,
+}: {
+  eyebrow?: string;
+  title: React.ReactNode;
+  desc?: string;
+  right?: React.ReactNode;
+}) {
+  return (
+    <div className="mb-4 flex flex-wrap items-end justify-between gap-x-4 gap-y-2">
+      <div className="min-w-0">
+        {eyebrow ? (
+          <p className="mb-1 text-[0.8rem] font-bold uppercase tracking-[0.14em] text-brand-600">
+            {eyebrow}
+          </p>
+        ) : null}
+        <h2 className="t-section">{title}</h2>
+        {desc ? <p className="mt-1 t-caption">{desc}</p> : null}
+      </div>
+      {right ? <div className="shrink-0">{right}</div> : null}
+    </div>
+  );
+}
 
 export default function DashboardPage() {
   const year = useAppStore((s) => s.periodYear);
-  const fin = getYear(year);
-  const ratios = getRatios(year);
-  const cash = CASH_BY_YEAR[year] ?? 0;
-  const prevCash = CASH_BY_YEAR[year - 1];
-  const cashDelta =
-    prevCash != null && prevCash > 0 ? ((cash - prevCash) / prevCash) * 100 : null;
 
   const recos = generateRecommendations();
   const topRecos = recos.slice(0, 3);
   const urgentCount = recos.filter(
     (r) => r.priority === "긴급" || r.priority === "높음"
   ).length;
+  const opDecisions = getOperationDecisions();
 
   return (
     <div>
-      {/* ── 모바일 Hero — 대표 관점의 인사 + 오늘의 이슈 ── */}
+      {/* ── 모바일 Hero ── */}
       <section className="mb-5 lg:hidden">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.32, ease: EASE }}
         >
           <p className="text-[1.4rem] font-extrabold leading-tight tracking-[-0.02em] text-ink-900">
             안녕하세요, {COMPANY.ceoTitle}님
           </p>
-          <p className="mt-1.5 text-[0.88rem] leading-relaxed text-ink-500">
-            오늘 확인할 경영 이슈가{" "}
-            <span className="font-bold text-brand-600">{urgentCount}건</span>{" "}
-            있습니다.
+          <p className="mt-1.5 text-[0.92rem] leading-relaxed text-ink-500">
+            {formatDateKo(DEMO_TODAY)} 기준 · 확인할 경영 이슈{" "}
+            <span className="font-bold text-brand-600">{urgentCount}건</span>
           </p>
         </motion.div>
-        <div className="mt-4">
-          <PeriodSelect />
-        </div>
       </section>
 
       {/* ── 데스크톱 헤더 ── */}
       <div className="hidden lg:block">
         <PageHeader
           title="경영 대시보드"
-          subtitle="매출·재무·거래처·재고를 연결해 오늘 필요한 의사결정을 한눈에 확인합니다."
-          withPeriod
+          subtitle={`${CURRENT_YEAR}년 현재까지의 실적과 재고·거래처 상황을 전년 같은 기간과 비교해 오늘 필요한 결정을 정리합니다.`}
         />
       </div>
 
-      {/* ── ROW 2: KPI ── */}
-      {/* 모바일: 핵심 3개를 한 카드에 행으로 — 큰 숫자를 한눈에 */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
-        className="card divide-y divide-surface-line lg:hidden"
-      >
-        {[
-          { label: "매출액", value: fin.revenue, delta: ratios.revenueYoYPct, rail: "bg-brand-500" },
-          { label: "영업이익", value: fin.operatingProfit, delta: ratios.operatingYoYPct, rail: "bg-teal-500" },
-          { label: "당기순이익", value: fin.netProfit, delta: ratios.netYoYPct, rail: "bg-gold-400" },
-        ].map((k) => (
-          <div key={k.label} className="flex items-center gap-3 px-4 py-3.5">
-            <span aria-hidden className={`h-11 w-1 shrink-0 rounded-full ${k.rail}`} />
-            {/* 좁은 폭에서 지표명이 잘리지 않도록 라벨/증감을 왼쪽 한 칼럼으로 묶는다 */}
-            <div className="min-w-0 flex-1">
-              <p className="truncate whitespace-nowrap text-[0.95rem] font-semibold text-ink-600">
-                {k.label}
-              </p>
-              <p className="mt-1.5">
-                <Delta value={k.delta} size="sm" />
-              </p>
-            </div>
-            <span className="shrink-0 whitespace-nowrap text-right text-[1.6rem] font-extrabold leading-none tabular-nums tracking-[-0.025em] text-ink-900">
-              {k.value.toFixed(2)}
-              <span className="ml-0.5 text-[0.9rem] font-bold text-ink-500">억</span>
+      {/* ── ① 지금 어떤 상태인가 ── */}
+      <CurrentStatus />
+
+      {/* ── ② 그래서 무엇을 할 것인가 ── */}
+      <section className="mt-8" aria-label="지표별 권장 행동">
+        <SectionHead
+          eyebrow="Next Action"
+          title="지금 해야 할 일"
+          desc="위 지표에서 바로 이어지는 행동입니다"
+        />
+        <TopActions />
+      </section>
+
+      {/* ── ③ AX 추천 ── */}
+      <section className="mt-9" aria-label="오늘의 AX 추천">
+        <SectionHead
+          eyebrow="AX Insight"
+          title={
+            <span className="inline-flex items-center gap-2">
+              <Sparkles
+                className="h-[1.1rem] w-[1.1rem] shrink-0 text-teal-500"
+                aria-hidden
+              />
+              오늘의 AX 추천
             </span>
-          </div>
-        ))}
-      </motion.div>
-
-      {/* 데스크톱: Hero KPI 4개 */}
-      <div className="hidden gap-4 lg:grid lg:grid-cols-4">
-        <HeroKpi
-          icon={BadgeDollarSign}
-          label="매출액"
-          value={fin.revenue}
-          unit="억원"
-          delta={ratios.revenueYoYPct}
-          accent="brand"
-          art={{
-            src: "revenue",
-            size: "46% auto",
-            position: "right -12px bottom -14px",
-            opacity: 0.85,
-          }}
-          index={0}
+          }
+          desc="어떤 재고를 누구에게 팔면 얼마가 되는지 데이터로 연결했습니다"
+          right={
+            <Link
+              href="/insights"
+              className="btn btn-ghost btn-sm !font-bold text-brand-600"
+            >
+              추천 {recos.length}건 전체 보기
+              <ArrowRight className="h-4 w-4" aria-hidden />
+            </Link>
+          }
         />
-        <HeroKpi
-          icon={TrendingUp}
-          label="영업이익"
-          value={fin.operatingProfit}
-          unit="억원"
-          delta={ratios.operatingYoYPct}
-          accent="teal"
-          art={{
-            src: "operating-profit",
-            size: "46% auto",
-            position: "right -12px center",
-            opacity: 0.85,
-          }}
-          index={1}
-        />
-        <HeroKpi
-          icon={LineChart}
-          label="당기순이익"
-          value={fin.netProfit}
-          unit="억원"
-          delta={ratios.netYoYPct}
-          accent="gold"
-          art={{
-            src: "net-income",
-            size: "46% auto",
-            position: "right -12px center",
-            opacity: 0.82,
-          }}
-          index={2}
-        />
-        <HeroKpi
-          icon={Wallet}
-          label="현금성 자산"
-          value={cash}
-          unit="억원"
-          delta={cashDelta}
-          accent="navy"
-          art={{
-            src: "cash-assets",
-            size: "46% auto",
-            position: "right -12px center",
-            opacity: 0.8,
-          }}
-          index={3}
-        />
-      </div>
-
-      {/* ── 모바일: AX 추천을 KPI 바로 다음에 ── */}
-      <section className="mt-7 lg:hidden" aria-label="오늘의 AX 추천">
-        <div className="mb-3.5 flex items-end justify-between gap-3">
-          <div className="min-w-0">
-            <h2 className="t-section">오늘의 AX 추천</h2>
-            <p className="mt-1 t-caption">가장 먼저 확인할 행동입니다</p>
-          </div>
-          <Link
-            href="/insights"
-            className="inline-flex items-center gap-0.5 text-[0.78rem] font-bold text-brand-600"
-          >
-            {recos.length}건 <ArrowRight className="h-3.5 w-3.5" aria-hidden />
-          </Link>
-        </div>
-        <div className="grid gap-3">
+        <div className="grid gap-4 lg:gap-5 xl:grid-cols-3">
           {topRecos.map((reco, i) => (
             <AxActionCard key={reco.id} reco={reco} index={i} />
           ))}
         </div>
       </section>
 
-      {/* ── ROW 3: 재무 차트 65% + AI 브리핑 35% ── */}
-      <div className="mt-7 grid gap-4 lg:mt-8 lg:grid-cols-12 lg:gap-5">
+      {/* ── ④ 운영 판단 — 재고·거래처·견적·자본 ── */}
+      <section className="mt-9" aria-label="운영 의사결정">
+        <SectionHead
+          eyebrow="Operation"
+          title="운영 판단"
+          desc="재고·거래처·견적·자본을 현재 기준으로 진단하고 다음 행동까지 제안합니다"
+        />
+        <div className="grid gap-4 lg:gap-5 xl:grid-cols-2 2xl:grid-cols-4">
+          {opDecisions.map((d, i) => (
+            <DecisionCard key={d.id} decision={d} index={i} />
+          ))}
+        </div>
+      </section>
+
+      {/* ── ⑤ 상세 근거 — 매일 볼 필요는 없지만 확인은 되어야 하는 것들 ── */}
+      <section className="mt-9" aria-label="상세 데이터">
+        <SectionHead
+          eyebrow="Reference"
+          title="상세 데이터"
+          desc="판단의 바탕이 된 원본 수치입니다"
+        />
+
+        <div className="grid gap-4 lg:gap-5 xl:grid-cols-12">
+          <div className="min-w-0 xl:col-span-7">
+            <InventorySnapshot />
+          </div>
+          <div className="min-w-0 xl:col-span-5">
+            <TopCustomersCard />
+          </div>
+        </div>
+
+        <div className="mt-4 grid gap-4 lg:gap-5 xl:grid-cols-12">
+          <motion.section
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.34, ease: EASE }}
+            className="card-data isolate flex flex-col p-5 xl:col-span-7 lg:p-6"
+            aria-label="재무 성과 추이"
+          >
+            <CardArt
+              src="financial-trend"
+              size="38% auto"
+              position="right -18px top -24px"
+              opacity={0.45}
+            />
+            <div className="mb-2 flex flex-wrap items-end justify-between gap-x-3 gap-y-1">
+              <div className="min-w-0">
+                <h3 className="t-card-title">연간 재무 성과 추이</h3>
+                <p className="mt-1 t-caption">
+                  {LAST_CLOSED_YEAR - 2} ~ {LAST_CLOSED_YEAR} 확정 실적 · 단위 억원
+                </p>
+              </div>
+              <span className="hidden shrink-0 rounded-md bg-surface-sunken px-2.5 py-1 text-[0.82rem] font-bold text-ink-500 sm:inline">
+                3개년
+              </span>
+            </div>
+            <div className="hidden min-h-[280px] flex-1 lg:block">
+              <FinancialTrendChart fill />
+            </div>
+            <div className="lg:hidden">
+              <FinancialTrendChart height={252} compact />
+            </div>
+          </motion.section>
+
+          <div className="min-w-0 xl:col-span-5">
+            <BriefingCard year={year} />
+          </div>
+        </div>
+
         <motion.section
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
-          className="card-data isolate flex flex-col p-5 lg:col-span-7 lg:p-6"
-          aria-label="재무 성과 추이"
+          transition={{ duration: 0.32, delay: 0.1, ease: EASE }}
+          className="card-data isolate mt-4 p-5 lg:p-6"
+          aria-label="자산 구성 현황"
         >
           <CardArt
-            src="financial-trend"
-            size="38% auto"
-            position="right -18px top -24px"
-            opacity={0.45}
+            src="asset-composition"
+            size="72% auto"
+            position="right -60px bottom -34px"
+            opacity={0.28}
           />
-
-          <div className="mb-2 flex items-end justify-between gap-3">
-            <div className="min-w-0">
-              <h2 className="t-section">재무 성과 추이</h2>
-              <p className="mt-1 t-caption">2023 ~ 2025 · 단위 억원</p>
-            </div>
-            <span className="hidden rounded-md bg-surface-sunken px-2.5 py-1 text-[0.82rem] font-bold text-ink-500 sm:inline">
-              3개년
-            </span>
+          <div className="mb-4 min-w-0">
+            <h3 className="t-card-title">자산 구성 현황</h3>
+            <p className="mt-1 t-caption">{year}년 확정 실적 · 단위 억원</p>
           </div>
-          <div className="hidden min-h-[300px] flex-1 lg:block">
-            <FinancialTrendChart fill />
-          </div>
-          <div className="lg:hidden">
-            <FinancialTrendChart height={252} compact />
-          </div>
+          <AssetCompositionChart year={year} />
         </motion.section>
-
-        <div className="min-w-0 lg:col-span-5">
-          <BriefingCard year={year} />
-        </div>
-      </div>
-
-      {/* ── ROW 4: 데스크톱 AX Actions ── */}
-      <section className="mt-8 hidden lg:block" aria-label="오늘의 AX 추천">
-        <div className="mb-4 flex items-end justify-between gap-3">
-          <div className="min-w-0">
-            <h2 className="t-section">
-              <span className="inline-flex items-center gap-2">
-                <Sparkles className="h-[1.05rem] w-[1.05rem] text-teal-500" aria-hidden />
-                오늘의 AX 추천
-              </span>
-            </h2>
-            <p className="mt-1 t-caption">
-              데이터에서 발견한 신호를 근거와 함께 다음 행동으로 연결합니다
-            </p>
-          </div>
-          <Link
-            href="/insights"
-            className="btn btn-ghost btn-sm !font-bold text-brand-600"
-          >
-            추천 {recos.length}건 전체 보기
-            <ArrowRight className="h-3.5 w-3.5" aria-hidden />
-          </Link>
-        </div>
-        <div className="grid gap-5 lg:grid-cols-3">
-          {topRecos.map((reco, i) => (
-            <AxActionCard key={reco.id} reco={reco} index={i} />
-          ))}
-        </div>
       </section>
 
-      {/* ── ROW 5: 거래처 / 재고 / 재무 개요 ── */}
-      <div className="mt-6 grid gap-4 lg:mt-8 lg:grid-cols-12 lg:gap-5">
-        <div className="min-w-0 lg:col-span-6 2xl:col-span-5">
-          <InventorySnapshot />
-        </div>
-        <div className="min-w-0 lg:col-span-6 2xl:col-span-4">
-          <TopCustomersCard />
-        </div>
-        <div className="min-w-0 lg:col-span-12 2xl:col-span-3">
-          <CashflowCard year={year} />
-        </div>
-      </div>
-
-      {/* 자산 구성 */}
-      <motion.section
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.32, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
-        className="card-data isolate mt-4 p-5 lg:mt-5 lg:p-6"
-        aria-label="자산 구성 현황"
+      {/* 데이터 기준 안내 — 어디까지가 확정이고 어디부터가 추정인지 */}
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4, delay: 0.2 }}
+        className="mt-6 text-[0.86rem] leading-relaxed text-ink-400"
       >
-        <CardArt
-          src="asset-composition"
-          size="72% auto"
-          position="right -60px bottom -34px"
-          opacity={0.28}
-        />
-
-        <div className="mb-4 flex items-end justify-between gap-3">
-          <div className="min-w-0">
-            <h2 className="t-section">자산 구성 현황</h2>
-            <p className="mt-1 t-caption">{year}년 · 단위 억원</p>
-          </div>
-        </div>
-        <AssetCompositionChart year={year} />
-      </motion.section>
-
-      {/* ── ROW 6: 요약 스트립 ── */}
-      <div className="mt-4 lg:mt-5">
-        <MetricStrip year={year} />
-      </div>
+        {LAST_CLOSED_YEAR}년까지는 확정 실적입니다. {CURRENT_YEAR}년 1~
+        {CURRENT_MONTH}월 누적과 현금 잔액은 확정 결산 전 추정치이며, 거래처·재고·견적
+        데이터는 시연용 샘플입니다.
+      </motion.p>
     </div>
   );
 }
