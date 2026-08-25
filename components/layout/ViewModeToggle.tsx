@@ -53,7 +53,7 @@ export function MobileModeReturnBar() {
 
   // 하단 중앙(토스트)·우측(둘러보기 배너)과 겹치지 않도록 사이드바 오른쪽 아래에 고정
   return (
-    <div className="fixed bottom-5 left-[252px] z-[55]">
+    <div className="fixed bottom-5 left-[256px] z-[55]">
       <button
         onClick={() => {
           setDesktopMode(false);

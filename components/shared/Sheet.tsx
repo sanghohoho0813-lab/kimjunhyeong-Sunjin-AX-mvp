@@ -73,13 +73,13 @@ export function Sheet({
             transition={{ type: "tween", duration: 0.26, ease: [0.32, 0.72, 0, 1] }}
           >
             <div className="flex items-center justify-between gap-3 border-b border-surface-line px-5 py-4">
-              <div className="min-w-0 text-base font-bold text-navy-900">
+              <div className="min-w-0 text-base font-bold text-ink-900">
                 {title}
               </div>
               <button
                 onClick={onClose}
                 aria-label="닫기"
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-navy-400 transition-colors hover:bg-surface hover:text-navy-700"
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-ink-400 transition-colors hover:bg-surface hover:text-ink-700"
               >
                 <X className="h-5 w-5" />
               </button>

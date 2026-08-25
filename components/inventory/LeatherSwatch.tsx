@@ -1,38 +1,79 @@
 import { clsx } from "@/lib/utils/clsx";
-import type { LeatherColor } from "@/types";
+import type { LeatherColor, LeatherFinish } from "@/types";
 
-/** 피혁 컬러 스와치 — 이미지 없이 가죽 질감 느낌의 그라데이션 표현 */
-const COLOR_STYLES: Record<LeatherColor, string> = {
-  Black: "from-[#2b2b30] via-[#1a1a1e] to-[#101014]",
-  "Dark Brown": "from-[#5b4132] via-[#46311f] to-[#33241a]",
-  Camel: "from-[#c99e6b] via-[#b88b52] to-[#a1743f]",
-  Navy: "from-[#2c3e63] via-[#22304e] to-[#182238]",
-  Burgundy: "from-[#7a3040] via-[#63212f] to-[#4c1a25]",
-  Ivory: "from-[#efe8da] via-[#e6dcc8] to-[#d8cbb2]",
-  Gray: "from-[#9aa0ab] via-[#82888f] to-[#6a7078]",
+/**
+ * 피혁 Material Swatch — 실제 이미지 없이 CSS Gradient + Grain으로 가죽 질감을 표현한다.
+ * 화면 전체를 텍스처로 도배하지 않고, 재고 항목의 식별자 역할만 한다.
+ */
+const TONES: Record<LeatherColor, { base: string; hi: string; lo: string }> = {
+  Black: { base: "#23242A", hi: "#43454E", lo: "#0D0E12" },
+  "Dark Brown": { base: "#4B3527", hi: "#6E5038", lo: "#2A1C13" },
+  Camel: { base: "#B98A50", hi: "#D6AE79", lo: "#8A6234" },
+  Navy: { base: "#26344F", hi: "#3F5476", lo: "#141D2E" },
+  Burgundy: { base: "#6B2735", hi: "#8F3B4B", lo: "#42151F" },
+  Ivory: { base: "#E4DAC6", hi: "#F4EEE1", lo: "#C7B99E" },
+  Gray: { base: "#828892", hi: "#A5ABB4", lo: "#5C626B" },
+};
+
+/** 가공 방식에 따른 광택 차이 */
+const SHEEN: Record<LeatherFinish, number> = {
+  Aniline: 0.34,
+  "Semi-Aniline": 0.26,
+  Pigmented: 0.18,
+  Nubuck: 0.08,
+  Embossed: 0.22,
 };
 
 export function LeatherSwatch({
   color,
+  finish = "Pigmented",
   className,
-  rounded = "rounded-[10px]",
+  rounded = "rounded-[11px]",
 }: {
   color: LeatherColor;
+  finish?: LeatherFinish;
   className?: string;
   rounded?: string;
 }) {
+  const t = TONES[color];
+  const sheen = SHEEN[finish] ?? 0.2;
+
   return (
     <span
       aria-hidden
       className={clsx(
-        "relative block shrink-0 overflow-hidden bg-gradient-to-br shadow-inner",
-        COLOR_STYLES[color],
+        "relative block shrink-0 overflow-hidden ring-1 ring-inset ring-black/10",
         rounded,
         className
       )}
+      style={{
+        background: `radial-gradient(120% 100% at 26% 18%, ${t.hi} 0%, ${t.base} 46%, ${t.lo} 100%)`,
+      }}
     >
-      <span className="absolute inset-0 bg-[radial-gradient(ellipse_at_25%_20%,rgba(255,255,255,0.28),transparent_55%)]" />
-      <span className="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_85%,rgba(0,0,0,0.22),transparent_60%)]" />
+      {/* 광택 하이라이트 */}
+      <span
+        className="absolute inset-0"
+        style={{
+          background: `linear-gradient(146deg, rgba(255,255,255,${sheen}) 0%, rgba(255,255,255,0) 42%)`,
+        }}
+      />
+      {/* 가죽 결(grain) — 미세 노이즈 */}
+      <span
+        className="absolute inset-0 opacity-[0.5] mix-blend-overlay"
+        style={{
+          backgroundImage:
+            "radial-gradient(rgba(255,255,255,0.5) 0.5px, transparent 0.6px), radial-gradient(rgba(0,0,0,0.5) 0.5px, transparent 0.6px)",
+          backgroundSize: "5px 5px, 7px 7px",
+          backgroundPosition: "0 0, 2px 3px",
+        }}
+      />
+      {/* 하단 그림자로 두께감 */}
+      <span
+        className="absolute inset-x-0 bottom-0 h-1/3"
+        style={{
+          background: "linear-gradient(to top, rgba(0,0,0,0.24), transparent)",
+        }}
+      />
     </span>
   );
 }

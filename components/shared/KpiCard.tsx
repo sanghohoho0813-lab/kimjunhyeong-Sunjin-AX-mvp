@@ -4,20 +4,31 @@ import { motion, useReducedMotion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { clsx } from "@/lib/utils/clsx";
-import { DeltaBadge } from "./ui";
+import { Delta } from "./ui";
 
-const TONES = {
-  blue: "bg-brand-50 text-brand-600",
-  teal: "bg-teal-50 text-teal-600",
-  violet: "bg-indigo-50 text-indigo-600",
-  gold: "bg-gold-100 text-gold-600",
-  navy: "bg-navy-50 text-navy-600",
+const ACCENTS = {
+  brand: {
+    icon: "bg-brand-50 text-brand-600",
+    rail: "from-brand-500 to-brand-600",
+  },
+  teal: {
+    icon: "bg-teal-50 text-teal-600",
+    rail: "from-teal-400 to-teal-500",
+  },
+  navy: {
+    icon: "bg-navy-50 text-navy-700",
+    rail: "from-navy-600 to-navy-800",
+  },
+  gold: {
+    icon: "bg-gold-100 text-gold-500",
+    rail: "from-gold-300 to-gold-400",
+  },
 } as const;
 
-export type KpiTone = keyof typeof TONES;
+export type KpiAccent = keyof typeof ACCENTS;
 
 /** 숫자 카운트업 (reduced-motion 시 즉시 표시) */
-export function useCountUp(target: number, duration = 700): number {
+export function useCountUp(target: number, duration = 800): number {
   const reduced = useReducedMotion();
   const [value, setValue] = useState(reduced ? target : 0);
   const raf = useRef<number>(0);
@@ -28,11 +39,9 @@ export function useCountUp(target: number, duration = 700): number {
       return;
     }
     const start = performance.now();
-    const from = 0;
     const tick = (now: number) => {
       const t = Math.min(1, (now - start) / duration);
-      const eased = 1 - Math.pow(1 - t, 3);
-      setValue(from + (target - from) * eased);
+      setValue(target * (1 - Math.pow(1 - t, 3)));
       if (t < 1) raf.current = requestAnimationFrame(tick);
     };
     raf.current = requestAnimationFrame(tick);
@@ -42,7 +51,11 @@ export function useCountUp(target: number, duration = 700): number {
   return value;
 }
 
-export function KpiCard({
+/**
+ * Hero KPI — 숫자가 카드의 주인공.
+ * 시각 위계: Label → Value → Change (Icon은 보조)
+ */
+export function HeroKpi({
   icon: Icon,
   label,
   value,
@@ -51,9 +64,9 @@ export function KpiCard({
   delta,
   deltaSuffix = "%",
   deltaGoodWhenUp = true,
-  tone = "blue",
-  footnote,
-  compact = false,
+  accent = "brand",
+  note,
+  index = 0,
 }: {
   icon: LucideIcon;
   label: string;
@@ -63,65 +76,110 @@ export function KpiCard({
   delta?: number | null;
   deltaSuffix?: string;
   deltaGoodWhenUp?: boolean;
-  tone?: KpiTone;
-  footnote?: string;
-  compact?: boolean;
+  accent?: KpiAccent;
+  note?: string;
+  index?: number;
 }) {
   const animated = useCountUp(value);
+  const tone = ACCENTS[accent];
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 14 }}
+      initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.32 }}
-      className={clsx("card card-hover", compact ? "p-3.5" : "p-4 lg:p-5")}
+      transition={{ duration: 0.32, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
+      className="card-kpi px-5 py-5"
     >
-      <div className="flex items-center justify-between gap-2">
+      {/* 상단 accent rail */}
+      <span
+        aria-hidden
+        className={clsx(
+          "absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r opacity-90",
+          tone.rail
+        )}
+      />
+      <div className="flex items-start justify-between gap-3">
+        <p className="text-[0.82rem] font-semibold text-ink-500">{label}</p>
         <span
           className={clsx(
-            "text-[0.78rem] font-semibold text-navy-500",
-            compact && "text-[0.72rem]"
+            "flex h-8 w-8 shrink-0 items-center justify-center rounded-[10px]",
+            tone.icon
           )}
         >
-          {label}
-        </span>
-        <span
-          className={clsx(
-            "flex items-center justify-center rounded-[10px]",
-            TONES[tone],
-            compact ? "h-7 w-7" : "h-8 w-8"
-          )}
-        >
-          <Icon className={compact ? "h-3.5 w-3.5" : "h-4 w-4"} aria-hidden />
+          <Icon className="h-[1.05rem] w-[1.05rem]" strokeWidth={2} aria-hidden />
         </span>
       </div>
-      <p
-        className={clsx(
-          "mt-1.5 font-extrabold tabular-nums leading-none text-navy-900",
-          compact ? "text-[1.3rem]" : "text-[1.55rem] lg:text-[1.8rem]"
-        )}
-      >
+
+      <p className="mt-3 t-kpi">
         {animated.toFixed(decimals)}
-        <span
-          className={clsx(
-            "ml-0.5 font-bold text-navy-500",
-            compact ? "text-[0.8rem]" : "text-[0.95rem]"
-          )}
-        >
-          {unit}
-        </span>
+        <span className="t-unit">{unit}</span>
       </p>
-      <div className={clsx("mt-2", compact && "mt-1.5")}>
+
+      <div className="mt-3">
         {delta !== undefined ? (
-          <DeltaBadge
+          <Delta
             value={delta}
             suffix={deltaSuffix}
             goodWhenUp={deltaGoodWhenUp}
+            label="전년 대비"
           />
-        ) : footnote ? (
-          <span className="text-xs text-navy-400">{footnote}</span>
+        ) : note ? (
+          <span className="text-[0.74rem] text-ink-400">{note}</span>
         ) : null}
       </div>
+    </motion.div>
+  );
+}
+
+/** 모바일 / 밀집 영역용 소형 KPI */
+export function MiniKpi({
+  label,
+  value,
+  unit,
+  decimals = 2,
+  delta,
+  accent = "brand",
+  index = 0,
+}: {
+  label: string;
+  value: number;
+  unit: ReactNode;
+  decimals?: number;
+  delta?: number | null;
+  accent?: KpiAccent;
+  index?: number;
+}) {
+  const animated = useCountUp(value);
+  const tone = ACCENTS[accent];
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.36, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
+      className="card-kpi min-w-0 px-3.5 py-3.5"
+    >
+      <span
+        aria-hidden
+        className={clsx(
+          "absolute inset-x-0 top-0 h-[2.5px] bg-gradient-to-r",
+          tone.rail
+        )}
+      />
+      <p className="truncate text-[0.74rem] font-semibold text-ink-500">
+        {label}
+      </p>
+      <p className="mt-1.5 t-kpi-sm">
+        {animated.toFixed(decimals)}
+        <span className="t-unit">{unit}</span>
+      </p>
+      {delta != null ? (
+        <p className="mt-1.5">
+          <Delta value={delta} size="sm" />
+        </p>
+      ) : (
+        <p className="mt-1.5 text-[0.7rem] text-ink-400">—</p>
+      )}
     </motion.div>
   );
 }

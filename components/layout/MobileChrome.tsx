@@ -12,6 +12,7 @@ import { isActivePath, MOBILE_MORE_ITEMS, MOBILE_NAV } from "./nav";
 import { DesktopModeButton } from "./ViewModeToggle";
 import { Sheet } from "@/components/shared/Sheet";
 
+/** 모바일 헤더 — Content보다 눈에 띄지 않도록 낮고 차분하게 */
 export function MobileHeader() {
   const setAlertsOpen = useAppStore((s) => s.setAlertsOpen);
   const readAlertIds = useAppStore((s) => s.readAlertIds);
@@ -20,26 +21,29 @@ export function MobileHeader() {
   ).length;
 
   return (
-    <header className="fixed inset-x-0 top-0 z-40 flex h-[54px] items-center justify-between bg-navy-950 px-4 lg:hidden">
+    <header className="fixed inset-x-0 top-0 z-40 flex h-[52px] items-center justify-between bg-navy-925 px-4 lg:hidden">
       <Link
         href="/dashboard"
         className="flex items-center gap-2"
         aria-label="선진산업 AX 홈"
       >
-        <SunjinMark className="h-7 w-7" />
-        <span className="text-[0.95rem] font-extrabold text-white">
-          {COMPANY.productShort}
+        <SunjinMark className="h-[26px] w-[26px]" />
+        <span className="text-[0.92rem] font-extrabold tracking-[-0.01em] text-white">
+          선진산업
+          <span className="ml-1 text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-navy-300">
+            AX
+          </span>
         </span>
       </Link>
-      <div className="flex items-center gap-1.5">
+      <div className="flex items-center gap-1">
         <button
           onClick={() => setAlertsOpen(true)}
           aria-label={`알림 ${unread}건`}
-          className="relative flex h-10 w-10 items-center justify-center rounded-full text-navy-200 transition-colors hover:text-white"
+          className="relative flex h-11 w-11 items-center justify-center rounded-full text-navy-200 transition-colors active:text-white"
         >
-          <Bell className="h-5 w-5" aria-hidden />
+          <Bell className="h-[1.2rem] w-[1.2rem]" strokeWidth={1.9} aria-hidden />
           {unread > 0 ? (
-            <span className="absolute right-1 top-1 flex h-[1.05rem] min-w-[1.05rem] items-center justify-center rounded-full bg-rose-500 px-1 text-[0.62rem] font-bold text-white">
+            <span className="absolute right-1.5 top-1.5 flex h-[1rem] min-w-[1rem] items-center justify-center rounded-full bg-critical px-1 text-[0.6rem] font-bold text-white">
               {unread}
             </span>
           ) : null}
@@ -47,7 +51,7 @@ export function MobileHeader() {
         <Link
           href="/settings"
           aria-label="설정 및 프로필"
-          className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-teal-500 text-xs font-bold text-white"
+          className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-teal-500 text-[0.72rem] font-bold text-white"
         >
           손
         </Link>
@@ -66,7 +70,7 @@ export function BottomNav() {
     <>
       <nav
         aria-label="모바일 내비게이션"
-        className="fixed inset-x-0 bottom-0 z-50 border-t border-surface-line bg-white/95 pb-safe backdrop-blur lg:hidden"
+        className="fixed inset-x-0 bottom-0 z-50 border-t border-surface-line bg-white/95 pb-safe backdrop-blur-xl lg:hidden"
       >
         <div className="grid h-[var(--bottom-nav-height)] grid-cols-5">
           {MOBILE_NAV.map((item) => {
@@ -77,20 +81,26 @@ export function BottomNav() {
                 key={item.href}
                 href={item.href}
                 aria-current={active ? "page" : undefined}
-                className={clsx(
-                  "flex flex-col items-center justify-center gap-0.5 transition-colors",
-                  active ? "text-brand-600" : "text-navy-400"
-                )}
+                className="relative flex flex-col items-center justify-center gap-[3px]"
               >
+                {active ? (
+                  <span
+                    aria-hidden
+                    className="absolute top-0 h-[2.5px] w-9 rounded-b-full bg-brand-600"
+                  />
+                ) : null}
                 <Icon
-                  className={clsx("h-[1.35rem] w-[1.35rem]", active && "scale-105")}
-                  strokeWidth={active ? 2.4 : 2}
+                  className={clsx(
+                    "h-[1.3rem] w-[1.3rem] transition-colors duration-200",
+                    active ? "text-brand-600" : "text-ink-400"
+                  )}
+                  strokeWidth={active ? 2.3 : 1.9}
                   aria-hidden
                 />
                 <span
                   className={clsx(
-                    "text-[0.66rem]",
-                    active ? "font-bold" : "font-medium"
+                    "text-[0.66rem] leading-none transition-colors duration-200",
+                    active ? "font-bold text-brand-600" : "font-medium text-ink-400"
                   )}
                 >
                   {item.label}
@@ -101,16 +111,26 @@ export function BottomNav() {
           <button
             onClick={() => setMoreOpen(true)}
             aria-label="더보기 메뉴"
-            className={clsx(
-              "flex flex-col items-center justify-center gap-0.5 transition-colors",
-              moreActive ? "text-brand-600" : "text-navy-400"
-            )}
+            className="relative flex flex-col items-center justify-center gap-[3px]"
           >
-            <MoreHorizontal className="h-[1.35rem] w-[1.35rem]" aria-hidden />
+            {moreActive ? (
+              <span
+                aria-hidden
+                className="absolute top-0 h-[2.5px] w-9 rounded-b-full bg-brand-600"
+              />
+            ) : null}
+            <MoreHorizontal
+              className={clsx(
+                "h-[1.3rem] w-[1.3rem]",
+                moreActive ? "text-brand-600" : "text-ink-400"
+              )}
+              strokeWidth={moreActive ? 2.3 : 1.9}
+              aria-hidden
+            />
             <span
               className={clsx(
-                "text-[0.66rem]",
-                moreActive ? "font-bold" : "font-medium"
+                "text-[0.66rem] leading-none",
+                moreActive ? "font-bold text-brand-600" : "font-medium text-ink-400"
               )}
             >
               더보기
@@ -125,7 +145,7 @@ export function BottomNav() {
         title="더보기"
         side="bottom-only"
       >
-        <div className="grid grid-cols-3 gap-3 pb-2">
+        <div className="grid grid-cols-3 gap-2.5">
           {MOBILE_MORE_ITEMS.map((item) => {
             const Icon = item.icon;
             return (
@@ -133,21 +153,26 @@ export function BottomNav() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setMoreOpen(false)}
-                className="flex flex-col items-center gap-2 rounded-card border border-surface-line bg-surface-soft px-3 py-4 text-navy-700 transition-colors hover:border-brand-200 hover:bg-brand-50"
+                className="card-action tap flex flex-col items-center gap-2 px-3 py-4"
               >
-                <Icon className="h-6 w-6 text-brand-600" aria-hidden />
-                <span className="text-[0.8rem] font-semibold">{item.label}</span>
+                <span className="flex h-10 w-10 items-center justify-center rounded-[12px] bg-brand-50">
+                  <Icon className="h-[1.15rem] w-[1.15rem] text-brand-600" aria-hidden />
+                </span>
+                <span className="text-[0.8rem] font-bold text-ink-800">
+                  {item.label}
+                </span>
               </Link>
             );
           })}
         </div>
-        <div className="mt-4 border-t border-surface-line pt-4">
+
+        <div className="mt-5 border-t border-surface-line pt-5">
           <DesktopModeButton onSwitched={() => setMoreOpen(false)} />
-          <p className="mt-2 text-center text-[0.7rem] leading-relaxed text-navy-400">
+          <p className="mt-2.5 text-center text-[0.72rem] leading-relaxed text-ink-400">
             휴대폰에서도 PC와 동일한 화면으로 볼 수 있습니다.
           </p>
         </div>
-        <p className="mt-4 border-t border-surface-line pt-3 text-center text-[0.7rem] text-navy-400">
+        <p className="mt-5 border-t border-surface-line pt-4 text-center text-[0.72rem] text-ink-400">
           {COMPANY.ceoTitle} · {COMPANY.credit}
         </p>
       </Sheet>

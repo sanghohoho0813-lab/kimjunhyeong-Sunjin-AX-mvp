@@ -58,25 +58,25 @@ export function AlertDrawer() {
                     <span
                       className={clsx(
                         "inline-flex shrink-0 rounded-full px-2 py-0.5 text-[0.66rem] font-bold",
-                        CATEGORY_TONE[alert.category] ?? "bg-navy-50 text-navy-500"
+                        CATEGORY_TONE[alert.category] ?? "bg-surface-sunken text-ink-500"
                       )}
                     >
                       {alert.category}
                     </span>
-                    <span className="text-[0.68rem] text-navy-400">
+                    <span className="text-[0.68rem] text-ink-400">
                       {formatDate(alert.date)}
                     </span>
                   </div>
-                  <p className="mt-1.5 text-sm font-bold leading-snug text-navy-900">
+                  <p className="mt-1.5 text-sm font-bold leading-snug text-ink-900">
                     {alert.title}
                   </p>
-                  <p className="mt-1 text-[0.8rem] leading-relaxed text-navy-500">
+                  <p className="mt-1 text-[0.8rem] leading-relaxed text-ink-500">
                     {alert.body}
                   </p>
                 </div>
                 {alert.href ? (
                   <ChevronRight
-                    className="mt-1 h-4 w-4 shrink-0 text-navy-300"
+                    className="mt-1 h-4 w-4 shrink-0 text-ink-300"
                     aria-hidden
                   />
                 ) : null}

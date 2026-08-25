@@ -12,7 +12,7 @@ import Link from "next/link";
 import { notFound, useParams } from "next/navigation";
 import { useMemo, useRef, useState } from "react";
 import { LeatherSwatch } from "@/components/inventory/LeatherSwatch";
-import { DemoBadge, EmptyState, ScoreBadge, StatusBadge } from "@/components/shared/ui";
+import { DemoBadge, EmptyState, Score, Badge } from "@/components/shared/ui";
 import {
   getCustomer,
   getProduct,
@@ -66,7 +66,7 @@ export default function InventoryDetailPage() {
     <div>
       <Link
         href="/inventory"
-        className="mb-3 inline-flex items-center gap-1 text-[0.8rem] font-semibold text-navy-400 transition-colors hover:text-navy-700"
+        className="mb-3 inline-flex items-center gap-1 text-[0.8rem] font-semibold text-ink-400 transition-colors hover:text-ink-700"
       >
         <ArrowLeft className="h-4 w-4" aria-hidden /> 재고 목록
       </Link>
@@ -76,7 +76,7 @@ export default function InventoryDetailPage() {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
-        className="card p-5"
+        className="card-data p-6"
       >
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
           <LeatherSwatch
@@ -86,13 +86,13 @@ export default function InventoryDetailPage() {
           />
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
-              <h1 className="text-[1.3rem] font-extrabold text-navy-900 lg:text-[1.5rem]">
+              <h1 className="text-[1.3rem] font-extrabold text-ink-900 lg:text-[1.5rem]">
                 {product.name}
               </h1>
-              <StatusBadge status={stats.status} />
+              <Badge>{stats.status}</Badge>
               <DemoBadge />
             </div>
-            <p className="mt-1 text-[0.8rem] text-navy-500">
+            <p className="mt-1 text-[0.8rem] text-ink-500">
               {product.code} · {product.grade} Grade · {product.finish}
             </p>
             <dl className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -113,12 +113,12 @@ export default function InventoryDetailPage() {
                 },
               ].map((item) => (
                 <div key={item.label}>
-                  <dt className="text-[0.7rem] text-navy-400">{item.label}</dt>
+                  <dt className="text-[0.7rem] text-ink-400">{item.label}</dt>
                   <dd
                     className={
                       item.warn
                         ? "mt-0.5 text-[0.95rem] font-bold tabular-nums text-amber-600"
-                        : "mt-0.5 text-[0.95rem] font-bold tabular-nums text-navy-900"
+                        : "mt-0.5 text-[0.95rem] font-bold tabular-nums text-ink-900"
                     }
                   >
                     {item.value}
@@ -150,7 +150,7 @@ export default function InventoryDetailPage() {
           </button>
           <Link
             href={`/quotes/new?product=${product.id}`}
-            className="flex h-12 flex-1 items-center justify-center gap-2 rounded-btn border border-surface-line bg-white px-5 text-sm font-bold text-navy-700 transition-colors hover:border-navy-300 sm:flex-none"
+            className="flex h-12 flex-1 items-center justify-center gap-2 rounded-btn border border-surface-line bg-white px-5 text-sm font-bold text-ink-700 transition-colors hover:border-ink-300 sm:flex-none"
           >
             <FilePlus2 className="h-4 w-4 text-brand-600" aria-hidden />
             견적 만들기
@@ -170,12 +170,12 @@ export default function InventoryDetailPage() {
               className="overflow-hidden"
               aria-label="판매 가능 거래처 추천"
             >
-              <div className="card mt-4 border-brand-100 bg-gradient-to-b from-brand-50/60 to-white p-5">
-                <h2 className="flex items-center gap-1.5 text-[1.02rem] font-bold text-navy-900">
+              <div className="card-insight mt-5 p-6">
+                <h2 className="flex items-center gap-1.5 text-[1.02rem] font-bold text-ink-900">
                   <Sparkles className="h-4 w-4 text-brand-600" aria-hidden />
                   이 피혁을 구매할 가능성이 높은 거래처
                 </h2>
-                <p className="mt-1 text-[0.75rem] text-navy-500">
+                <p className="mt-1 text-[0.75rem] text-ink-500">
                   과거 구매 이력·선호 스펙·재구매 타이밍을 조합한 AX 추천
                   점수입니다.
                 </p>
@@ -195,12 +195,12 @@ export default function InventoryDetailPage() {
                       >
                         <div className="flex flex-wrap items-center justify-between gap-2">
                           <div className="flex items-center gap-3">
-                            <ScoreBadge score={match.score} size="md" />
+                            <Score value={match.score} size="md" />
                             <div>
-                              <p className="font-bold text-navy-900">
+                              <p className="font-bold text-ink-900">
                                 {customer.name}
                               </p>
-                              <p className="text-[0.7rem] text-navy-400">
+                              <p className="text-[0.7rem] text-ink-400">
                                 {customer.segment} · 구매 가능성 {match.label}
                               </p>
                             </div>
@@ -208,7 +208,7 @@ export default function InventoryDetailPage() {
                           <div className="flex gap-2">
                             <Link
                               href={`/customers/${customer.id}`}
-                              className="flex h-9 items-center gap-0.5 rounded-btn border border-surface-line bg-white px-3 text-[0.78rem] font-semibold text-navy-600 transition-colors hover:border-navy-300"
+                              className="flex h-9 items-center gap-0.5 rounded-btn border border-surface-line bg-white px-3 text-[0.78rem] font-semibold text-ink-600 transition-colors hover:border-ink-300"
                             >
                               거래처 보기
                             </Link>
@@ -225,7 +225,7 @@ export default function InventoryDetailPage() {
                             {match.reasons.map((reason, j) => (
                               <li
                                 key={j}
-                                className="flex items-start gap-2 text-[0.78rem] leading-relaxed text-navy-600"
+                                className="flex items-start gap-2 text-[0.78rem] leading-relaxed text-ink-600"
                               >
                                 <span
                                   className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-teal-400"
@@ -240,7 +240,7 @@ export default function InventoryDetailPage() {
                           {match.breakdown.map((b) => (
                             <span
                               key={b.key}
-                              className="rounded-full bg-surface px-2.5 py-1 text-[0.68rem] font-semibold tabular-nums text-navy-500"
+                              className="rounded-full bg-surface px-2.5 py-1 text-[0.68rem] font-semibold tabular-nums text-ink-500"
                             >
                               {b.label} {b.earned}/{b.max}
                             </span>
@@ -262,28 +262,28 @@ export default function InventoryDetailPage() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.05 }}
-          className="card p-5"
+          className="card-data p-6"
           aria-label="제품 정보"
         >
-          <h2 className="text-[1.02rem] font-bold text-navy-900">제품 정보</h2>
+          <h2 className="text-[1.02rem] font-bold text-ink-900">제품 정보</h2>
           <dl className="mt-3 space-y-2.5">
             {infoRows.map((row) => (
               <div
                 key={row.label}
                 className="flex items-center justify-between gap-3 text-[0.82rem]"
               >
-                <dt className="text-navy-400">{row.label}</dt>
-                <dd className="font-semibold text-navy-800">{row.value}</dd>
+                <dt className="text-ink-400">{row.label}</dt>
+                <dd className="font-semibold text-ink-800">{row.value}</dd>
               </div>
             ))}
             <div className="flex items-center justify-between gap-3 border-t border-surface-line pt-2.5 text-[0.82rem]">
-              <dt className="text-navy-400">매입 단가</dt>
-              <dd className="font-bold tabular-nums text-navy-900">
+              <dt className="text-ink-400">매입 단가</dt>
+              <dd className="font-bold tabular-nums text-ink-900">
                 {formatNumber(product.costPerUnit)}원/평
               </dd>
             </div>
             <div className="flex items-center justify-between gap-3 text-[0.82rem]">
-              <dt className="text-navy-400">권장 판매가</dt>
+              <dt className="text-ink-400">권장 판매가</dt>
               <dd className="font-bold tabular-nums text-brand-700">
                 {formatNumber(product.listPricePerUnit)}원/평
               </dd>
@@ -296,10 +296,10 @@ export default function InventoryDetailPage() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.1 }}
-          className="card p-5"
+          className="card-data p-6"
           aria-label="판매 이력"
         >
-          <h2 className="text-[1.02rem] font-bold text-navy-900">판매 이력</h2>
+          <h2 className="text-[1.02rem] font-bold text-ink-900">판매 이력</h2>
           {txs.length === 0 ? (
             <div className="mt-3">
               <EmptyState
@@ -316,15 +316,15 @@ export default function InventoryDetailPage() {
                     <div className="flex items-center justify-between gap-2">
                       <Link
                         href={`/customers/${tx.customerId}`}
-                        className="truncate text-[0.85rem] font-semibold text-navy-800 transition-colors hover:text-brand-700"
+                        className="truncate text-[0.85rem] font-semibold text-ink-800 transition-colors hover:text-brand-700"
                       >
                         {customer?.name ?? tx.customerId}
                       </Link>
-                      <span className="shrink-0 text-[0.82rem] font-bold tabular-nums text-navy-900">
+                      <span className="shrink-0 text-[0.82rem] font-bold tabular-nums text-ink-900">
                         {formatKRW(tx.qty * tx.unitPrice)}
                       </span>
                     </div>
-                    <p className="mt-0.5 text-[0.7rem] tabular-nums text-navy-400">
+                    <p className="mt-0.5 text-[0.7rem] tabular-nums text-ink-400">
                       {formatDate(tx.date)} · {formatNumber(tx.qty)}평 ×{" "}
                       {formatNumber(tx.unitPrice)}원
                     </p>
@@ -340,10 +340,10 @@ export default function InventoryDetailPage() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.15 }}
-          className="card p-5"
+          className="card-data p-6"
           aria-label="유사 피혁"
         >
-          <h2 className="text-[1.02rem] font-bold text-navy-900">유사 피혁</h2>
+          <h2 className="text-[1.02rem] font-bold text-ink-900">유사 피혁</h2>
           {similar.length === 0 ? (
             <div className="mt-3">
               <EmptyState message="유사한 재고가 없습니다." />
@@ -360,15 +360,15 @@ export default function InventoryDetailPage() {
                     >
                       <LeatherSwatch color={p.color} className="h-10 w-10" />
                       <span className="min-w-0 flex-1">
-                        <span className="block truncate text-[0.82rem] font-bold text-navy-900">
+                        <span className="block truncate text-[0.82rem] font-bold text-ink-900">
                           {p.name}
                         </span>
-                        <span className="block text-[0.7rem] tabular-nums text-navy-400">
+                        <span className="block text-[0.7rem] tabular-nums text-ink-400">
                           {formatNumber(p.stockQty)}평 · {s.idleDays}일 무출고
                         </span>
                       </span>
                       <ChevronRight
-                        className="h-4 w-4 shrink-0 text-navy-300"
+                        className="h-4 w-4 shrink-0 text-ink-300"
                         aria-hidden
                       />
                     </Link>

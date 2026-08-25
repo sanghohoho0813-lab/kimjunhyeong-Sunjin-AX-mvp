@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useMemo, useState } from "react";
 import { LeatherSwatch } from "@/components/inventory/LeatherSwatch";
-import { ScoreBadge } from "@/components/shared/ui";
+import { Score } from "@/components/shared/ui";
 import { getCustomerStats, getProduct, getProductStats } from "@/lib/data/derived";
 import { CUSTOMERS, PRODUCTS } from "@/lib/data/seed";
 import {
@@ -79,16 +79,16 @@ function QuoteBuilder() {
     <div className="pb-24 lg:pb-0">
       <Link
         href="/quotes"
-        className="mb-3 inline-flex items-center gap-1 text-[0.8rem] font-semibold text-navy-400 transition-colors hover:text-navy-700"
+        className="mb-3 inline-flex items-center gap-1 text-[0.8rem] font-semibold text-ink-400 transition-colors hover:text-ink-700"
       >
         <ArrowLeft className="h-4 w-4" aria-hidden /> 견적 목록
       </Link>
 
       <div className="mb-5">
-        <h1 className="text-[1.35rem] font-extrabold text-navy-900 lg:text-[1.6rem]">
+        <h1 className="text-[1.35rem] font-extrabold text-ink-900 lg:text-[1.6rem]">
           추천 견적 생성
         </h1>
-        <p className="mt-1 text-[0.82rem] text-navy-500">
+        <p className="mt-1 text-[0.82rem] text-ink-500">
           거래처와 제품을 선택하면 과거 단가와 수량 구간을 반영한 추천가가
           계산됩니다. 가격은 직접 수정할 수 있습니다.
         </p>
@@ -100,12 +100,12 @@ function QuoteBuilder() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className="card space-y-5 p-5 lg:col-span-3"
+          className="card-data space-y-6 p-6 lg:col-span-3"
         >
           <div>
             <label
               htmlFor="quote-customer"
-              className="mb-1.5 block text-[0.8rem] font-bold text-navy-700"
+              className="mb-1.5 block text-[0.8rem] font-bold text-ink-700"
             >
               거래처
             </label>
@@ -116,7 +116,7 @@ function QuoteBuilder() {
                 setCustomerId(e.target.value);
                 setPriceTouched(false);
               }}
-              className="h-12 w-full rounded-btn border border-surface-line bg-white px-3.5 text-sm font-semibold text-navy-800 focus:border-brand-400"
+              className="h-12 w-full rounded-btn border border-surface-line bg-white px-3.5 text-sm font-semibold text-ink-800 focus:border-brand-400"
             >
               <option value="">거래처를 선택하세요</option>
               {CUSTOMERS.map((c) => (
@@ -126,7 +126,7 @@ function QuoteBuilder() {
               ))}
             </select>
             {customer ? (
-              <p className="mt-1.5 text-[0.72rem] text-navy-400">
+              <p className="mt-1.5 text-[0.72rem] text-ink-400">
                 누적 {formatKRW(getCustomerStats(customer.id).totalRevenue)} ·
                 평균 주문 {formatKRW(getCustomerStats(customer.id).avgOrderValue)}
               </p>
@@ -136,7 +136,7 @@ function QuoteBuilder() {
           <div>
             <label
               htmlFor="quote-product"
-              className="mb-1.5 block text-[0.8rem] font-bold text-navy-700"
+              className="mb-1.5 block text-[0.8rem] font-bold text-ink-700"
             >
               제품 (보유 재고)
             </label>
@@ -147,7 +147,7 @@ function QuoteBuilder() {
                 setProductId(e.target.value);
                 setPriceTouched(false);
               }}
-              className="h-12 w-full rounded-btn border border-surface-line bg-white px-3.5 text-sm font-semibold text-navy-800 focus:border-brand-400"
+              className="h-12 w-full rounded-btn border border-surface-line bg-white px-3.5 text-sm font-semibold text-ink-800 focus:border-brand-400"
             >
               <option value="">제품을 선택하세요</option>
               {PRODUCTS.map((p) => (
@@ -157,10 +157,10 @@ function QuoteBuilder() {
               ))}
             </select>
             {product ? (
-              <div className="mt-2 flex items-center gap-3 rounded-xl bg-surface-soft p-3">
+              <div className="mt-2 flex items-center gap-3 rounded-xl bg-surface-subtle p-3">
                 <LeatherSwatch color={product.color} className="h-10 w-10" />
-                <div className="min-w-0 text-[0.75rem] text-navy-500">
-                  <p className="font-bold text-navy-800">{product.code}</p>
+                <div className="min-w-0 text-[0.75rem] text-ink-500">
+                  <p className="font-bold text-ink-800">{product.code}</p>
                   <p className="tabular-nums">
                     매입가 {formatNumber(product.costPerUnit)}원 · 권장가{" "}
                     {formatNumber(product.listPricePerUnit)}원 · 무출고{" "}
@@ -175,7 +175,7 @@ function QuoteBuilder() {
             <div>
               <label
                 htmlFor="quote-qty"
-                className="mb-1.5 block text-[0.8rem] font-bold text-navy-700"
+                className="mb-1.5 block text-[0.8rem] font-bold text-ink-700"
               >
                 수량 (평)
               </label>
@@ -183,7 +183,7 @@ function QuoteBuilder() {
                 <button
                   onClick={() => setQty((q) => Math.max(10, q - 50))}
                   aria-label="수량 50 감소"
-                  className="w-12 shrink-0 text-navy-500 transition-colors hover:bg-surface"
+                  className="w-12 shrink-0 text-ink-500 transition-colors hover:bg-surface"
                 >
                   <Minus className="mx-auto h-4 w-4" />
                 </button>
@@ -198,18 +198,18 @@ function QuoteBuilder() {
                     const v = Number(e.target.value);
                     setQty(Number.isFinite(v) ? Math.max(0, Math.min(v, maxQty)) : 0);
                   }}
-                  className="w-full border-x border-surface-line text-center text-base font-bold tabular-nums text-navy-900 focus:outline-none"
+                  className="w-full border-x border-surface-line text-center text-base font-bold tabular-nums text-ink-900 focus:outline-none"
                 />
                 <button
                   onClick={() => setQty((q) => Math.min(maxQty, q + 50))}
                   aria-label="수량 50 증가"
-                  className="w-12 shrink-0 text-navy-500 transition-colors hover:bg-surface"
+                  className="w-12 shrink-0 text-ink-500 transition-colors hover:bg-surface"
                 >
                   <Plus className="mx-auto h-4 w-4" />
                 </button>
               </div>
               {product ? (
-                <p className="mt-1.5 text-[0.72rem] text-navy-400">
+                <p className="mt-1.5 text-[0.72rem] text-ink-400">
                   보유 재고 {formatNumber(product.stockQty)}평 이내
                 </p>
               ) : null}
@@ -218,7 +218,7 @@ function QuoteBuilder() {
             <div>
               <label
                 htmlFor="quote-price"
-                className="mb-1.5 block text-[0.8rem] font-bold text-navy-700"
+                className="mb-1.5 block text-[0.8rem] font-bold text-ink-700"
               >
                 판매 단가 (원/평)
               </label>
@@ -233,7 +233,7 @@ function QuoteBuilder() {
                   const v = Number(e.target.value);
                   setPrice(Number.isFinite(v) ? v : 0);
                 }}
-                className="h-12 w-full rounded-btn border border-surface-line bg-white px-3.5 text-right text-base font-bold tabular-nums text-navy-900 focus:border-brand-400"
+                className="h-12 w-full rounded-btn border border-surface-line bg-white px-3.5 text-right text-base font-bold tabular-nums text-ink-900 focus:border-brand-400"
               />
               {recommendation && priceTouched ? (
                 <button
@@ -265,7 +265,7 @@ function QuoteBuilder() {
                 {recommendation.notes.map((note, i) => (
                   <li
                     key={i}
-                    className="flex items-start gap-2 text-[0.75rem] leading-relaxed text-navy-600"
+                    className="flex items-start gap-2 text-[0.75rem] leading-relaxed text-ink-600"
                   >
                     <span
                       className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-brand-400"
@@ -274,7 +274,7 @@ function QuoteBuilder() {
                     {note}
                   </li>
                 ))}
-                <li className="flex items-start gap-2 text-[0.75rem] leading-relaxed text-navy-600">
+                <li className="flex items-start gap-2 text-[0.75rem] leading-relaxed text-ink-600">
                   <span
                     className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-brand-400"
                     aria-hidden
@@ -285,15 +285,15 @@ function QuoteBuilder() {
               </ul>
               {match && match.score >= 35 ? (
                 <div className="mt-3 flex items-center gap-2 border-t border-brand-100 pt-3">
-                  <ScoreBadge score={match.score} size="sm" />
-                  <span className="text-[0.72rem] font-semibold text-navy-500">
+                  <Score value={match.score} size="sm" />
+                  <span className="text-[0.72rem] font-semibold text-ink-500">
                     이 거래처의 구매 가능성 지수 {match.score}점 ({match.label})
                   </span>
                 </div>
               ) : null}
             </div>
           ) : (
-            <p className="rounded-xl bg-surface-soft p-4 text-[0.8rem] text-navy-400">
+            <p className="rounded-xl bg-surface-subtle p-4 text-[0.8rem] text-ink-400">
               거래처와 제품을 선택하면 추천 단가와 근거가 표시됩니다.
             </p>
           )}
@@ -306,25 +306,25 @@ function QuoteBuilder() {
           transition={{ duration: 0.3, delay: 0.08 }}
           className="lg:col-span-2"
         >
-          <div className="card p-5 lg:sticky lg:top-6">
-            <h2 className="text-[1.02rem] font-bold text-navy-900">
+          <div className="card-data p-6 lg:sticky lg:top-6">
+            <h2 className="text-[1.02rem] font-bold text-ink-900">
               예상 매출 · 마진
             </h2>
             <dl className="mt-4 space-y-3">
               <div className="flex items-center justify-between">
-                <dt className="text-[0.82rem] text-navy-500">예상 매출</dt>
-                <dd className="text-[1.25rem] font-extrabold tabular-nums text-navy-900">
+                <dt className="text-[0.82rem] text-ink-500">예상 매출</dt>
+                <dd className="text-[1.25rem] font-extrabold tabular-nums text-ink-900">
                   {totals ? formatKRW(totals.revenue) : "—"}
                 </dd>
               </div>
               <div className="flex items-center justify-between">
-                <dt className="text-[0.82rem] text-navy-500">예상 원가</dt>
-                <dd className="text-[0.95rem] font-bold tabular-nums text-navy-600">
+                <dt className="text-[0.82rem] text-ink-500">예상 원가</dt>
+                <dd className="text-[0.95rem] font-bold tabular-nums text-ink-600">
                   {totals ? formatKRW(totals.cost) : "—"}
                 </dd>
               </div>
               <div className="flex items-center justify-between border-t border-surface-line pt-3">
-                <dt className="text-[0.82rem] font-bold text-navy-700">
+                <dt className="text-[0.82rem] font-bold text-ink-700">
                   예상 마진
                 </dt>
                 <dd className="text-[1.1rem] font-extrabold tabular-nums text-teal-600">
@@ -332,7 +332,7 @@ function QuoteBuilder() {
                 </dd>
               </div>
               <div className="flex items-center justify-between">
-                <dt className="text-[0.82rem] text-navy-500">예상 마진율</dt>
+                <dt className="text-[0.82rem] text-ink-500">예상 마진율</dt>
                 <dd
                   className={clsx(
                     "text-[0.95rem] font-bold tabular-nums",
@@ -359,13 +359,13 @@ function QuoteBuilder() {
                 "mt-5 hidden h-12 w-full items-center justify-center gap-2 rounded-btn text-sm font-bold text-white transition-colors lg:flex",
                 canSave
                   ? "bg-brand-600 hover:bg-brand-700"
-                  : "cursor-not-allowed bg-navy-200"
+                  : "cursor-not-allowed bg-ink-300"
               )}
             >
               <Check className="h-4 w-4" aria-hidden />
               견적 저장
             </button>
-            <p className="mt-3 hidden text-center text-[0.68rem] text-navy-400 lg:block">
+            <p className="mt-3 hidden text-center text-[0.68rem] text-ink-400 lg:block">
               추천가는 시연용 참고 가격이며, 저장 후 목록에서 확인할 수 있습니다.
             </p>
           </div>
@@ -376,8 +376,8 @@ function QuoteBuilder() {
       <div className="fixed inset-x-0 bottom-[calc(var(--bottom-nav-height)+env(safe-area-inset-bottom))] z-40 border-t border-surface-line bg-white/95 px-4 py-3 backdrop-blur lg:hidden">
         <div className="flex items-center justify-between gap-3">
           <div className="min-w-0">
-            <p className="text-[0.68rem] text-navy-400">예상 매출 / 마진율</p>
-            <p className="truncate text-[0.95rem] font-extrabold tabular-nums text-navy-900">
+            <p className="text-[0.68rem] text-ink-400">예상 매출 / 마진율</p>
+            <p className="truncate text-[0.95rem] font-extrabold tabular-nums text-ink-900">
               {totals ? formatKRW(totals.revenue) : "—"}
               <span
                 className={clsx(
@@ -394,7 +394,7 @@ function QuoteBuilder() {
             disabled={!canSave}
             className={clsx(
               "flex h-12 shrink-0 items-center gap-1.5 rounded-btn px-6 text-sm font-bold text-white transition-colors",
-              canSave ? "bg-brand-600 hover:bg-brand-700" : "cursor-not-allowed bg-navy-200"
+              canSave ? "bg-brand-600 hover:bg-brand-700" : "cursor-not-allowed bg-ink-300"
             )}
           >
             <Check className="h-4 w-4" aria-hidden />

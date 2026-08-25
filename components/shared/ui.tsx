@@ -1,149 +1,180 @@
 "use client";
 
 import { clsx } from "@/lib/utils/clsx";
-import { TrendingDown, TrendingUp, Minus } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, Minus } from "lucide-react";
 import type { ReactNode } from "react";
 
-export function SectionTitle({
+export function SectionHead({
   title,
+  desc,
   right,
   className,
 }: {
   title: ReactNode;
+  desc?: ReactNode;
   right?: ReactNode;
   className?: string;
 }) {
   return (
-    <div className={clsx("mb-3 flex items-center justify-between gap-2", className)}>
-      <h2 className="text-[1.02rem] font-bold text-navy-900">{title}</h2>
-      {right}
+    <div
+      className={clsx("mb-3.5 flex items-end justify-between gap-3", className)}
+    >
+      <div className="min-w-0">
+        <h2 className="t-section">{title}</h2>
+        {desc ? <p className="mt-1 t-caption">{desc}</p> : null}
+      </div>
+      {right ? <div className="shrink-0">{right}</div> : null}
     </div>
   );
 }
 
-/** 증감 표시 배지 */
-export function DeltaBadge({
+/** 증감 표시 — 숫자 옆 보조 정보 */
+export function Delta({
   value,
   suffix = "%",
   goodWhenUp = true,
-  label = "전년 대비",
+  label,
+  size = "md",
 }: {
   value: number | null;
   suffix?: string;
   goodWhenUp?: boolean;
   label?: string;
+  size?: "sm" | "md";
 }) {
   if (value == null) {
     return (
-      <span className="inline-flex items-center gap-1 text-xs text-navy-400">
-        <Minus className="h-3 w-3" aria-hidden /> 비교 데이터 없음
+      <span className="inline-flex items-center gap-1 text-[0.76rem] text-ink-400">
+        <Minus className="h-3 w-3" aria-hidden /> 비교 없음
       </span>
     );
   }
   const up = value >= 0;
   const good = goodWhenUp ? up : !up;
-  return (
-    <span
-      className={clsx(
-        "inline-flex items-center gap-1 text-xs font-semibold tabular-nums",
-        good ? "text-emerald-600" : "text-rose-600"
-      )}
-    >
-      <span className="font-normal text-navy-400">{label}</span>
-      {up ? (
-        <TrendingUp className="h-3.5 w-3.5" aria-hidden />
-      ) : (
-        <TrendingDown className="h-3.5 w-3.5" aria-hidden />
-      )}
-      {up ? "+" : ""}
-      {Math.abs(value) >= 100 ? Math.round(value).toLocaleString() : value.toFixed(1)}
-      {suffix}
-    </span>
-  );
-}
+  const Icon = up ? ArrowUpRight : ArrowDownRight;
+  const magnitude =
+    Math.abs(value) >= 100
+      ? Math.round(Math.abs(value)).toLocaleString()
+      : Math.abs(value).toFixed(1);
 
-const STATUS_STYLES: Record<string, string> = {
-  // 거래처 상태
-  안정: "bg-emerald-50 text-emerald-700 border-emerald-100",
-  "재구매 예상": "bg-brand-50 text-brand-700 border-brand-100",
-  "재접촉 필요": "bg-amber-50 text-amber-700 border-amber-100",
-  "휴면 가능": "bg-navy-50 text-navy-500 border-navy-100",
-  신규: "bg-teal-50 text-teal-700 border-teal-100",
-  // 재고 상태
-  정상: "bg-emerald-50 text-emerald-700 border-emerald-100",
-  관심: "bg-amber-50 text-amber-700 border-amber-100",
-  장기재고: "bg-rose-50 text-rose-600 border-rose-100",
-  // 견적 상태
-  작성중: "bg-navy-50 text-navy-500 border-navy-100",
-  발송: "bg-brand-50 text-brand-700 border-brand-100",
-  검토: "bg-amber-50 text-amber-700 border-amber-100",
-  승인: "bg-emerald-50 text-emerald-700 border-emerald-100",
-  보류: "bg-rose-50 text-rose-600 border-rose-100",
-  // 우선순위
-  긴급: "bg-rose-50 text-rose-600 border-rose-100",
-  높음: "bg-amber-50 text-amber-700 border-amber-100",
-  보통: "bg-navy-50 text-navy-500 border-navy-100",
-  // 재무 신호
-  양호: "bg-emerald-50 text-emerald-700 border-emerald-100",
-  관찰: "bg-navy-50 text-navy-500 border-navy-100",
-  주의: "bg-amber-50 text-amber-700 border-amber-100",
-};
-
-export function StatusBadge({
-  status,
-  className,
-}: {
-  status: string;
-  className?: string;
-}) {
-  return (
-    <span
-      className={clsx(
-        "inline-flex shrink-0 items-center whitespace-nowrap rounded-full border px-2.5 py-0.5 text-xs font-semibold",
-        STATUS_STYLES[status] ?? "bg-navy-50 text-navy-500 border-navy-100",
-        className
-      )}
-    >
-      {status}
-    </span>
-  );
-}
-
-/** 점수 배지 — 재구매 가능성 / AX 매칭 점수 */
-export function ScoreBadge({
-  score,
-  label,
-  size = "md",
-}: {
-  score: number;
-  label?: string;
-  size?: "sm" | "md" | "lg";
-}) {
-  const tone =
-    score >= 75
-      ? "bg-brand-600 text-white"
-      : score >= 55
-        ? "bg-teal-500 text-white"
-        : score >= 35
-          ? "bg-amber-100 text-amber-800"
-          : "bg-navy-100 text-navy-500";
   return (
     <span className="inline-flex items-center gap-1.5">
       <span
         className={clsx(
-          "inline-flex items-center justify-center rounded-full font-bold tabular-nums",
-          tone,
-          size === "lg"
-            ? "h-11 w-11 text-base"
-            : size === "md"
-              ? "h-9 w-9 text-sm"
-              : "h-7 w-7 text-xs"
+          "inline-flex items-center gap-0.5 rounded-md px-1.5 py-0.5 font-bold tabular-nums",
+          size === "sm" ? "text-[0.7rem]" : "text-[0.76rem]",
+          good
+            ? "bg-positive-soft text-positive"
+            : "bg-critical-soft text-critical"
         )}
       >
-        {score}
+        <Icon className="h-3 w-3" aria-hidden />
+        {up ? "+" : "−"}
+        {magnitude}
+        {suffix}
       </span>
       {label ? (
-        <span className="text-xs font-semibold text-navy-500">{label}</span>
+        <span className="text-[0.72rem] text-ink-400">{label}</span>
+      ) : null}
+    </span>
+  );
+}
+
+const TONES: Record<string, string> = {
+  // 거래처 상태
+  안정: "bg-positive-soft text-positive",
+  "재구매 예상": "bg-brand-50 text-brand-700",
+  "재접촉 필요": "bg-warning-soft text-warning",
+  "휴면 가능": "bg-ink-200/60 text-ink-500",
+  신규: "bg-teal-50 text-teal-700",
+  // 재고 상태
+  정상: "bg-positive-soft text-positive",
+  관심: "bg-warning-soft text-warning",
+  장기재고: "bg-critical-soft text-critical",
+  // 견적 상태
+  작성중: "bg-ink-200/60 text-ink-500",
+  발송: "bg-brand-50 text-brand-700",
+  검토: "bg-warning-soft text-warning",
+  승인: "bg-positive-soft text-positive",
+  보류: "bg-critical-soft text-critical",
+  // 우선순위
+  긴급: "bg-critical-soft text-critical",
+  높음: "bg-warning-soft text-warning",
+  보통: "bg-ink-200/60 text-ink-500",
+  // 재무 신호
+  양호: "bg-positive-soft text-positive",
+  관찰: "bg-ink-200/60 text-ink-500",
+  주의: "bg-warning-soft text-warning",
+};
+
+export function Badge({
+  children,
+  tone,
+  className,
+  dot = false,
+}: {
+  children: ReactNode;
+  tone?: string;
+  className?: string;
+  dot?: boolean;
+}) {
+  const key = typeof children === "string" ? children : "";
+  return (
+    <span
+      className={clsx(
+        "inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-md px-2 py-1 text-[0.72rem] font-bold leading-none",
+        TONES[tone ?? key] ?? "bg-ink-200/60 text-ink-500",
+        className
+      )}
+    >
+      {dot ? (
+        <span
+          aria-hidden
+          className="h-1.5 w-1.5 rounded-full bg-current opacity-70"
+        />
+      ) : null}
+      {children}
+    </span>
+  );
+}
+
+/** 점수 표시 — 재구매 가능성 / AX 매칭 */
+export function Score({
+  value,
+  label,
+  size = "md",
+}: {
+  value: number;
+  label?: string;
+  size?: "sm" | "md" | "lg";
+}) {
+  const tone =
+    value >= 75
+      ? "bg-brand-600 text-white"
+      : value >= 55
+        ? "bg-teal-500 text-white"
+        : value >= 35
+          ? "bg-warning-soft text-warning"
+          : "bg-ink-200 text-ink-500";
+  return (
+    <span className="inline-flex items-center gap-2">
+      <span
+        className={clsx(
+          "inline-flex items-center justify-center rounded-xl font-extrabold tabular-nums",
+          tone,
+          size === "lg"
+            ? "h-12 w-12 text-[1.05rem]"
+            : size === "md"
+              ? "h-9 w-9 text-[0.85rem]"
+              : "h-7 w-7 text-[0.74rem]"
+        )}
+      >
+        {value}
+      </span>
+      {label ? (
+        <span className="text-[0.76rem] font-semibold text-ink-500">
+          {label}
+        </span>
       ) : null}
     </span>
   );
@@ -157,9 +188,9 @@ export function EmptyState({
   hint?: string;
 }) {
   return (
-    <div className="flex flex-col items-center justify-center gap-1 rounded-card border border-dashed border-surface-line bg-surface-soft px-6 py-10 text-center">
-      <p className="text-sm font-medium text-navy-500">{message}</p>
-      {hint ? <p className="text-xs text-navy-400">{hint}</p> : null}
+    <div className="flex flex-col items-center justify-center gap-1.5 rounded-card border border-dashed border-surface-line-strong bg-surface-subtle px-6 py-12 text-center">
+      <p className="text-[0.9rem] font-semibold text-ink-600">{message}</p>
+      {hint ? <p className="t-caption">{hint}</p> : null}
     </div>
   );
 }
@@ -168,12 +199,42 @@ export function DemoBadge({ className }: { className?: string }) {
   return (
     <span
       className={clsx(
-        "inline-flex items-center rounded-full border border-gold-200 bg-gold-100/60 px-2 py-0.5 text-[0.68rem] font-semibold tracking-wide text-gold-700",
+        "inline-flex items-center gap-1 rounded-md border border-gold-200 bg-gold-100/70 px-2 py-0.5 text-[0.66rem] font-bold tracking-wide text-gold-600",
         className
       )}
       title="개별 거래·재고 데이터는 시연용 샘플입니다"
     >
       시연 데이터
+    </span>
+  );
+}
+
+/** 얇은 진행 바 — 랭킹/비중 표시 */
+export function Meter({
+  ratio,
+  className,
+  tone = "brand",
+}: {
+  ratio: number;
+  className?: string;
+  tone?: "brand" | "teal";
+}) {
+  return (
+    <span
+      className={clsx(
+        "block h-1.5 overflow-hidden rounded-full bg-surface-sunken",
+        className
+      )}
+    >
+      <span
+        className={clsx(
+          "block h-full rounded-full",
+          tone === "brand"
+            ? "bg-gradient-to-r from-brand-500 to-brand-600"
+            : "bg-gradient-to-r from-teal-400 to-teal-500"
+        )}
+        style={{ width: `${Math.max(2, Math.min(100, ratio * 100))}%` }}
+      />
     </span>
   );
 }

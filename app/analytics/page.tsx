@@ -11,7 +11,7 @@ import {
 import { useMemo, useState } from "react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { FinancialTrendChart } from "@/components/charts/FinancialTrendChart";
-import { StatusBadge } from "@/components/shared/ui";
+import { Badge } from "@/components/shared/ui";
 import {
   CASH_BY_YEAR,
   FINANCIALS,
@@ -96,15 +96,16 @@ export default function AnalyticsPage() {
   }, [retain, repay]);
 
   const kpis = [
-    { label: "매출액", value: `${fin.revenue.toFixed(2)}억` },
-    { label: "영업이익률", value: formatPercent(ratios.operatingMarginPct, 1) },
-    { label: "당기순이익률", value: formatPercent(ratios.netMarginPct, 1) },
-    { label: "현금성 자산", value: `${(CASH_BY_YEAR[year] ?? 0).toFixed(2)}억` },
-    { label: "매출채권", value: `${(RECEIVABLES_BY_YEAR[year] ?? 0).toFixed(2)}억` },
+    { label: "매출액", value: `${fin.revenue.toFixed(2)}억`, rail: "from-brand-500 to-brand-600" },
+    { label: "영업이익률", value: formatPercent(ratios.operatingMarginPct, 1), rail: "from-teal-400 to-teal-500" },
+    { label: "당기순이익률", value: formatPercent(ratios.netMarginPct, 1), rail: "from-gold-300 to-gold-400" },
+    { label: "현금성 자산", value: `${(CASH_BY_YEAR[year] ?? 0).toFixed(2)}억`, rail: "from-navy-600 to-navy-800" },
+    { label: "매출채권", value: `${(RECEIVABLES_BY_YEAR[year] ?? 0).toFixed(2)}억`, rail: "from-ink-300 to-ink-400" },
     {
       label: "자기자본",
       value: `${fin.equity.toFixed(2)}억`,
       warn: fin.equity < 1,
+      rail: "from-warning to-gold-500",
     },
   ];
 
@@ -131,20 +132,29 @@ export default function AnalyticsPage() {
       />
 
       {/* KPI */}
-      <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-6 lg:gap-3">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6 lg:gap-4">
         {kpis.map((kpi, i) => (
           <motion.div
             key={kpi.label}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.25, delay: i * 0.04 }}
-            className="card p-3.5"
+            transition={{ duration: 0.4, delay: i * 0.04, ease: [0.22, 1, 0.36, 1] }}
+            className="card-kpi px-4 py-4"
           >
-            <p className="text-[0.7rem] font-semibold text-navy-400">{kpi.label}</p>
+            <span
+              aria-hidden
+              className={clsx(
+                "absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r",
+                kpi.rail
+              )}
+            />
+            <p className="truncate text-[0.76rem] font-semibold text-ink-500">
+              {kpi.label}
+            </p>
             <p
               className={clsx(
-                "mt-1 text-[1.15rem] font-extrabold tabular-nums",
-                kpi.warn ? "text-amber-600" : "text-navy-900"
+                "mt-2 text-[1.42rem] font-extrabold leading-none tabular-nums tracking-[-0.025em]",
+                kpi.warn ? "text-warning" : "text-ink-900"
               )}
             >
               {kpi.value}
@@ -159,16 +169,16 @@ export default function AnalyticsPage() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className="card p-5"
+          className="card-data flex flex-col p-6"
         >
           <div className="flex items-baseline justify-between">
-            <h2 className="text-[1.02rem] font-bold text-navy-900">
+            <h2 className="text-[1.02rem] font-bold text-ink-900">
               3개년 재무 성과
             </h2>
-            <span className="text-[0.7rem] text-navy-400">단위: 억원</span>
+            <span className="text-[0.7rem] text-ink-400">단위: 억원</span>
           </div>
-          <div className="mt-2">
-            <FinancialTrendChart height={240} />
+          <div className="mt-2 min-h-[260px] flex-1">
+            <FinancialTrendChart fill />
           </div>
         </motion.section>
 
@@ -177,29 +187,29 @@ export default function AnalyticsPage() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.05 }}
-          className="card p-5"
+          className="card-data p-6"
           aria-label="재무 위험 신호"
         >
-          <h2 className="text-[1.02rem] font-bold text-navy-900">재무 신호</h2>
+          <h2 className="text-[1.02rem] font-bold text-ink-900">재무 신호</h2>
           <ul className="mt-3 space-y-2.5">
             {signals.map((signal) => (
               <li
                 key={signal.label}
-                className="flex items-center justify-between gap-3 rounded-xl border border-surface-line bg-surface-soft px-3.5 py-2.5"
+                className="flex items-center justify-between gap-3 rounded-xl border border-surface-line bg-surface-subtle px-3.5 py-2.5"
               >
                 <div className="min-w-0">
-                  <p className="text-[0.85rem] font-bold text-navy-800">
+                  <p className="text-[0.85rem] font-bold text-ink-800">
                     {signal.label}
                   </p>
-                  <p className="text-[0.72rem] tabular-nums text-navy-400">
+                  <p className="text-[0.72rem] tabular-nums text-ink-400">
                     {signal.note}
                   </p>
                 </div>
-                <StatusBadge status={signal.level} className="!px-3" />
+                <Badge className="!px-3">{signal.level}</Badge>
               </li>
             ))}
           </ul>
-          <p className="mt-3 text-[0.68rem] leading-relaxed text-navy-400">
+          <p className="mt-3 text-[0.68rem] leading-relaxed text-ink-400">
             시연용 룰 기반 평가입니다. 정밀한 판단은 결산자료 확인이 필요합니다.
           </p>
         </motion.section>
@@ -211,10 +221,10 @@ export default function AnalyticsPage() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.1 }}
-          className="card mt-4 p-5"
+          className="card-data mt-5 p-6"
           aria-label="핵심 변화"
         >
-          <h2 className="text-[1.02rem] font-bold text-navy-900">
+          <h2 className="text-[1.02rem] font-bold text-ink-900">
             {year - 1} → {year} 핵심 변화
           </h2>
           <div className="mt-3 grid grid-cols-2 gap-3 lg:grid-cols-4">
@@ -224,15 +234,15 @@ export default function AnalyticsPage() {
               return (
                 <div
                   key={change.label}
-                  className="rounded-xl border border-surface-line bg-surface-soft p-3.5"
+                  className="rounded-xl border border-surface-line bg-surface-subtle p-3.5"
                 >
-                  <p className="text-[0.72rem] font-semibold text-navy-400">
+                  <p className="text-[0.72rem] font-semibold text-ink-400">
                     {change.label}
                   </p>
                   <div className="mt-1.5 flex items-center gap-1.5 text-[0.9rem] font-bold tabular-nums">
-                    <span className="text-navy-400">{change.from.toFixed(2)}억</span>
-                    <ArrowRight className="h-3.5 w-3.5 text-navy-300" aria-hidden />
-                    <span className={good ? "text-navy-900" : "text-amber-600"}>
+                    <span className="text-ink-400">{change.from.toFixed(2)}억</span>
+                    <ArrowRight className="h-3.5 w-3.5 text-ink-300" aria-hidden />
+                    <span className={good ? "text-ink-900" : "text-amber-600"}>
                       {change.to.toFixed(2)}억
                     </span>
                   </div>
@@ -254,7 +264,7 @@ export default function AnalyticsPage() {
               );
             })}
           </div>
-          <div className="mt-4 rounded-xl bg-navy-50/60 p-4 text-[0.82rem] leading-relaxed text-navy-600">
+          <div className="mt-4 rounded-xl bg-surface-sunken/60 p-4 text-[0.82rem] leading-relaxed text-ink-600">
             <p>2025년은 매출과 수익성이 크게 회복되었습니다.</p>
             <p className="mt-1">
               반면 자기자본이 감소하면서 재무 안정성 관련 지표는 약화되었습니다.
@@ -273,11 +283,11 @@ export default function AnalyticsPage() {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.15 }}
-        className="card mt-4 p-5"
+        className="card-data mt-5 p-6"
         aria-label="재무 시나리오"
       >
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <h2 className="flex items-center gap-1.5 text-[1.02rem] font-bold text-navy-900">
+          <h2 className="flex items-center gap-1.5 text-[1.02rem] font-bold text-ink-900">
             <Calculator className="h-4 w-4 text-brand-600" aria-hidden />
             재무 시나리오 (2025년 기준)
           </h2>
@@ -287,12 +297,12 @@ export default function AnalyticsPage() {
               setRepay(0.3);
               pushToast("시나리오가 초기화되었습니다.");
             }}
-            className="flex h-8 items-center gap-1 rounded-btn border border-surface-line px-3 text-[0.75rem] font-semibold text-navy-500 transition-colors hover:border-navy-300"
+            className="flex h-8 items-center gap-1 rounded-btn border border-surface-line px-3 text-[0.75rem] font-semibold text-ink-500 transition-colors hover:border-ink-300"
           >
             <RotateCcw className="h-3.5 w-3.5" aria-hidden /> 초기화
           </button>
         </div>
-        <p className="mt-1 text-[0.75rem] text-navy-400">
+        <p className="mt-1 text-[0.75rem] text-ink-400">
           이익 유보와 부채 상환 계획에 따른 자본 구조 변화를 가늠해보는 경영
           Simulation입니다.
         </p>
@@ -303,7 +313,7 @@ export default function AnalyticsPage() {
               <div className="flex items-center justify-between">
                 <label
                   htmlFor="sim-retain"
-                  className="text-[0.82rem] font-bold text-navy-700"
+                  className="text-[0.82rem] font-bold text-ink-700"
                 >
                   연간 이익 유보
                 </label>
@@ -326,7 +336,7 @@ export default function AnalyticsPage() {
               <div className="flex items-center justify-between">
                 <label
                   htmlFor="sim-repay"
-                  className="text-[0.82rem] font-bold text-navy-700"
+                  className="text-[0.82rem] font-bold text-ink-700"
                 >
                   부채 상환
                 </label>
@@ -345,7 +355,7 @@ export default function AnalyticsPage() {
                 className="mt-2 w-full accent-brand-600"
               />
             </div>
-            <p className="text-[0.68rem] leading-relaxed text-navy-400">
+            <p className="text-[0.68rem] leading-relaxed text-ink-400">
               단순화된 시연용 계산입니다. 실제 재무 계획은 세무·회계 전문가와
               함께 검토가 필요합니다.
             </p>
@@ -380,20 +390,20 @@ export default function AnalyticsPage() {
             ].map((item) => (
               <div
                 key={item.label}
-                className="rounded-xl border border-surface-line bg-surface-soft p-3.5"
+                className="rounded-xl border border-surface-line bg-surface-subtle p-3.5"
               >
-                <p className="text-[0.7rem] font-semibold text-navy-400">
+                <p className="text-[0.7rem] font-semibold text-ink-400">
                   {item.label}
                 </p>
                 <p
                   className={clsx(
                     "mt-1 text-[1.15rem] font-extrabold tabular-nums",
-                    item.highlight ? "text-teal-600" : "text-navy-900"
+                    item.highlight ? "text-teal-600" : "text-ink-900"
                   )}
                 >
                   {item.value}
                 </p>
-                <p className="mt-0.5 text-[0.68rem] text-navy-400">{item.sub}</p>
+                <p className="mt-0.5 text-[0.68rem] text-ink-400">{item.sub}</p>
               </div>
             ))}
           </div>

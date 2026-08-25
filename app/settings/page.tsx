@@ -47,9 +47,9 @@ export default function SettingsPage() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.25 }}
-          className="card p-5"
+          className="card-data p-6"
         >
-          <h2 className="flex items-center gap-2 text-[0.95rem] font-bold text-navy-900">
+          <h2 className="flex items-center gap-2 text-[0.95rem] font-bold text-ink-900">
             <UserRound className="h-4 w-4 text-brand-600" aria-hidden />
             사용자
           </h2>
@@ -58,10 +58,10 @@ export default function SettingsPage() {
               손
             </span>
             <div>
-              <p className="text-[1.02rem] font-extrabold text-navy-900">
+              <p className="text-[1.02rem] font-extrabold text-ink-900">
                 {COMPANY.ceoTitle}
               </p>
-              <p className="text-[0.75rem] text-navy-400">{COMPANY.credit}</p>
+              <p className="text-[0.75rem] text-ink-400">{COMPANY.credit}</p>
             </div>
           </div>
         </motion.section>
@@ -71,9 +71,9 @@ export default function SettingsPage() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.25, delay: 0.04 }}
-          className="card p-5"
+          className="card-data p-6"
         >
-          <h2 className="flex items-center gap-2 text-[0.95rem] font-bold text-navy-900">
+          <h2 className="flex items-center gap-2 text-[0.95rem] font-bold text-ink-900">
             <Building2 className="h-4 w-4 text-brand-600" aria-hidden />
             기업 정보
           </h2>
@@ -87,8 +87,8 @@ export default function SettingsPage() {
               { label: "근로자", value: COMPANY.employees },
             ].map((row) => (
               <div key={row.label} className="flex items-start gap-3">
-                <dt className="w-16 shrink-0 text-navy-400">{row.label}</dt>
-                <dd className="min-w-0 font-semibold text-navy-800">
+                <dt className="w-16 shrink-0 text-ink-400">{row.label}</dt>
+                <dd className="min-w-0 font-semibold text-ink-800">
                   {row.value}
                 </dd>
               </div>
@@ -101,13 +101,13 @@ export default function SettingsPage() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.25, delay: 0.08 }}
-          className="card p-5"
+          className="card-data p-6"
         >
-          <h2 className="flex items-center gap-2 text-[0.95rem] font-bold text-navy-900">
+          <h2 className="flex items-center gap-2 text-[0.95rem] font-bold text-ink-900">
             <Type className="h-4 w-4 text-brand-600" aria-hidden />
             글자 크기
           </h2>
-          <p className="mt-1 text-[0.75rem] text-navy-400">
+          <p className="mt-1 text-[0.75rem] text-ink-400">
             전체 화면의 글자 크기가 함께 조정됩니다.
           </p>
           <div className="mt-3 grid grid-cols-3 gap-2">
@@ -123,7 +123,7 @@ export default function SettingsPage() {
                   "h-12 rounded-btn border text-sm font-bold transition-colors",
                   fontScale === option.value
                     ? "border-brand-600 bg-brand-600 text-white"
-                    : "border-surface-line bg-white text-navy-600 hover:border-navy-300"
+                    : "border-surface-line bg-white text-ink-600 hover:border-ink-300"
                 )}
               >
                 {option.label}
@@ -137,13 +137,13 @@ export default function SettingsPage() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.25, delay: 0.1 }}
-          className="card p-5"
+          className="card-data p-6"
         >
-          <h2 className="flex items-center gap-2 text-[0.95rem] font-bold text-navy-900">
+          <h2 className="flex items-center gap-2 text-[0.95rem] font-bold text-ink-900">
             <MonitorSmartphone className="h-4 w-4 text-brand-600" aria-hidden />
             화면 모드
           </h2>
-          <p className="mt-1 text-[0.75rem] text-navy-400">
+          <p className="mt-1 text-[0.75rem] text-ink-400">
             휴대폰에서도 PC와 동일한 화면으로 볼 수 있습니다. 설정은 다음 접속
             시에도 유지됩니다.
           </p>
@@ -157,16 +157,16 @@ export default function SettingsPage() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.25, delay: 0.12 }}
-          className="card p-5"
+          className="card-data p-6"
         >
-          <h2 className="flex items-center gap-2 text-[0.95rem] font-bold text-navy-900">
+          <h2 className="flex items-center gap-2 text-[0.95rem] font-bold text-ink-900">
             <Play className="h-4 w-4 text-brand-600" aria-hidden />
             시연 도구
           </h2>
           <div className="mt-3 flex flex-col gap-2 sm:flex-row">
             <button
               onClick={() => setTourOpen(true)}
-              className="flex h-11 flex-1 items-center justify-center gap-1.5 rounded-btn border border-surface-line bg-white text-sm font-bold text-navy-700 transition-colors hover:border-navy-300"
+              className="flex h-11 flex-1 items-center justify-center gap-1.5 rounded-btn border border-surface-line bg-white text-sm font-bold text-ink-700 transition-colors hover:border-ink-300"
             >
               AX 둘러보기 다시 보기
             </button>
@@ -184,7 +184,7 @@ export default function SettingsPage() {
                 </button>
                 <button
                   onClick={() => setConfirmReset(false)}
-                  className="h-11 flex-1 rounded-btn border border-surface-line bg-white text-sm font-semibold text-navy-500"
+                  className="h-11 flex-1 rounded-btn border border-surface-line bg-white text-sm font-semibold text-ink-500"
                 >
                   취소
                 </button>
@@ -192,14 +192,14 @@ export default function SettingsPage() {
             ) : (
               <button
                 onClick={() => setConfirmReset(true)}
-                className="flex h-11 flex-1 items-center justify-center gap-1.5 rounded-btn border border-surface-line bg-white text-sm font-bold text-navy-700 transition-colors hover:border-rose-200 hover:text-rose-600"
+                className="flex h-11 flex-1 items-center justify-center gap-1.5 rounded-btn border border-surface-line bg-white text-sm font-bold text-ink-700 transition-colors hover:border-rose-200 hover:text-rose-600"
               >
                 <RotateCcw className="h-4 w-4" aria-hidden />
                 데모 데이터 초기화
               </button>
             )}
           </div>
-          <p className="mt-2 text-[0.7rem] text-navy-400">
+          <p className="mt-2 text-[0.7rem] text-ink-400">
             초기화 시 시연 중 생성한 견적·영업 활동·설정이 초기 상태로
             돌아갑니다.
           </p>
@@ -210,28 +210,28 @@ export default function SettingsPage() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.25, delay: 0.16 }}
-          className="card p-5"
+          className="card-data p-6"
         >
-          <h2 className="flex items-center gap-2 text-[0.95rem] font-bold text-navy-900">
+          <h2 className="flex items-center gap-2 text-[0.95rem] font-bold text-ink-900">
             <Database className="h-4 w-4 text-brand-600" aria-hidden />
             시스템 정보
           </h2>
           <dl className="mt-3 space-y-2 text-[0.85rem]">
             <div className="flex items-center gap-3">
-              <dt className="w-24 shrink-0 text-navy-400">제품</dt>
-              <dd className="font-semibold text-navy-800">
+              <dt className="w-24 shrink-0 text-ink-400">제품</dt>
+              <dd className="font-semibold text-ink-800">
                 {COMPANY.productName} v0.1 (MVP)
               </dd>
             </div>
             <div className="flex items-center gap-3">
-              <dt className="w-24 shrink-0 text-navy-400">데이터 모드</dt>
-              <dd className="font-semibold text-navy-800">
+              <dt className="w-24 shrink-0 text-ink-400">데이터 모드</dt>
+              <dd className="font-semibold text-ink-800">
                 {supabaseMode ? "Supabase Mode" : "Demo Mode (로컬 시연 데이터)"}
               </dd>
             </div>
             <div className="flex items-center gap-3">
-              <dt className="w-24 shrink-0 text-navy-400">기획·구축</dt>
-              <dd className="font-semibold text-navy-800">{COMPANY.credit}</dd>
+              <dt className="w-24 shrink-0 text-ink-400">기획·구축</dt>
+              <dd className="font-semibold text-ink-800">{COMPANY.credit}</dd>
             </div>
           </dl>
           <div className="mt-4 flex items-center justify-center rounded-xl border border-surface-line bg-white px-4 py-3">

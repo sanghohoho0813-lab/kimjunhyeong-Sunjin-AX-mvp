@@ -71,7 +71,7 @@ export function DemoTour() {
             <button
               onClick={close}
               aria-label="둘러보기 닫기"
-              className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full text-navy-400 transition-colors hover:bg-surface hover:text-navy-700"
+              className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full text-ink-400 transition-colors hover:bg-surface hover:text-ink-700"
             >
               <X className="h-4 w-4" />
             </button>
@@ -79,10 +79,10 @@ export function DemoTour() {
               <Sparkles className="h-3.5 w-3.5" aria-hidden />
               AX 둘러보기 {step + 1}/{STEPS.length}
             </span>
-            <h3 className="mt-3 text-lg font-extrabold text-navy-900">
+            <h3 className="mt-3 text-lg font-extrabold text-ink-900">
               {current.title}
             </h3>
-            <p className="mt-2 text-sm leading-relaxed text-navy-500">
+            <p className="mt-2 text-sm leading-relaxed text-ink-500">
               {current.body}
             </p>
 
@@ -94,7 +94,7 @@ export function DemoTour() {
                     className={
                       i === step
                         ? "h-1.5 w-5 rounded-full bg-brand-600 transition-all"
-                        : "h-1.5 w-1.5 rounded-full bg-navy-100 transition-all"
+                        : "h-1.5 w-1.5 rounded-full bg-ink-200 transition-all"
                     }
                   />
                 ))}
@@ -103,14 +103,14 @@ export function DemoTour() {
                 {step > 0 ? (
                   <button
                     onClick={() => setStep((s) => Math.max(0, s - 1))}
-                    className="flex h-10 items-center gap-1 rounded-btn border border-surface-line px-3 text-sm font-semibold text-navy-600 transition-colors hover:bg-surface"
+                    className="flex h-10 items-center gap-1 rounded-btn border border-surface-line px-3 text-sm font-semibold text-ink-600 transition-colors hover:bg-surface"
                   >
                     <ArrowLeft className="h-4 w-4" aria-hidden /> 이전
                   </button>
                 ) : (
                   <button
                     onClick={close}
-                    className="h-10 rounded-btn px-3 text-sm font-medium text-navy-400 transition-colors hover:text-navy-600"
+                    className="h-10 rounded-btn px-3 text-sm font-medium text-ink-400 transition-colors hover:text-ink-600"
                   >
                     건너뛰기
                   </button>

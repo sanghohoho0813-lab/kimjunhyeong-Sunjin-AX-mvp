@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useMemo, useState } from "react";
 import { PageHeader } from "@/components/layout/PageHeader";
-import { DemoBadge, EmptyState, ScoreBadge, StatusBadge } from "@/components/shared/ui";
+import { DemoBadge, EmptyState, Score, Badge } from "@/components/shared/ui";
 import {
   getCustomerStats,
   getCustomerStatus,
@@ -64,7 +64,7 @@ function CustomersContent() {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="relative w-full sm:max-w-xs">
           <Search
-            className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-navy-300"
+            className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-300"
             aria-hidden
           />
           <input
@@ -72,7 +72,7 @@ function CustomersContent() {
             onChange={(e) => setQuery(e.target.value)}
             placeholder="거래처명·담당자·업종 검색"
             aria-label="거래처 검색"
-            className="h-11 w-full rounded-btn border border-surface-line bg-white pl-10 pr-4 text-sm text-navy-800 placeholder:text-navy-300 focus:border-brand-400"
+            className="input pl-10"
           />
         </div>
         <div className="no-scrollbar -mx-4 flex gap-1.5 overflow-x-auto px-4 sm:mx-0 sm:px-0">
@@ -81,10 +81,8 @@ function CustomersContent() {
               key={f}
               onClick={() => setFilter(f)}
               className={clsx(
-                "h-9 shrink-0 whitespace-nowrap rounded-full border px-3.5 text-[0.8rem] font-semibold transition-colors",
-                filter === f
-                  ? "border-navy-900 bg-navy-900 text-white"
-                  : "border-surface-line bg-white text-navy-500 hover:border-navy-200"
+                "chip",
+                filter === f && "chip-on"
               )}
             >
               {f}
@@ -104,19 +102,19 @@ function CustomersContent() {
         <>
           {/* 데스크톱 테이블 */}
           <div className="card mt-4 hidden overflow-hidden lg:block">
-            <table className="w-full text-left text-sm">
+            <table className="tbl">
               <thead>
-                <tr className="border-b border-surface-line bg-surface-soft text-[0.72rem] uppercase tracking-wide text-navy-400">
-                  <th className="px-5 py-3 font-semibold">거래처</th>
-                  <th className="px-3 py-3 font-semibold">상태</th>
-                  <th className="px-3 py-3 text-right font-semibold">누적 매출</th>
-                  <th className="px-3 py-3 text-right font-semibold">평균 주문</th>
-                  <th className="px-3 py-3 text-right font-semibold">최근 거래</th>
-                  <th className="px-3 py-3 text-right font-semibold">경과/주기</th>
-                  <th className="px-3 py-3 text-center font-semibold">
+                <tr>
+                  <th className="pl-6">거래처</th>
+                  <th>상태</th>
+                  <th className="text-right">누적 매출</th>
+                  <th className="text-right">평균 주문</th>
+                  <th className="text-right">최근 거래</th>
+                  <th className="text-right">경과/주기</th>
+                  <th className="text-center">
                     재구매 가능성
                   </th>
-                  <th className="px-3 py-3" />
+                  <th />
                 </tr>
               </thead>
               <tbody>
@@ -126,48 +124,48 @@ function CustomersContent() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.25, delay: i * 0.02 }}
-                    className="group border-b border-surface-line/70 transition-colors last:border-0 hover:bg-brand-50/30"
+                    className="group"
                   >
-                    <td className="px-5 py-3.5">
+                    <td className="pl-6">
                       <Link
                         href={`/customers/${customer.id}`}
                         className="block"
                       >
-                        <span className="font-bold text-navy-900 group-hover:text-brand-700">
+                        <span className="font-bold text-ink-900 group-hover:text-brand-700">
                           {customer.name}
                         </span>
-                        <span className="mt-0.5 block text-[0.72rem] text-navy-400">
+                        <span className="mt-0.5 block text-[0.72rem] text-ink-400">
                           {customer.contactName} · {customer.segment}
                         </span>
                       </Link>
                     </td>
-                    <td className="px-3 py-3.5">
-                      <StatusBadge status={status} />
+                    <td className="">
+                      <Badge>{status}</Badge>
                     </td>
-                    <td className="px-3 py-3.5 text-right font-bold tabular-nums text-navy-900">
+                    <td className="text-right font-bold tabular-nums text-ink-900">
                       {formatKRW(stats.totalRevenue)}
                     </td>
-                    <td className="px-3 py-3.5 text-right tabular-nums text-navy-600">
+                    <td className="text-right tabular-nums text-ink-600">
                       {formatKRW(stats.avgOrderValue)}
                     </td>
-                    <td className="px-3 py-3.5 text-right tabular-nums text-navy-600">
+                    <td className="text-right tabular-nums text-ink-600">
                       {stats.lastPurchaseDate
                         ? formatDate(stats.lastPurchaseDate)
                         : "—"}
                     </td>
-                    <td className="px-3 py-3.5 text-right tabular-nums text-navy-600">
+                    <td className="text-right tabular-nums text-ink-600">
                       {stats.elapsedDays != null
                         ? `${stats.elapsedDays}일 / ${stats.cycleDays}일`
                         : "—"}
                     </td>
-                    <td className="px-3 py-3.5 text-center">
-                      <ScoreBadge score={score.score} label={score.label} size="sm" />
+                    <td className="text-center">
+                      <Score value={score.score} label={score.label} size="sm" />
                     </td>
-                    <td className="px-3 py-3.5 text-right">
+                    <td className="text-right">
                       <Link
                         href={`/customers/${customer.id}`}
                         aria-label={`${customer.name} 상세 보기`}
-                        className="inline-flex h-8 w-8 items-center justify-center rounded-full text-navy-300 transition-colors hover:bg-brand-50 hover:text-brand-600"
+                        className="inline-flex h-8 w-8 items-center justify-center rounded-full text-ink-300 transition-colors hover:bg-brand-50 hover:text-brand-600"
                       >
                         <ChevronRight className="h-4 w-4" />
                       </Link>
@@ -189,36 +187,36 @@ function CustomersContent() {
               >
                 <Link
                   href={`/customers/${customer.id}`}
-                  className="card card-hover block p-4"
+                  className="card card-interactive tap block p-4"
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0">
-                      <p className="truncate text-[0.95rem] font-bold text-navy-900">
+                      <p className="truncate text-[0.95rem] font-bold text-ink-900">
                         {customer.name}
                       </p>
-                      <p className="mt-0.5 text-[0.72rem] text-navy-400">
+                      <p className="mt-0.5 text-[0.72rem] text-ink-400">
                         {customer.contactName} · {customer.segment}
                       </p>
                     </div>
-                    <StatusBadge status={status} />
+                    <Badge>{status}</Badge>
                   </div>
                   <div className="mt-3 grid grid-cols-3 gap-2 border-t border-surface-line pt-3 text-center">
                     <div>
-                      <p className="text-[0.66rem] text-navy-400">누적 매출</p>
-                      <p className="mt-0.5 text-[0.82rem] font-bold tabular-nums text-navy-900">
+                      <p className="text-[0.66rem] text-ink-400">누적 매출</p>
+                      <p className="mt-0.5 text-[0.82rem] font-bold tabular-nums text-ink-900">
                         {formatKRW(stats.totalRevenue)}
                       </p>
                     </div>
                     <div>
-                      <p className="text-[0.66rem] text-navy-400">최근 구매</p>
-                      <p className="mt-0.5 text-[0.82rem] font-bold tabular-nums text-navy-900">
+                      <p className="text-[0.66rem] text-ink-400">최근 구매</p>
+                      <p className="mt-0.5 text-[0.82rem] font-bold tabular-nums text-ink-900">
                         {stats.elapsedDays != null ? `${stats.elapsedDays}일 전` : "—"}
                       </p>
                     </div>
                     <div>
-                      <p className="text-[0.66rem] text-navy-400">재구매 가능성</p>
+                      <p className="text-[0.66rem] text-ink-400">재구매 가능성</p>
                       <p className="mt-0.5 flex items-center justify-center">
-                        <ScoreBadge score={score.score} size="sm" />
+                        <Score value={score.score} size="sm" />
                       </p>
                     </div>
                   </div>

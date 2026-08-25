@@ -16,8 +16,8 @@ import { Sheet } from "@/components/shared/Sheet";
 import {
   DemoBadge,
   EmptyState,
-  ScoreBadge,
-  StatusBadge,
+  Score,
+  Badge,
 } from "@/components/shared/ui";
 import {
   customerTransactions,
@@ -66,7 +66,7 @@ export default function CustomerDetailPage() {
     <div>
       <Link
         href="/customers"
-        className="mb-3 inline-flex items-center gap-1 text-[0.8rem] font-semibold text-navy-400 transition-colors hover:text-navy-700"
+        className="mb-3 inline-flex items-center gap-1 text-[0.8rem] font-semibold text-ink-400 transition-colors hover:text-ink-700"
       >
         <ArrowLeft className="h-4 w-4" aria-hidden /> 거래처 목록
       </Link>
@@ -76,18 +76,18 @@ export default function CustomerDetailPage() {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
-        className="card p-5"
+        className="card-data p-6"
       >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
-              <h1 className="text-[1.35rem] font-extrabold text-navy-900 lg:text-[1.55rem]">
+              <h1 className="text-[1.35rem] font-extrabold text-ink-900 lg:text-[1.55rem]">
                 {customer.name}
               </h1>
-              <StatusBadge status={status} />
+              <Badge>{status}</Badge>
               <DemoBadge />
             </div>
-            <p className="mt-1 text-[0.8rem] text-navy-500">
+            <p className="mt-1 text-[0.8rem] text-ink-500">
               {customer.contactName} · {customer.segment} · {customer.region} ·
               거래 시작 {customer.since}
             </p>
@@ -95,14 +95,14 @@ export default function CustomerDetailPage() {
           <div className="flex w-full gap-2 sm:w-auto">
             <button
               onClick={() => setActionOpen(true)}
-              className="flex h-11 flex-1 items-center justify-center gap-1.5 rounded-btn border border-surface-line bg-white px-4 text-sm font-bold text-navy-700 transition-colors hover:border-navy-300 sm:flex-none"
+              className="btn btn-ghost flex-1 sm:flex-none"
             >
               <PhoneCall className="h-4 w-4 text-brand-600" aria-hidden />
               영업 액션 등록
             </button>
             <Link
               href={`/quotes/new?customer=${customer.id}`}
-              className="flex h-11 flex-1 items-center justify-center gap-1.5 rounded-btn bg-brand-600 px-4 text-sm font-bold text-white transition-colors hover:bg-brand-700 sm:flex-none"
+              className="btn btn-primary flex-1 sm:flex-none"
             >
               <FilePlus2 className="h-4 w-4" aria-hidden />
               견적 만들기
@@ -123,8 +123,8 @@ export default function CustomerDetailPage() {
             { label: "평균 재구매 주기", value: `${stats.cycleDays}일` },
           ].map((item) => (
             <div key={item.label}>
-              <dt className="text-[0.7rem] text-navy-400">{item.label}</dt>
-              <dd className="mt-0.5 text-[0.95rem] font-bold tabular-nums text-navy-900">
+              <dt className="text-[0.7rem] text-ink-400">{item.label}</dt>
+              <dd className="mt-0.5 text-[0.95rem] font-bold tabular-nums text-ink-900">
                 {item.value}
               </dd>
             </div>
@@ -138,20 +138,20 @@ export default function CustomerDetailPage() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.05 }}
-          className="card p-5 lg:col-span-1"
+          className="card-data p-6 lg:col-span-1"
           aria-label="AX 인사이트"
         >
-          <h2 className="flex items-center gap-1.5 text-[1.02rem] font-bold text-navy-900">
+          <h2 className="flex items-center gap-1.5 text-[1.02rem] font-bold text-ink-900">
             <Sparkles className="h-4 w-4 text-brand-600" aria-hidden />
             AX 인사이트
           </h2>
-          <div className="mt-3 flex items-center gap-3 rounded-xl bg-surface-soft p-3.5">
-            <ScoreBadge score={score.score} size="lg" />
+          <div className="mt-3 flex items-center gap-3 rounded-xl bg-surface-subtle p-3.5">
+            <Score value={score.score} size="lg" />
             <div>
-              <p className="text-sm font-bold text-navy-900">
+              <p className="text-sm font-bold text-ink-900">
                 재구매 가능성 {score.label}
               </p>
-              <p className="text-[0.7rem] text-navy-400">
+              <p className="text-[0.7rem] text-ink-400">
                 구매 주기·빈도·규모·추세 기반 지수
               </p>
             </div>
@@ -160,7 +160,7 @@ export default function CustomerDetailPage() {
             {score.reasons.map((reason, i) => (
               <li
                 key={i}
-                className="flex items-start gap-2 text-[0.8rem] leading-relaxed text-navy-600"
+                className="flex items-start gap-2 text-[0.8rem] leading-relaxed text-ink-600"
               >
                 <span
                   className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-400"
@@ -171,7 +171,7 @@ export default function CustomerDetailPage() {
             ))}
           </ul>
           <div className="mt-4 border-t border-surface-line pt-3.5">
-            <p className="text-[0.7rem] font-bold uppercase tracking-wide text-navy-400">
+            <p className="text-[0.7rem] font-bold uppercase tracking-wide text-ink-400">
               선호 피혁
             </p>
             <div className="mt-1.5 flex flex-wrap gap-1.5">
@@ -183,7 +183,7 @@ export default function CustomerDetailPage() {
               ].map((chip) => (
                 <span
                   key={chip}
-                  className="rounded-full border border-navy-100 bg-white px-2.5 py-0.5 text-xs font-semibold text-navy-600"
+                  className="rounded-full border border-surface-line bg-white px-2.5 py-0.5 text-xs font-semibold text-ink-600"
                 >
                   {chip}
                 </span>
@@ -197,14 +197,14 @@ export default function CustomerDetailPage() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.1 }}
-          className="card p-5 lg:col-span-2"
+          className="card-data p-6 lg:col-span-2"
           aria-label="추천 상품"
         >
           <div className="flex items-center justify-between gap-2">
-            <h2 className="text-[1.02rem] font-bold text-navy-900">
+            <h2 className="text-[1.02rem] font-bold text-ink-900">
               이 거래처에 추천할 재고
             </h2>
-            <span className="text-[0.7rem] text-navy-400">
+            <span className="text-[0.7rem] text-ink-400">
               AX 매칭 점수 기준 상위 3개
             </span>
           </div>
@@ -212,21 +212,21 @@ export default function CustomerDetailPage() {
             {recommendedProducts.map(({ product, match }) => (
               <li
                 key={product.id}
-                className="rounded-xl border border-surface-line bg-surface-soft p-3.5 transition-colors hover:border-brand-200"
+                className="rounded-xl border border-surface-line bg-surface-subtle p-3.5 transition-colors hover:border-brand-200"
               >
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <Link
                     href={`/inventory/${product.id}`}
-                    className="min-w-0 font-bold text-navy-900 transition-colors hover:text-brand-700"
+                    className="min-w-0 font-bold text-ink-900 transition-colors hover:text-brand-700"
                   >
                     {product.name}
-                    <span className="ml-2 text-[0.7rem] font-medium text-navy-400">
+                    <span className="ml-2 text-[0.7rem] font-medium text-ink-400">
                       {product.code}
                     </span>
                   </Link>
-                  <ScoreBadge score={match.score} label={match.label} size="sm" />
+                  <Score value={match.score} label={match.label} size="sm" />
                 </div>
-                <p className="mt-1 text-[0.75rem] text-navy-500">
+                <p className="mt-1 text-[0.75rem] text-ink-500">
                   보유 {formatNumber(product.stockQty)}평 · 권장가{" "}
                   {formatNumber(product.listPricePerUnit)}원/평 ·{" "}
                   {product.grade} Grade
@@ -245,7 +245,7 @@ export default function CustomerDetailPage() {
                   </Link>
                   <Link
                     href={`/inventory/${product.id}`}
-                    className="flex h-9 items-center gap-0.5 rounded-btn border border-surface-line bg-white px-3.5 text-[0.78rem] font-semibold text-navy-600 transition-colors hover:border-navy-300"
+                    className="flex h-9 items-center gap-0.5 rounded-btn border border-surface-line bg-white px-3.5 text-[0.78rem] font-semibold text-ink-600 transition-colors hover:border-ink-300"
                   >
                     재고 상세 <ChevronRight className="h-3.5 w-3.5" aria-hidden />
                   </Link>
@@ -262,10 +262,10 @@ export default function CustomerDetailPage() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.15 }}
-          className="card p-5 lg:col-span-2"
+          className="card-data p-6 lg:col-span-2"
           aria-label="구매 이력"
         >
-          <h2 className="text-[1.02rem] font-bold text-navy-900">구매 이력</h2>
+          <h2 className="text-[1.02rem] font-bold text-ink-900">구매 이력</h2>
           {txs.length === 0 ? (
             <div className="mt-3">
               <EmptyState message="구매 이력이 없습니다." />
@@ -280,15 +280,15 @@ export default function CustomerDetailPage() {
                     className="flex items-center justify-between gap-3 py-3"
                   >
                     <div className="min-w-0">
-                      <p className="truncate text-[0.85rem] font-semibold text-navy-800">
+                      <p className="truncate text-[0.85rem] font-semibold text-ink-800">
                         {product?.name ?? tx.productId}
                       </p>
-                      <p className="mt-0.5 text-[0.72rem] tabular-nums text-navy-400">
+                      <p className="mt-0.5 text-[0.72rem] tabular-nums text-ink-400">
                         {formatDate(tx.date)} · {formatNumber(tx.qty)}평 ×{" "}
                         {formatNumber(tx.unitPrice)}원
                       </p>
                     </div>
-                    <span className="shrink-0 text-[0.85rem] font-bold tabular-nums text-navy-900">
+                    <span className="shrink-0 text-[0.85rem] font-bold tabular-nums text-ink-900">
                       {formatKRW(tx.qty * tx.unitPrice)}
                     </span>
                   </li>
@@ -303,11 +303,11 @@ export default function CustomerDetailPage() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.2 }}
-          className="card p-5"
+          className="card-data p-6"
           aria-label="영업 활동"
         >
           <div className="flex items-center justify-between gap-2">
-            <h2 className="text-[1.02rem] font-bold text-navy-900">영업 활동</h2>
+            <h2 className="text-[1.02rem] font-bold text-ink-900">영업 활동</h2>
             <button
               onClick={() => setActionOpen(true)}
               className="text-xs font-bold text-brand-600 transition-colors hover:text-brand-700"
@@ -330,13 +330,13 @@ export default function CustomerDetailPage() {
                     <CalendarClock className="h-3.5 w-3.5" aria-hidden />
                   </span>
                   <div className="min-w-0">
-                    <p className="text-[0.8rem] font-bold text-navy-800">
+                    <p className="text-[0.8rem] font-bold text-ink-800">
                       {activity.type}
-                      <span className="ml-2 text-[0.68rem] font-medium tabular-nums text-navy-400">
+                      <span className="ml-2 text-[0.68rem] font-medium tabular-nums text-ink-400">
                         {formatDate(activity.date)}
                       </span>
                     </p>
-                    <p className="mt-0.5 text-[0.78rem] leading-relaxed text-navy-500">
+                    <p className="mt-0.5 text-[0.78rem] leading-relaxed text-ink-500">
                       {activity.memo}
                     </p>
                   </div>
@@ -355,7 +355,7 @@ export default function CustomerDetailPage() {
       >
         <div className="space-y-4">
           <div>
-            <p className="mb-1.5 text-[0.78rem] font-bold text-navy-700">
+            <p className="mb-1.5 text-[0.78rem] font-bold text-ink-700">
               활동 유형
             </p>
             <div className="flex flex-wrap gap-1.5">
@@ -366,7 +366,7 @@ export default function CustomerDetailPage() {
                   className={
                     actionType === type
                       ? "h-10 rounded-btn bg-navy-900 px-3.5 text-[0.8rem] font-bold text-white"
-                      : "h-10 rounded-btn border border-surface-line bg-white px-3.5 text-[0.8rem] font-semibold text-navy-500 transition-colors hover:border-navy-300"
+                      : "h-10 rounded-btn border border-surface-line bg-white px-3.5 text-[0.8rem] font-semibold text-ink-500 transition-colors hover:border-ink-300"
                   }
                 >
                   {type}
@@ -377,7 +377,7 @@ export default function CustomerDetailPage() {
           <div>
             <label
               htmlFor="action-memo"
-              className="mb-1.5 block text-[0.78rem] font-bold text-navy-700"
+              className="mb-1.5 block text-[0.78rem] font-bold text-ink-700"
             >
               메모
             </label>
@@ -387,7 +387,7 @@ export default function CustomerDetailPage() {
               onChange={(e) => setActionMemo(e.target.value)}
               rows={3}
               placeholder="예: 장기재고 Black Cow 1.4mm 제안 전화"
-              className="w-full rounded-btn border border-surface-line bg-white px-3.5 py-2.5 text-sm text-navy-800 placeholder:text-navy-300 focus:border-brand-400"
+              className="w-full rounded-btn border border-surface-line bg-white px-3.5 py-2.5 text-sm text-ink-800 placeholder:text-ink-300 focus:border-brand-400"
             />
           </div>
           <button

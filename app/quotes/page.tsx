@@ -5,7 +5,7 @@ import { ChevronRight, FilePlus2, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useMemo } from "react";
 import { PageHeader } from "@/components/layout/PageHeader";
-import { DemoBadge, EmptyState, StatusBadge } from "@/components/shared/ui";
+import { DemoBadge, EmptyState, Badge } from "@/components/shared/ui";
 import { getAverageMarginRate, getCustomer, getProduct } from "@/lib/data/derived";
 import { quoteTotals } from "@/lib/pricing/recommend";
 import { useAllQuotes } from "@/lib/store";
@@ -49,7 +49,7 @@ export default function QuotesPage() {
         }
       />
 
-      <p className="mb-3 flex items-center gap-1.5 text-[0.75rem] text-navy-400">
+      <p className="mb-3 flex items-center gap-1.5 text-[0.75rem] text-ink-400">
         <Sparkles className="h-3.5 w-3.5 text-brand-500" aria-hidden />
         전체 거래 평균 마진율 {formatPercent(avgMargin, 1)} — 이보다 5%p 이상
         낮은 견적은 별도 표시됩니다.
@@ -64,17 +64,17 @@ export default function QuotesPage() {
         <>
           {/* 데스크톱 테이블 */}
           <div className="card hidden overflow-hidden lg:block">
-            <table className="w-full text-left text-sm">
+            <table className="tbl">
               <thead>
-                <tr className="border-b border-surface-line bg-surface-soft text-[0.72rem] uppercase tracking-wide text-navy-400">
-                  <th className="px-5 py-3 font-semibold">견적번호</th>
-                  <th className="px-3 py-3 font-semibold">거래처</th>
-                  <th className="px-3 py-3 font-semibold">제품</th>
-                  <th className="px-3 py-3 text-right font-semibold">예상 매출</th>
-                  <th className="px-3 py-3 text-right font-semibold">예상 마진</th>
-                  <th className="px-3 py-3 text-right font-semibold">마진율</th>
-                  <th className="px-3 py-3 font-semibold">상태</th>
-                  <th className="px-3 py-3 text-right font-semibold">작성일</th>
+                <tr>
+                  <th className="pl-6">견적번호</th>
+                  <th>거래처</th>
+                  <th>제품</th>
+                  <th className="text-right">예상 매출</th>
+                  <th className="text-right">예상 마진</th>
+                  <th className="text-right">마진율</th>
+                  <th>상태</th>
+                  <th className="text-right">작성일</th>
                 </tr>
               </thead>
               <tbody>
@@ -84,9 +84,9 @@ export default function QuotesPage() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.25, delay: i * 0.02 }}
-                    className="border-b border-surface-line/70 last:border-0 hover:bg-brand-50/30"
+                    className="group"
                   >
-                    <td className="px-5 py-3.5 font-bold tabular-nums text-navy-900">
+                    <td className="pl-6 font-bold tabular-nums text-ink-900">
                       {quote.number}
                       {quote.source === "ax" ? (
                         <span className="ml-2 rounded-full bg-brand-50 px-2 py-0.5 text-[0.62rem] font-bold text-brand-600">
@@ -94,21 +94,21 @@ export default function QuotesPage() {
                         </span>
                       ) : null}
                     </td>
-                    <td className="px-3 py-3.5">
+                    <td className="">
                       <Link
                         href={`/customers/${quote.customerId}`}
-                        className="font-semibold text-navy-800 transition-colors hover:text-brand-700"
+                        className="font-semibold text-ink-800 transition-colors hover:text-brand-700"
                       >
                         {customer?.name ?? "—"}
                       </Link>
                     </td>
-                    <td className="max-w-[220px] truncate px-3 py-3.5 text-navy-600">
+                    <td className="max-w-[220px] truncate px-3 py-3.5 text-ink-600">
                       {productLabel}
                     </td>
-                    <td className="px-3 py-3.5 text-right font-bold tabular-nums text-navy-900">
+                    <td className="text-right font-bold tabular-nums text-ink-900">
                       {formatKRW(totals.revenue)}
                     </td>
-                    <td className="px-3 py-3.5 text-right tabular-nums text-navy-700">
+                    <td className="text-right tabular-nums text-ink-700">
                       {formatKRW(totals.margin)}
                     </td>
                     <td
@@ -124,10 +124,10 @@ export default function QuotesPage() {
                         </span>
                       ) : null}
                     </td>
-                    <td className="px-3 py-3.5">
-                      <StatusBadge status={quote.status} />
+                    <td className="">
+                      <Badge>{quote.status}</Badge>
                     </td>
-                    <td className="px-3 py-3.5 text-right tabular-nums text-navy-500">
+                    <td className="text-right tabular-nums text-ink-500">
                       {formatDate(quote.createdAt)}
                     </td>
                   </motion.tr>
@@ -144,11 +144,11 @@ export default function QuotesPage() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.25, delay: i * 0.03 }}
-                className="card p-4"
+                className="card card-interactive tap p-4"
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
-                    <p className="text-[0.72rem] font-bold tabular-nums text-navy-400">
+                    <p className="text-[0.72rem] font-bold tabular-nums text-ink-400">
                       {quote.number}
                       {quote.source === "ax" ? (
                         <span className="ml-1.5 rounded-full bg-brand-50 px-1.5 py-0.5 text-[0.6rem] font-bold text-brand-600">
@@ -159,30 +159,30 @@ export default function QuotesPage() {
                         {formatDate(quote.createdAt)}
                       </span>
                     </p>
-                    <p className="mt-1 truncate text-[0.92rem] font-bold text-navy-900">
+                    <p className="mt-1 truncate text-[0.92rem] font-bold text-ink-900">
                       {customer?.name ?? "—"}
                     </p>
-                    <p className="mt-0.5 truncate text-[0.75rem] text-navy-500">
+                    <p className="mt-0.5 truncate text-[0.75rem] text-ink-500">
                       {productLabel}
                     </p>
                   </div>
-                  <StatusBadge status={quote.status} />
+                  <Badge>{quote.status}</Badge>
                 </div>
                 <div className="mt-3 grid grid-cols-3 gap-2 border-t border-surface-line pt-3 text-center">
                   <div>
-                    <p className="text-[0.66rem] text-navy-400">예상 매출</p>
-                    <p className="mt-0.5 text-[0.82rem] font-bold tabular-nums text-navy-900">
+                    <p className="text-[0.66rem] text-ink-400">예상 매출</p>
+                    <p className="mt-0.5 text-[0.82rem] font-bold tabular-nums text-ink-900">
                       {formatKRW(totals.revenue)}
                     </p>
                   </div>
                   <div>
-                    <p className="text-[0.66rem] text-navy-400">예상 마진</p>
-                    <p className="mt-0.5 text-[0.82rem] font-bold tabular-nums text-navy-900">
+                    <p className="text-[0.66rem] text-ink-400">예상 마진</p>
+                    <p className="mt-0.5 text-[0.82rem] font-bold tabular-nums text-ink-900">
                       {formatKRW(totals.margin)}
                     </p>
                   </div>
                   <div>
-                    <p className="text-[0.66rem] text-navy-400">마진율</p>
+                    <p className="text-[0.66rem] text-ink-400">마진율</p>
                     <p
                       className={clsx(
                         "mt-0.5 text-[0.82rem] font-bold tabular-nums",

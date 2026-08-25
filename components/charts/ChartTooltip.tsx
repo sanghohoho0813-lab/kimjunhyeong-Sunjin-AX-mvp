@@ -2,7 +2,7 @@
 
 import type { TooltipProps } from "recharts";
 
-/** 공용 커스텀 툴팁 — 억원 단위 */
+/** 억원 단위 커스텀 툴팁 — Premium styling */
 export function EokTooltip({
   active,
   payload,
@@ -10,15 +10,15 @@ export function EokTooltip({
 }: TooltipProps<number, string>) {
   if (!active || !payload?.length) return null;
   return (
-    <div className="rounded-xl border border-surface-line bg-white/95 px-3.5 py-2.5 shadow-modal backdrop-blur">
-      <p className="mb-1.5 text-xs font-bold text-navy-900">{label}년</p>
-      <ul className="space-y-1">
+    <div className="rounded-xl border border-surface-line bg-white/95 px-4 py-3 shadow-modal backdrop-blur-sm">
+      <p className="mb-2 text-[0.74rem] font-bold text-ink-900">{label}년</p>
+      <ul className="space-y-1.5">
         {payload.map((entry) => (
           <li
             key={entry.dataKey as string}
-            className="flex items-center justify-between gap-4 text-xs"
+            className="flex items-center justify-between gap-6 text-[0.76rem]"
           >
-            <span className="flex items-center gap-1.5 text-navy-500">
+            <span className="flex items-center gap-2 text-ink-500">
               <span
                 className="h-2 w-2 rounded-full"
                 style={{ background: entry.color }}
@@ -26,9 +26,13 @@ export function EokTooltip({
               />
               {entry.name}
             </span>
-            <span className="font-bold tabular-nums text-navy-900">
-              {typeof entry.value === "number" ? entry.value.toFixed(2) : entry.value}
-              억
+            <span className="font-bold tabular-nums text-ink-900">
+              {typeof entry.value === "number"
+                ? entry.value.toFixed(2)
+                : entry.value}
+              <span className="ml-0.5 text-[0.68rem] font-semibold text-ink-400">
+                억
+              </span>
             </span>
           </li>
         ))}

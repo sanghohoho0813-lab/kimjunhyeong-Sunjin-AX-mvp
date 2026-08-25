@@ -5,10 +5,19 @@
 @tailwind utilities;
 
 :root {
-  --bottom-nav-height: 62px;
+  --bottom-nav-height: 64px;
+  --sidebar-width: 240px;
+  --page-pad-x: 16px;
+  --shell-radius: 0px;
 }
 
-/* 글자 크기 설정 — 설정 화면에서 변경, 전체 rem 기반 크기에 반영 */
+@media (min-width: 1024px) {
+  :root {
+    --page-pad-x: 32px;
+  }
+}
+
+/* 글자 크기 설정 — 설정 화면에서 변경 */
 html {
   font-size: 16px;
 }
@@ -25,35 +34,39 @@ body {
 }
 
 body {
-  @apply bg-surface text-navy-900 antialiased;
+  @apply bg-surface text-ink-900 antialiased;
   word-break: keep-all;
   overflow-wrap: break-word;
   -webkit-tap-highlight-color: transparent;
+  font-feature-settings: "ss01", "cv01";
 }
 
-/* 키보드 포커스 링 */
 :focus-visible {
-  outline: 2px solid theme("colors.brand.500");
+  outline: 2px solid theme("colors.brand.600");
   outline-offset: 2px;
-  border-radius: 6px;
+  border-radius: 8px;
 }
 
-/* 얇은 스크롤바 (데스크톱) */
 @media (pointer: fine) {
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
   }
   ::-webkit-scrollbar-thumb {
-    background: rgba(22, 35, 59, 0.18);
-    border-radius: 8px;
+    background: rgba(15, 23, 42, 0.14);
+    border-radius: 999px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(15, 23, 42, 0.24);
+    background-clip: content-box;
   }
   ::-webkit-scrollbar-track {
     background: transparent;
   }
 }
 
-/* 가로 스크롤 영역 스크롤바 숨김 (모바일 KPI 등) */
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -62,39 +75,221 @@ body {
   display: none;
 }
 
-/* 숫자 고정폭 */
 .tabular-nums {
   font-variant-numeric: tabular-nums;
 }
 
-/* 카드 공통 — min-width:0 으로 grid/flex 아이템의 고유 폭 전파(가로 오버플로우)를 차단 */
-.card {
-  @apply rounded-card border border-surface-line bg-white shadow-card;
-  min-width: 0;
-}
-.card-hover {
-  @apply transition-all duration-200;
-}
-@media (hover: hover) {
-  .card-hover:hover {
-    @apply -translate-y-0.5 shadow-card-hover;
+@layer components {
+  /* ── Card System — 4 Type ───────────────────────────────── */
+
+  /* 공통 베이스: Border 또는 Shadow 중 하나만 사용 */
+  .card {
+    @apply relative rounded-card bg-white;
+    border: 1px solid theme("colors.surface.line");
+    min-width: 0;
+  }
+
+  /* 1. KPI Card — 숫자가 주인공 */
+  .card-kpi {
+    @apply relative overflow-hidden rounded-card bg-white;
+    border: 1px solid theme("colors.surface.line");
+    min-width: 0;
+  }
+
+  /* 2. Data Card — Chart / Ranking. 미세한 elevation */
+  .card-data {
+    @apply relative rounded-card-lg bg-white shadow-card;
+    border: 1px solid transparent;
+    min-width: 0;
+  }
+
+  /* 3. Insight Card — AX / AI. Teal 계열로 명확히 구분 */
+  .card-insight {
+    @apply relative overflow-hidden rounded-card-lg;
+    background:
+      linear-gradient(180deg, #f4fcfb 0%, #ffffff 46%),
+      theme("colors.white");
+    border: 1px solid #cdeee8;
+    min-width: 0;
+  }
+
+  /* 4. Action Card — 즉시 행동하는 영역 */
+  .card-action {
+    @apply relative rounded-card bg-white transition-all duration-200 ease-premium;
+    border: 1px solid theme("colors.surface.line");
+    min-width: 0;
+  }
+  @media (hover: hover) {
+    .card-action:hover {
+      border-color: theme("colors.brand.200");
+      background: theme("colors.brand.50");
+    }
+  }
+
+  /* Interactive Card만 hover elevation (정적 KPI는 제외) */
+  .card-interactive {
+    @apply transition-all duration-200 ease-premium;
+  }
+  @media (hover: hover) {
+    .card-interactive:hover {
+      @apply -translate-y-[3px] shadow-card-hover;
+      border-color: theme("colors.surface.line-strong");
+    }
+  }
+
+  /* 모바일 터치 피드백 */
+  @media (hover: none) {
+    .card-action:active,
+    .card-interactive:active,
+    .tap {
+      transform: scale(0.985);
+      transition: transform 120ms ease-out;
+    }
+  }
+
+  /* ── Typography ─────────────────────────────────────────── */
+  .t-page-title {
+    @apply text-[1.4rem] font-extrabold leading-tight tracking-[-0.02em] text-ink-900 lg:text-[1.78rem];
+  }
+  .t-section {
+    @apply text-[1.05rem] font-bold tracking-[-0.01em] text-ink-900 lg:text-[1.18rem];
+  }
+  .t-card-title {
+    @apply text-[0.94rem] font-bold text-ink-900;
+  }
+  .t-body {
+    @apply text-[0.9rem] leading-relaxed text-ink-600;
+  }
+  .t-caption {
+    @apply text-[0.78rem] text-ink-500;
+  }
+  .t-eyebrow {
+    @apply text-[0.7rem] font-bold uppercase tracking-[0.09em] text-ink-400;
+  }
+  /* KPI 숫자 */
+  .t-kpi {
+    @apply font-extrabold leading-none tracking-[-0.03em] tabular-nums text-ink-900;
+    font-size: clamp(1.85rem, 2.1vw, 2.3rem);
+  }
+  .t-kpi-sm {
+    @apply font-extrabold leading-none tracking-[-0.025em] tabular-nums text-ink-900;
+    font-size: clamp(1.4rem, 1.6vw, 1.6rem);
+  }
+  .t-unit {
+    @apply ml-0.5 align-baseline text-[0.5em] font-bold text-ink-500;
+  }
+
+  /* ── Button ─────────────────────────────────────────────── */
+  .btn {
+    @apply inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-btn text-[0.86rem] font-bold transition-all duration-200 ease-premium;
+    min-height: 44px;
+    padding-inline: 1rem;
+  }
+  .btn-primary {
+    @apply bg-brand-600 text-white;
+  }
+  .btn-primary:hover {
+    @apply bg-brand-700;
+  }
+  .btn-dark {
+    @apply bg-navy-900 text-white;
+  }
+  .btn-dark:hover {
+    @apply bg-navy-800;
+  }
+  .btn-ghost {
+    @apply bg-white text-ink-700;
+    border: 1px solid theme("colors.surface.line");
+  }
+  .btn-ghost:hover {
+    border-color: theme("colors.ink.300");
+    @apply bg-surface-subtle;
+  }
+  .btn-sm {
+    min-height: 36px;
+    @apply px-3 text-[0.8rem];
+  }
+
+  /* ── Input ──────────────────────────────────────────────── */
+  .input {
+    @apply w-full rounded-btn bg-white text-[0.9rem] text-ink-900 transition-colors duration-200 placeholder:text-ink-400;
+    min-height: 44px;
+    padding-inline: 0.9rem;
+    border: 1px solid theme("colors.surface.line");
+  }
+  .input:focus {
+    @apply outline-none;
+    border-color: theme("colors.brand.400");
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  }
+
+  /* ── Chip / Filter ──────────────────────────────────────── */
+  .chip {
+    @apply inline-flex shrink-0 items-center whitespace-nowrap rounded-pill px-3.5 text-[0.8rem] font-semibold transition-all duration-200;
+    min-height: 38px;
+    border: 1px solid theme("colors.surface.line");
+    @apply bg-white text-ink-500;
+  }
+  .chip:hover {
+    border-color: theme("colors.ink.300");
+  }
+  .chip-on {
+    @apply border-navy-900 bg-navy-900 text-white;
+  }
+
+  /* ── Table ──────────────────────────────────────────────── */
+  .tbl {
+    @apply w-full text-left text-[0.88rem];
+  }
+  .tbl thead tr {
+    @apply bg-surface-subtle;
+    border-bottom: 1px solid theme("colors.surface.line");
+  }
+  .tbl th {
+    @apply px-4 py-3 text-[0.72rem] font-bold uppercase tracking-[0.05em] text-ink-400;
+  }
+  .tbl td {
+    @apply px-4 py-3.5;
+  }
+  .tbl tbody tr {
+    border-bottom: 1px solid rgba(232, 236, 242, 0.75);
+    @apply transition-colors duration-150;
+  }
+  .tbl tbody tr:last-child {
+    border-bottom: 0;
+  }
+  @media (hover: hover) {
+    .tbl tbody tr:hover {
+      @apply bg-brand-50/45;
+    }
+  }
+
+  /* 사이드바 nav */
+  .nav-item {
+    @apply flex items-center gap-3 rounded-btn px-3 text-[0.9rem] font-medium transition-all duration-200 ease-premium;
+    min-height: 44px;
   }
 }
 
 /* Recharts 기본 스타일 정리 */
 .recharts-cartesian-axis-tick text {
-  fill: #7c8aa5;
-  font-size: 0.72rem;
+  fill: #94a3b8;
+  font-size: 0.74rem;
+  font-weight: 500;
 }
 .recharts-legend-item-text {
-  font-size: 0.78rem;
-  color: #46536b !important;
+  font-size: 0.78rem !important;
+  color: #475569 !important;
+  font-weight: 600;
 }
 .recharts-tooltip-cursor {
-  fill: rgba(51, 102, 255, 0.05);
+  fill: rgba(37, 99, 235, 0.05);
+}
+.recharts-surface {
+  overflow: visible;
 }
 
-/* 모션 최소화 환경 지원 */
+/* 모션 최소화 환경 */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -109,7 +304,4 @@ body {
 /* 모바일 safe area */
 .pb-safe {
   padding-bottom: env(safe-area-inset-bottom);
-}
-.h-bottom-nav {
-  height: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
 }

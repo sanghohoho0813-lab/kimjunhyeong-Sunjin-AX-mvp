@@ -6,7 +6,8 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Sheet } from "@/components/shared/Sheet";
-import { EmptyState, StatusBadge } from "@/components/shared/ui";
+import { EmptyState, Badge } from "@/components/shared/ui";
+import { AxActionCard } from "@/components/dashboard/AxActionCard";
 import { getCustomer, getProduct } from "@/lib/data/derived";
 import { generateRecommendations } from "@/lib/insights/recommendations";
 import { clsx } from "@/lib/utils/clsx";
@@ -47,17 +48,15 @@ export default function InsightsPage() {
               key={c}
               onClick={() => setCategory(c)}
               className={clsx(
-                "h-9 shrink-0 whitespace-nowrap rounded-full border px-3.5 text-[0.8rem] font-semibold transition-colors",
-                category === c
-                  ? "border-navy-900 bg-navy-900 text-white"
-                  : "border-surface-line bg-white text-navy-500 hover:border-navy-200"
+                "chip",
+                category === c && "chip-on"
               )}
             >
               {c}
               <span
                 className={clsx(
                   "ml-1.5 tabular-nums",
-                  category === c ? "text-navy-300" : "text-navy-300"
+                  category === c ? "text-ink-300" : "text-ink-300"
                 )}
               >
                 {count}
@@ -75,47 +74,11 @@ export default function InsightsPage() {
           />
         </div>
       ) : (
-        <ul className="mt-4 grid gap-3 lg:grid-cols-2">
+        <ul className="mt-5 grid gap-4 lg:grid-cols-2 2xl:grid-cols-3">
           {filtered.map((reco, i) => (
-            <motion.li
-              key={reco.id}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.28, delay: i * 0.04 }}
-            >
-              <button
-                onClick={() => setSelected(reco)}
-                className="card card-hover flex h-full w-full flex-col p-5 text-left"
-              >
-                <div className="flex items-center justify-between gap-2">
-                  <span className="rounded-full bg-surface px-2.5 py-1 text-[0.68rem] font-bold text-navy-500">
-                    {reco.category}
-                  </span>
-                  <StatusBadge status={reco.priority} />
-                </div>
-                <h2 className="mt-3 text-[0.95rem] font-bold leading-snug text-navy-900">
-                  {reco.title}
-                </h2>
-                <p className="mt-1.5 text-[0.8rem] leading-relaxed text-navy-500">
-                  {reco.why}
-                </p>
-                <p className="mt-1.5 text-[0.78rem] leading-relaxed text-navy-400">
-                  {reco.connection}
-                </p>
-                <div className="mt-auto flex items-center justify-between gap-2 pt-3">
-                  {reco.expectedEffect ? (
-                    <span className="text-[0.78rem] font-bold text-teal-600">
-                      {reco.expectedEffect}
-                    </span>
-                  ) : (
-                    <span />
-                  )}
-                  <span className="flex items-center gap-0.5 text-[0.78rem] font-bold text-brand-600">
-                    자세히 보기 <ChevronRight className="h-3.5 w-3.5" aria-hidden />
-                  </span>
-                </div>
-              </button>
-            </motion.li>
+            <li key={reco.id} className="min-w-0">
+              <AxActionCard reco={reco} index={i} onOpen={setSelected} />
+            </li>
           ))}
         </ul>
       )}
@@ -135,25 +98,25 @@ export default function InsightsPage() {
           <div className="space-y-5">
             <div>
               <div className="flex items-center gap-2">
-                <span className="rounded-full bg-surface px-2.5 py-1 text-[0.68rem] font-bold text-navy-500">
+                <span className="rounded-full bg-surface px-2.5 py-1 text-[0.68rem] font-bold text-ink-500">
                   {selected.category}
                 </span>
-                <StatusBadge status={selected.priority} />
+                <Badge>{selected.priority}</Badge>
               </div>
-              <h3 className="mt-2.5 text-[1.05rem] font-extrabold leading-snug text-navy-900">
+              <h3 className="mt-2.5 text-[1.05rem] font-extrabold leading-snug text-ink-900">
                 {selected.title}
               </h3>
             </div>
 
             <div>
-              <p className="text-[0.72rem] font-bold uppercase tracking-wide text-navy-400">
+              <p className="text-[0.72rem] font-bold uppercase tracking-wide text-ink-400">
                 발견된 신호
               </p>
               <ul className="mt-2 space-y-1.5">
                 {selected.signals.map((signal, i) => (
                   <li
                     key={i}
-                    className="flex items-start gap-2 rounded-lg bg-surface-soft px-3 py-2 text-[0.8rem] text-navy-700"
+                    className="flex items-start gap-2 rounded-lg bg-surface-subtle px-3 py-2 text-[0.8rem] text-ink-700"
                   >
                     <span
                       className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500"
@@ -166,13 +129,13 @@ export default function InsightsPage() {
             </div>
 
             <div>
-              <p className="text-[0.72rem] font-bold uppercase tracking-wide text-navy-400">
+              <p className="text-[0.72rem] font-bold uppercase tracking-wide text-ink-400">
                 왜 중요한가
               </p>
-              <p className="mt-1.5 text-[0.85rem] leading-relaxed text-navy-600">
+              <p className="mt-1.5 text-[0.85rem] leading-relaxed text-ink-600">
                 {selected.why}
               </p>
-              <p className="mt-1.5 text-[0.82rem] leading-relaxed text-navy-500">
+              <p className="mt-1.5 text-[0.82rem] leading-relaxed text-ink-500">
                 {selected.connection}
               </p>
               {selected.expectedEffect ? (
@@ -184,7 +147,7 @@ export default function InsightsPage() {
 
             {selected.relatedCustomerIds?.length ? (
               <div>
-                <p className="text-[0.72rem] font-bold uppercase tracking-wide text-navy-400">
+                <p className="text-[0.72rem] font-bold uppercase tracking-wide text-ink-400">
                   관련 거래처
                 </p>
                 <div className="mt-2 flex flex-wrap gap-1.5">
@@ -193,7 +156,7 @@ export default function InsightsPage() {
                       key={cid}
                       href={`/customers/${cid}`}
                       onClick={() => setSelected(null)}
-                      className="rounded-full border border-surface-line bg-white px-3 py-1 text-[0.78rem] font-semibold text-navy-700 transition-colors hover:border-brand-300 hover:text-brand-700"
+                      className="rounded-full border border-surface-line bg-white px-3 py-1 text-[0.78rem] font-semibold text-ink-700 transition-colors hover:border-brand-300 hover:text-brand-700"
                     >
                       {getCustomer(cid)?.name ?? cid}
                     </Link>
@@ -204,7 +167,7 @@ export default function InsightsPage() {
 
             {selected.relatedProductIds?.length ? (
               <div>
-                <p className="text-[0.72rem] font-bold uppercase tracking-wide text-navy-400">
+                <p className="text-[0.72rem] font-bold uppercase tracking-wide text-ink-400">
                   관련 제품
                 </p>
                 <div className="mt-2 flex flex-wrap gap-1.5">
@@ -213,7 +176,7 @@ export default function InsightsPage() {
                       key={pid}
                       href={`/inventory/${pid}`}
                       onClick={() => setSelected(null)}
-                      className="rounded-full border border-surface-line bg-white px-3 py-1 text-[0.78rem] font-semibold text-navy-700 transition-colors hover:border-brand-300 hover:text-brand-700"
+                      className="rounded-full border border-surface-line bg-white px-3 py-1 text-[0.78rem] font-semibold text-ink-700 transition-colors hover:border-brand-300 hover:text-brand-700"
                     >
                       {getProduct(pid)?.name ?? pid}
                     </Link>
