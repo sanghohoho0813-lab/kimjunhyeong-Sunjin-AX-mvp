@@ -28,7 +28,7 @@ export function Sidebar() {
       {/* 브랜드 */}
       <Link
         href="/dashboard"
-        className="flex items-center gap-3 px-5 pb-6 pt-7"
+        className="flex items-center gap-3 px-5 pb-4 pt-5"
         aria-label="선진산업 Business AX 홈"
       >
         <SunjinMark className="h-[38px] w-[38px] shrink-0" />
@@ -43,7 +43,7 @@ export function Sidebar() {
       </Link>
 
       {/* 내비게이션 */}
-      <nav className="flex-1 overflow-y-auto px-3" aria-label="주요 메뉴">
+      <nav className="min-h-0 flex-1 overflow-y-auto px-3" aria-label="주요 메뉴">
         <p className="px-3 pb-2 text-[0.78rem] font-bold uppercase tracking-[0.16em] text-navy-400">
           Workspace
         </p>
@@ -101,7 +101,7 @@ export function Sidebar() {
       </nav>
 
       {/* 회사 정보 */}
-      <div className="mx-3 mb-3 rounded-card border border-white/[0.07] bg-white/[0.035] px-4 py-3.5">
+      <div className="mx-3 mb-3 rounded-card border border-white/[0.07] bg-white/[0.035] px-4 py-3 [@media(max-height:820px)]:hidden">
         <div className="flex items-center gap-2">
           <span
             aria-hidden
@@ -110,36 +110,40 @@ export function Sidebar() {
           <p className="text-[0.86rem] font-bold text-white">{COMPANY.name}</p>
         </div>
         <dl className="mt-2.5 space-y-1.5 text-[0.84rem] leading-none text-navy-300">
-          <div className="flex gap-2">
-            <dt className="w-14 shrink-0 whitespace-nowrap text-navy-400">대표자</dt>
-            <dd className="text-navy-100">{COMPANY.ceo}</dd>
+          <div className="flex items-baseline justify-between gap-3">
+            <dt className="shrink-0 whitespace-nowrap text-navy-400">대표자</dt>
+            <dd className="min-w-0 truncate text-right text-navy-100">
+              {COMPANY.ceo}
+            </dd>
           </div>
-          <div className="flex gap-2">
-            <dt className="w-14 shrink-0 whitespace-nowrap text-navy-400">업종</dt>
-            <dd className="min-w-0 truncate text-navy-100">피혁 제조·도소매</dd>
+          <div className="flex items-baseline justify-between gap-3">
+            <dt className="shrink-0 whitespace-nowrap text-navy-400">업종</dt>
+            <dd className="min-w-0 truncate text-right text-navy-100">
+              피혁 제조·도소매
+            </dd>
           </div>
-          <div className="flex gap-2">
-            <dt className="w-14 shrink-0 whitespace-nowrap text-navy-400">지역</dt>
-            <dd className="text-navy-100">경기 동두천</dd>
+          <div className="flex items-baseline justify-between gap-3">
+            <dt className="shrink-0 whitespace-nowrap text-navy-400">지역</dt>
+            <dd className="min-w-0 truncate text-right text-navy-100">
+              경기 동두천
+            </dd>
           </div>
         </dl>
       </div>
 
       {/* 사용자 + 제작 표기 */}
-      <div className="border-t border-white/[0.07] px-5 py-4">
+      <div className="border-t border-white/[0.07] px-5 py-3.5">
         <div className="flex items-center gap-3">
           <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-teal-500 text-[0.82rem] font-bold text-white">
             손
           </span>
-          <div className="min-w-0">
-            <p className="truncate text-[0.86rem] font-bold text-white">
-              {COMPANY.ceoTitle}
-            </p>
-            <p className="truncate text-[0.82rem] text-navy-300">
-              {COMPANY.credit}
-            </p>
-          </div>
+          <p className="min-w-0 truncate text-[0.86rem] font-bold text-white">
+            {COMPANY.ceoTitle}
+          </p>
         </div>
+        <p className="mt-2 truncate text-[0.82rem] text-navy-300">
+          {COMPANY.credit}
+        </p>
         <div className="mt-3.5 flex items-center justify-center rounded-btn bg-white/95 px-3 py-1.5">
           <Image
             src="/brand/mirae-ai-lab.jpg"
