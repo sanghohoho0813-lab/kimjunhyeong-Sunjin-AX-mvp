@@ -119,9 +119,10 @@ export default function RequestPage() {
                 finish={p.finish}
                 className="h-14 w-14 shrink-0"
               />
+              {/* 제품코드·품명은 식별 정보라 자르지 않는다. 좁으면 흐르게 둔다. */}
               <span className="min-w-0 flex-1">
-                <span className="flex items-center gap-1.5">
-                  <span className="truncate text-[0.8rem] font-bold uppercase tracking-[0.08em] text-leather-500">
+                <span className="flex flex-wrap items-center gap-x-1.5 gap-y-1">
+                  <span className="text-[0.8rem] font-bold uppercase tracking-[0.08em] text-leather-500">
                     {p.code}
                   </span>
                   {fav ? (
@@ -130,12 +131,11 @@ export default function RequestPage() {
                     </span>
                   ) : null}
                 </span>
-                <span className="mt-0.5 block truncate text-[0.94rem] font-bold text-ink-900">
+                <span className="mt-0.5 block text-[0.94rem] font-bold leading-snug text-ink-900">
                   {p.material} · {p.color}
                 </span>
-                <span className="mt-0.5 block truncate text-[0.86rem] text-ink-500">
-                  {p.thicknessMm}mm · {p.grade} · 재고 {formatNumber(p.stockQty)}평 ·{" "}
-                  {leadTimeDays(p)}일
+                <span className="mt-0.5 block text-[0.86rem] leading-snug text-ink-500">
+                  {p.thicknessMm}mm · {p.grade} · 재고 {formatNumber(p.stockQty)}평
                 </span>
               </span>
               <span

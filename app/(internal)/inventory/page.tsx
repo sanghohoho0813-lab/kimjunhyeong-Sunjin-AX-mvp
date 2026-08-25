@@ -126,11 +126,11 @@ function InventoryContent() {
               <card.icon className="h-5 w-5" aria-hidden />
             </span>
             <span className="min-w-0">
-              <span className="block truncate text-[0.84rem] font-semibold text-ink-500 sm:text-[0.86rem]">
+              <span className="block whitespace-nowrap text-[0.84rem] font-semibold text-ink-500 sm:text-[0.86rem]">
                 <span className="sm:hidden">{card.short}</span>
                 <span className="hidden sm:inline">{card.label}</span>
               </span>
-              <span className="mt-1 block truncate text-[1.05rem] font-extrabold tabular-nums tracking-[-0.02em] text-ink-900 sm:text-[1.28rem]">
+              <span className="mt-1 block whitespace-nowrap text-[1.05rem] font-extrabold tabular-nums tracking-[-0.02em] text-ink-900 sm:text-[1.28rem]">
                 {card.value}
               </span>
               <span className="mt-0.5 hidden text-[0.84rem] text-ink-400 sm:block">
@@ -283,10 +283,10 @@ function InventoryContent() {
                     <span className="min-w-0 flex-1">
                       <span className="flex items-start justify-between gap-2">
                         <span className="min-w-0">
-                          <span className="block truncate text-[0.94rem] font-bold tracking-[-0.01em] text-ink-900">
+                          <span className="block text-[0.94rem] font-bold leading-snug tracking-[-0.01em] text-ink-900">
                             {product.material} Leather
                           </span>
-                          <span className="mt-0.5 block truncate text-[0.82rem] font-semibold uppercase tracking-[0.07em] text-ink-400">
+                          <span className="mt-0.5 block text-[0.82rem] font-semibold uppercase leading-snug tracking-[0.07em] text-ink-400">
                             {product.color} · {product.thicknessMm}mm ·{" "}
                             {product.grade} Grade
                           </span>

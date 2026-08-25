@@ -84,7 +84,7 @@ export function AssetCompositionChart({
                 style={{ background: COLORS[i % COLORS.length] }}
                 aria-hidden
               />
-              <span className="truncate">{d.name}</span>
+              <span className="leading-snug">{d.name}</span>
             </span>
             <span className="shrink-0 text-[0.84rem] font-bold tabular-nums text-ink-900">
               {d.value.toFixed(2)}억

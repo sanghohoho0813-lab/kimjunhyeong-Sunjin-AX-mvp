@@ -163,10 +163,10 @@ export default function QuotesPage() {
                         {formatDate(quote.createdAt)}
                       </span>
                     </p>
-                    <p className="mt-1 truncate text-[0.92rem] font-bold text-ink-900">
+                    <p className="mt-1 text-[0.92rem] font-bold leading-snug text-ink-900">
                       {customer?.name ?? "—"}
                     </p>
-                    <p className="mt-0.5 truncate text-[0.75rem] text-ink-500">
+                    <p className="mt-0.5 text-[0.75rem] leading-snug text-ink-500">
                       {productLabel}
                     </p>
                   </div>

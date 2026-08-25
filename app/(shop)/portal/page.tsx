@@ -144,7 +144,7 @@ function ReorderCard({ order }: { order: CustomerOrder }) {
                   key={it.productId}
                   className="flex flex-wrap items-center justify-between gap-2 rounded-card bg-ivory px-3 py-2.5"
                 >
-                  <span className="min-w-0 flex-1 truncate text-[0.9rem] font-semibold text-ink-700">
+                  <span className="min-w-[9rem] flex-1 text-[0.9rem] font-semibold leading-snug text-ink-700">
                     {p.material} · {p.color} · {p.thicknessMm}mm
                   </span>
                   <span className="flex shrink-0 items-center gap-1.5">
@@ -361,7 +361,7 @@ function PortalContent() {
                     key={a.id}
                     className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 px-5 py-3.5"
                   >
-                    <span className="min-w-0 flex-1 truncate text-[0.94rem] text-ink-700">
+                    <span className="min-w-0 flex-1 text-[0.94rem] leading-snug text-ink-700">
                       {a.label}
                     </span>
                     <span className="shrink-0 text-[0.86rem] tabular-nums text-ink-400">
@@ -415,7 +415,7 @@ function PortalContent() {
                           key={it.productId}
                           className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1"
                         >
-                          <span className="min-w-0 flex-1 truncate text-[0.92rem] text-ink-600">
+                          <span className="min-w-0 flex-1 text-[0.92rem] leading-snug text-ink-600">
                             {p?.name ?? it.productId}
                           </span>
                           <span className="shrink-0 text-[0.9rem] font-semibold tabular-nums text-ink-700">

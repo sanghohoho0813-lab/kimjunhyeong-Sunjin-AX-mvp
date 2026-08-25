@@ -286,7 +286,7 @@ export default function CustomerDetailPage() {
                     className="flex items-center justify-between gap-3 py-3"
                   >
                     <div className="min-w-0">
-                      <p className="truncate text-[0.85rem] font-semibold text-ink-800">
+                      <p className="text-[0.85rem] font-semibold leading-snug text-ink-800">
                         {product?.name ?? tx.productId}
                       </p>
                       <p className="mt-0.5 text-[0.84rem] tabular-nums text-ink-400">

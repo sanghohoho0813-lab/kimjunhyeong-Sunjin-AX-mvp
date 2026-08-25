@@ -74,10 +74,10 @@ export function AccountSwitch() {
           )}
         </span>
         <span className="min-w-0 flex-1">
-          <span className="block truncate text-[0.95rem] font-bold text-ink-900">
+          <span className="block text-[0.95rem] font-bold leading-snug text-ink-900">
             {org}
           </span>
-          <span className="block truncate text-[0.86rem] text-ink-500">
+          <span className="block text-[0.86rem] leading-snug text-ink-500">
             {name} · {isCustomer ? "고객" : role === "admin" ? "관리자" : "직원"}
           </span>
         </span>

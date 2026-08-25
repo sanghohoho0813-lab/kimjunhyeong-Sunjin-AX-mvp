@@ -28,22 +28,24 @@ export function CustomerFrontCta({ className }: { className?: string }) {
         aria-hidden
         className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.05] to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
       />
-      <span className="relative flex items-center gap-3">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[11px] bg-white/[0.12] text-teal-200">
-          <Globe className="h-[1.2rem] w-[1.2rem]" strokeWidth={2.1} aria-hidden />
-        </span>
-        <span className="min-w-0 flex-1">
-          <span className="block truncate text-[0.95rem] font-extrabold text-white">
-            고객용 B2B Front
+      {/* 사이드바 폭(280px)에서 아이콘·화살표와 한 줄에 두면 문구가 잘린다.
+          세로로 쌓아 텍스트가 카드 폭을 온전히 쓰게 한다. */}
+      <span className="relative block">
+        <span className="flex items-center justify-between gap-2">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px] bg-white/[0.12] text-teal-200">
+            <Globe className="h-[1.1rem] w-[1.1rem]" strokeWidth={2.1} aria-hidden />
           </span>
-          <span className="mt-0.5 block truncate text-[0.82rem] text-navy-200">
-            고객이 보는 화면 열기
-          </span>
+          <ArrowRight
+            className="h-4 w-4 shrink-0 text-teal-200 transition-transform duration-200 group-hover:translate-x-0.5"
+            aria-hidden
+          />
         </span>
-        <ArrowRight
-          className="h-4 w-4 shrink-0 text-teal-200 transition-transform duration-200 group-hover:translate-x-0.5"
-          aria-hidden
-        />
+        <span className="mt-2.5 block text-[0.95rem] font-extrabold leading-snug text-white">
+          고객용 B2B Front
+        </span>
+        <span className="mt-0.5 block text-[0.82rem] leading-snug text-navy-200">
+          고객이 보는 화면 열기
+        </span>
       </span>
     </Link>
   );

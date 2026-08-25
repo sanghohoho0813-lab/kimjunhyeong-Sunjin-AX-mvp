@@ -114,7 +114,7 @@ export default function RequestsPage() {
             transition={{ duration: 0.3, delay: i * 0.05, ease: EASE }}
             className="card-kpi min-w-0 px-4 py-4"
           >
-            <p className="truncate text-[0.88rem] font-semibold text-ink-500">{x.l}</p>
+            <p className="text-[0.88rem] font-semibold leading-snug text-ink-500">{x.l}</p>
             <p
               className={clsx(
                 "mt-2 text-[1.5rem] font-extrabold tabular-nums tracking-[-0.02em]",
@@ -190,26 +190,28 @@ export default function RequestsPage() {
                   {q.items.map((it) => {
                     const p = getProduct(it.productId);
                     if (!p) return null;
+                    // 좁은 폭에서 품명이 96px로 눌려 잘렸다.
+                    // 수량 블록을 아래로 흐르게 해 품명에 폭을 내준다.
                     return (
                       <li
                         key={it.productId}
-                        className="flex items-center gap-3 rounded-card bg-surface-sunken p-3"
+                        className="flex flex-wrap items-center gap-x-3 gap-y-2 rounded-card bg-surface-sunken p-3"
                       >
                         <LeatherSwatch
                           color={p.color}
                           finish={p.finish}
                           className="h-11 w-11"
                         />
-                        <span className="min-w-0 flex-1">
-                          <span className="block truncate text-[0.94rem] font-bold text-ink-900">
+                        <span className="min-w-[10rem] flex-1">
+                          <span className="block text-[0.94rem] font-bold leading-snug text-ink-900">
                             {p.name}
                           </span>
-                          <span className="block truncate text-[0.86rem] text-ink-500">
+                          <span className="block text-[0.86rem] leading-snug text-ink-500">
                             재고 {formatNumber(p.stockQty)}평 · 참고가{" "}
                             {formatNumber(p.listPricePerUnit)}원/평
                           </span>
                         </span>
-                        <span className="shrink-0 text-right">
+                        <span className="ml-auto shrink-0 text-right">
                           <span className="block text-[0.98rem] font-extrabold tabular-nums text-ink-900">
                             {formatNumber(it.qty)}평
                           </span>

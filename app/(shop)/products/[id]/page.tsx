@@ -114,7 +114,7 @@ export default function ProductDetailPage() {
             rounded="rounded-card-lg"
             className="h-[15rem] w-full sm:h-[22rem] lg:h-[27rem]"
           />
-          <div className="mt-3 grid grid-cols-3 gap-3">
+          <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
             {[
               { l: "가공", v: product.finish },
               { l: "단위", v: `${product.unit} 단위 거래` },
@@ -125,7 +125,7 @@ export default function ProductDetailPage() {
                 className="min-w-0 rounded-card border border-ivory-line bg-white px-3 py-2.5"
               >
                 <p className="text-[0.82rem] font-semibold text-ink-400">{x.l}</p>
-                <p className="mt-0.5 truncate text-[0.92rem] font-bold text-ink-800">
+                <p className="mt-0.5 text-[0.92rem] font-bold leading-snug text-ink-800">
                   {x.v}
                 </p>
               </div>

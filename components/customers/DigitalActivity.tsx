@@ -118,7 +118,7 @@ export function DigitalActivity({ customerId }: { customerId: string }) {
           <div key={m.label} className="min-w-0 rounded-card bg-surface-sunken px-3.5 py-3">
             <span className="flex items-center gap-1.5 text-[0.84rem] font-semibold text-ink-500">
               <m.icon className="h-3.5 w-3.5 shrink-0 text-ink-400" aria-hidden />
-              <span className="truncate">{m.label}</span>
+              <span className="leading-snug">{m.label}</span>
             </span>
             <p className="mt-1 text-[1.3rem] font-extrabold tabular-nums tracking-[-0.02em] text-ink-900">
               {m.value}
@@ -168,10 +168,10 @@ export function DigitalActivity({ customerId }: { customerId: string }) {
             <span className="block text-[0.82rem] font-bold uppercase tracking-[0.08em] text-ink-400">
               가장 많이 본 제품
             </span>
-            <span className="mt-0.5 block truncate text-[0.95rem] font-bold text-ink-900">
+            <span className="mt-0.5 block text-[0.95rem] font-bold leading-snug text-ink-900">
               {topProduct.name}
             </span>
-            <span className="block truncate text-[0.86rem] text-ink-500">
+            <span className="block text-[0.86rem] leading-snug text-ink-500">
               {summary.topProductViews}회 조회 · 재고{" "}
               {formatNumber(topProduct.stockQty)}평
             </span>
@@ -196,7 +196,7 @@ export function DigitalActivity({ customerId }: { customerId: string }) {
                 >
                   <span className="flex min-w-0 flex-1 items-center gap-2">
                     <Icon className="h-3.5 w-3.5 shrink-0 text-ink-300" aria-hidden />
-                    <span className="truncate text-[0.9rem] text-ink-600">
+                    <span className="text-[0.9rem] leading-snug text-ink-600">
                       {a.label}
                     </span>
                   </span>

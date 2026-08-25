@@ -148,7 +148,7 @@ export default function AnalyticsPage() {
                 kpi.rail
               )}
             />
-            <p className="truncate text-[0.76rem] font-semibold text-ink-500">
+            <p className="text-[0.76rem] font-semibold leading-snug text-ink-500">
               {kpi.label}
             </p>
             <p

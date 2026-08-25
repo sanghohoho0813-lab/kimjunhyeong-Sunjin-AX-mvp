@@ -68,12 +68,12 @@ export function InventorySnapshot() {
                 />
                 <span className="min-w-0 flex-1">
                   <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                    <span className="truncate text-[0.85rem] font-bold text-ink-900">
+                    <span className="text-[0.85rem] font-bold leading-snug text-ink-900">
                       {product.material} · {product.color}
                     </span>
                     <Badge>{stats.status}</Badge>
                   </span>
-                  <span className="mt-0.5 block truncate text-[0.86rem] tabular-nums text-ink-400">
+                  <span className="mt-0.5 block text-[0.86rem] leading-snug tabular-nums text-ink-400">
                     {product.thicknessMm}mm · {product.grade} Grade ·{" "}
                     {formatNumber(product.stockQty)}평
                   </span>

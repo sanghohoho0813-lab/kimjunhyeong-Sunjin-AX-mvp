@@ -50,9 +50,9 @@ const NAV = [...NAV_PRIMARY, ...NAV_SECONDARY];
 const MOBILE_NAV = [
   { href: "/", label: "홈", icon: Home },
   { href: "/products", label: "제품 찾기", icon: Search },
-  { href: "/request/sample", label: "샘플/견적", icon: FileText },
-  { href: "/portal?tab=orders", label: "주문 내역", icon: Package },
-  { href: "/portal", label: "마이페이지", icon: User },
+  { href: "/request/sample", label: "샘플", icon: FileText },
+  { href: "/portal?tab=orders", label: "주문", icon: Package },
+  { href: "/portal", label: "마이", icon: User },
 ];
 
 /**
@@ -404,7 +404,7 @@ export function ShopShell({ children }: { children: ReactNode }) {
                 <Link
                   href={item.href}
                   className={clsx(
-                    "flex h-[var(--bottom-nav-height)] flex-col items-center justify-center gap-1 text-[0.74rem] font-bold transition-colors",
+                    "flex h-[var(--bottom-nav-height)] flex-col items-center justify-center gap-1 whitespace-nowrap px-1 text-[0.78rem] font-bold transition-colors",
                     active ? "text-leather-600" : "text-ink-400"
                   )}
                 >

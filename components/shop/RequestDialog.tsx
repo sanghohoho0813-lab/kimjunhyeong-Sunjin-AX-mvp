@@ -103,14 +103,25 @@ export function RequestDialog({
   const [note, setNote] = useState("");
   const [done, setDone] = useState<{ number: string } | null>(null);
 
+  // productIds는 부모에서 매 렌더 새 배열로 만들어진다. 배열 자체를 의존성에 두면
+  // 제출 직후 store 갱신 → 부모 리렌더 → 이 effect 재실행 → 완료 화면이 즉시
+  // 초기화된다. 내용이 바뀔 때만 반응하도록 문자열 키로 비교한다.
+  const productKey = productIds.join(",");
   useEffect(() => {
     if (!open) return;
     setDone(null);
     setContact(account.name);
     setNote("");
     setDue("");
-    setQty(Object.fromEntries(productIds.map((id) => [id, kind === "quote" ? 100 : 1])));
-  }, [open, productIds, kind, account.name]);
+    setQty(
+      Object.fromEntries(
+        productKey
+          .split(",")
+          .filter(Boolean)
+          .map((id) => [id, kind === "quote" ? 100 : 1])
+      )
+    );
+  }, [open, productKey, kind, account.name]);
 
   // 열려 있는 동안 배경 스크롤 잠금
   useEffect(() => {
