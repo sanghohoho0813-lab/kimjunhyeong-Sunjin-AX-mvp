@@ -9,6 +9,8 @@ import { DemoBadge, EmptyState, Badge } from "@/components/shared/ui";
 import { getAverageMarginRate, getCustomer, getProduct } from "@/lib/data/derived";
 import { quoteTotals } from "@/lib/pricing/recommend";
 import { useAllQuotes } from "@/lib/store";
+import { getQuoteDecision } from "@/lib/insights/decisions";
+import { DecisionBar } from "@/components/shared/DecisionBar";
 import { clsx } from "@/lib/utils/clsx";
 import { formatDate, formatKRW, formatPercent } from "@/lib/utils/format";
 
@@ -48,6 +50,8 @@ export default function QuotesPage() {
           </Link>
         }
       />
+
+      <DecisionBar decision={getQuoteDecision()} />
 
       <p className="mb-3 flex items-center gap-1.5 text-[0.75rem] text-ink-400">
         <Sparkles className="h-3.5 w-3.5 text-brand-500" aria-hidden />
@@ -102,7 +106,7 @@ export default function QuotesPage() {
                         {customer?.name ?? "—"}
                       </Link>
                     </td>
-                    <td className="max-w-[220px] truncate px-3 py-3.5 text-ink-600">
+                    <td className="max-w-[17rem] px-3 py-3.5 leading-snug text-ink-600">
                       {productLabel}
                     </td>
                     <td className="text-right font-bold tabular-nums text-ink-900">

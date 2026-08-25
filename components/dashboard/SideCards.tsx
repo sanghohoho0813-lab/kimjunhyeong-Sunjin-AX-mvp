@@ -46,7 +46,7 @@ export function InventorySnapshot() {
         </div>
         <Link
           href="/inventory"
-          className="inline-flex shrink-0 items-center gap-0.5 whitespace-nowrap text-[0.9rem] font-bold text-brand-600 transition-colors hover:text-brand-700"
+          className="-mr-2 inline-flex min-h-[2.75rem] shrink-0 items-center gap-0.5 whitespace-nowrap rounded-btn px-2 text-[0.9rem] font-bold text-brand-600 transition-colors hover:bg-brand-50 hover:text-brand-700"
         >
           전체 <ChevronRight className="h-3.5 w-3.5" aria-hidden />
         </Link>

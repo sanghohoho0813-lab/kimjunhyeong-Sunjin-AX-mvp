@@ -9,6 +9,8 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { LeatherSwatch } from "@/components/inventory/LeatherSwatch";
 import { DemoBadge, EmptyState, Badge } from "@/components/shared/ui";
 import { getInventorySummary, getProductStats } from "@/lib/data/derived";
+import { getInventoryDecision } from "@/lib/insights/decisions";
+import { DecisionBar } from "@/components/shared/DecisionBar";
 import { PRODUCTS } from "@/lib/data/seed";
 import { clsx } from "@/lib/utils/clsx";
 import { formatKRW, formatNumber } from "@/lib/utils/format";
@@ -62,18 +64,18 @@ function InventoryContent() {
   const summaryCards = [
     {
       icon: Layers,
-      label: "재고자산 (매입가 기준)",
+      label: "재고자산",
       short: "재고자산",
       value: formatKRW(summary.totalValue),
-      note: `${summary.itemCount}개 품목 · ${formatNumber(summary.totalQty)}평`,
+      note: `매입가 기준 · ${summary.itemCount}개 품목 · ${formatNumber(summary.totalQty)}평`,
       tone: "text-brand-600 bg-brand-50",
     },
     {
       icon: PackageOpen,
-      label: "장기재고 (120일 이상)",
+      label: "장기재고",
       short: "장기재고",
       value: formatKRW(summary.longStockValue),
-      note: `${summary.longStockCount}건 · 전체의 ${Math.round(
+      note: `120일 이상 · ${summary.longStockCount}건 · 전체의 ${Math.round(
         (summary.longStockValue / summary.totalValue) * 100
       )}%`,
       tone: "text-rose-600 bg-rose-50",
@@ -82,10 +84,10 @@ function InventoryContent() {
     },
     {
       icon: Timer,
-      label: "관심 재고 (90일 이상)",
+      label: "관심 재고",
       short: "관심 재고",
       value: `${summary.watchCount}건`,
-      note: "장기화 전 조기 판매 대상",
+      note: "90일 이상 · 장기화 전 조기 판매 대상",
       tone: "text-amber-600 bg-amber-50",
       active: status === "관심",
       onClick: () => setStatus(status === "관심" ? "전체" : "관심"),
@@ -99,6 +101,8 @@ function InventoryContent() {
         subtitle="보유 피혁의 상태를 파악하고, 오래 남은 재고를 판매 가능 거래처와 연결합니다."
         badge={<DemoBadge />}
       />
+
+      <DecisionBar decision={getInventoryDecision()} />
 
       {/* 요약 카드 */}
       <div className="grid grid-cols-3 gap-2.5 sm:gap-4">
@@ -357,7 +361,7 @@ function FilterGroup<T extends string>({
             key={option}
             onClick={() => onChange(option)}
             className={clsx(
-              "chip !min-h-[36px] !px-3 !text-[0.75rem]",
+              "chip !min-h-[2.75rem] !px-3.5 !text-[0.88rem]",
               value === option && "chip-on"
             )}
           >

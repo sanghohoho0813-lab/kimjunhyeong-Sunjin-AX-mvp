@@ -12,6 +12,8 @@ import {
   getCustomerStatus,
 } from "@/lib/data/derived";
 import { CUSTOMERS } from "@/lib/data/seed";
+import { getCustomerDecision } from "@/lib/insights/decisions";
+import { DecisionBar } from "@/components/shared/DecisionBar";
 import { calculateRepurchaseScore } from "@/lib/scoring/repurchase";
 import { clsx } from "@/lib/utils/clsx";
 import { formatDate, formatKRW } from "@/lib/utils/format";
@@ -59,6 +61,8 @@ function CustomersContent() {
         subtitle="구매 패턴과 재구매 가능성을 기준으로 오늘 접촉할 거래처를 결정합니다."
         badge={<DemoBadge />}
       />
+
+      <DecisionBar decision={getCustomerDecision()} />
 
       {/* 검색 + 필터 */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">

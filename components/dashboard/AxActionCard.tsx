@@ -66,12 +66,16 @@ export function AxActionCard({
           <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-teal-500/10 text-teal-600">
             <Sparkles className="h-3.5 w-3.5" strokeWidth={2.4} aria-hidden />
           </span>
-          <span className="truncate text-[0.78rem] font-bold uppercase tracking-[0.14em] text-teal-700">
+          <span className="shrink-0 whitespace-nowrap text-[0.78rem] font-bold uppercase tracking-[0.14em] text-teal-700">
             AX Insight
           </span>
-          <span className="inline-flex shrink-0 items-center gap-1 text-[0.78rem] font-semibold text-ink-400">
+          {/* 카테고리는 보조 정보라 폭이 좁으면 아이콘만 남긴다 */}
+          <span
+            className="inline-flex shrink-0 items-center gap-1 text-[0.78rem] font-semibold text-ink-400"
+            title={reco.category}
+          >
             <Icon className="h-3.5 w-3.5" aria-hidden />
-            {reco.category}
+            <span className="hidden 2xl:inline">{reco.category}</span>
           </span>
         </span>
         <Badge>{reco.priority}</Badge>
