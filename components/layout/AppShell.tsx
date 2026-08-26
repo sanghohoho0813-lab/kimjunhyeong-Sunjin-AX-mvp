@@ -10,6 +10,8 @@ import { BottomNav, MobileHeader } from "./MobileChrome";
 import { Sidebar } from "./Sidebar";
 import { DesktopModeButton, MobileModeReturnBar } from "./ViewModeToggle";
 import { Toaster } from "@/components/shared/Toaster";
+import { LiveClockMobile } from "@/components/shared/LiveClock";
+import { COMPANY } from "@/lib/data/seed";
 
 /** PC 버전으로 볼 때 적용하는 고정 viewport 폭 */
 const DESKTOP_VIEWPORT_WIDTH = 1280;
@@ -108,6 +110,12 @@ export function AppShell({ children }: { children: ReactNode }) {
       <div className="flex min-w-0 flex-1 flex-col pt-[var(--mobile-header-height)] lg:pl-sidebar lg:pt-0">
         <main className="flex-1">
           <div className="mx-auto w-full max-w-workspace px-4 pb-7 pt-4 sm:px-5 lg:px-6 lg:pb-10 lg:pt-8 2xl:px-8">
+            {/* 모바일 실시간 시계 — 대시보드처럼 PageHeader를 쓰지 않는 화면에도
+                같은 자리에 보이도록 셸에서 한 번만 그린다.
+                데스크톱은 PageHeader 우측 상단 유틸리티 줄에 있다. */}
+            <div className="mb-3 lg:hidden">
+              <LiveClockMobile />
+            </div>
             {children}
           </div>
         </main>
@@ -118,16 +126,25 @@ export function AppShell({ children }: { children: ReactNode }) {
         ) : (
           <div className="mx-auto w-full max-w-workspace px-4 pb-[calc(var(--bottom-nav-height)+env(safe-area-inset-bottom)+20px)] sm:px-5 lg:hidden">
             <DesktopModeButton />
-            <p className="mt-3 text-center text-[0.82rem] text-ink-400">
-              © 선진산업 Business AX · 미래에이아이랩 x 김준형
+            <p className="mt-3 text-center text-[0.82rem] leading-relaxed text-ink-400">
+              © {COMPANY.name} {COMPANY.industryEn} Business AX
+              <br />
+              {COMPANY.creditRole} {COMPANY.credit}
             </p>
           </div>
         )}
 
         <footer className="hidden px-6 pb-7 text-[0.84rem] text-ink-400 lg:block 2xl:px-8">
           <div className="mx-auto flex w-full max-w-workspace items-center justify-between border-t border-surface-line pt-5">
-            <span>© 선진산업 Business AX</span>
-            <span>미래에이아이랩 x 김준형</span>
+            <span>
+              © {COMPANY.name} {COMPANY.industryEn} Business AX
+            </span>
+            <span>
+              <span className="font-semibold uppercase tracking-[0.1em] text-ink-500">
+                {COMPANY.creditRole}
+              </span>{" "}
+              {COMPANY.credit}
+            </span>
           </div>
         </footer>
       </div>

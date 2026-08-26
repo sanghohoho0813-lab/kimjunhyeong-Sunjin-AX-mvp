@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { clsx } from "@/lib/utils/clsx";
 import { COMPANY } from "@/lib/data/seed";
-import { SunjinMark } from "./BrandMark";
+import { SunjinLogo } from "./BrandMark";
 import { isActivePath, NAV_ITEMS, NAV_TONES } from "./nav";
 import { generateBusinessAlerts } from "@/lib/insights/alerts";
 import { CustomerFrontCta } from "./CustomerFrontCta";
@@ -27,19 +27,16 @@ export function Sidebar() {
       />
 
       {/* 브랜드 */}
+      {/* 로고 워드마크가 Deep Navy라 남색 위에서는 읽히지 않는다. 흰 판 위에 올린다.
+          아래 영문 라인은 좁은 사이드바에서도 잘리지 않도록 대문자 자간을 쓰지 않는다. */}
       <Link
         href="/dashboard"
-        className="flex items-center gap-3 px-5 pb-4 pt-5"
-        aria-label="선진산업 Business AX 홈"
+        className="block px-5 pb-4 pt-5"
+        aria-label="선진산업 Leather Business AX 홈"
       >
-        <SunjinMark className="h-[38px] w-[38px] shrink-0" />
-        <span className="min-w-0">
-          <span className="block text-[1.06rem] font-extrabold leading-tight tracking-[-0.01em] text-white">
-            선진산업
-          </span>
-          <span className="block text-[0.8rem] font-semibold uppercase tracking-[0.16em] text-navy-300">
-            Business AX
-          </span>
+        <SunjinLogo plate className="h-[26px]" plateClassName="px-2.5 py-1.5" />
+        <span className="mt-2 block text-[0.86rem] font-semibold leading-snug tracking-[0.01em] text-navy-200">
+          {COMPANY.industryEn} Business AX
         </span>
       </Link>
 
@@ -147,7 +144,11 @@ export function Sidebar() {
             {COMPANY.ceoTitle}
           </p>
         </div>
-        <p className="mt-2 truncate text-[0.82rem] text-navy-300">
+        {/* 좁은 사이드바라 한 줄로 고정하면 잘린다. 라벨과 이름을 줄로 나눈다. */}
+        <p className="mt-2 text-[0.8rem] font-semibold leading-snug tracking-[0.01em] text-navy-400">
+          {COMPANY.creditRole}
+        </p>
+        <p className="mt-0.5 text-[0.84rem] leading-snug text-navy-200">
           {COMPANY.credit}
         </p>
         <div className="mt-3.5 flex items-center justify-center rounded-btn bg-white/95 px-3 py-1.5">

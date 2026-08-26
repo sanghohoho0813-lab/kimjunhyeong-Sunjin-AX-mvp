@@ -21,10 +21,14 @@ export const COMPANY = {
   ceo: "손순옥",
   ceoTitle: "손순옥 대표",
   bizType: "모피 및 가죽 제조업 · 피혁 제조·도소매",
+  /** 업종 영문 표기 — 브랜드 라인에서 무슨 회사인지 한눈에 보이게 한다 */
+  industryEn: "Leather",
   region: "경기도 동두천시",
   since: "2013년 12월",
   employees: "약 2명 (채용 계획 약 3명)",
   credit: "미래에이아이랩 x 김준형",
+  /** 제작 표기 — 기획·디자인을 함께 한 주체임을 영문으로 밝힌다 */
+  creditRole: "Planned & Designed by",
 } as const;
 
 export const CUSTOMERS: Customer[] = [

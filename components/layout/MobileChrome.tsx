@@ -7,7 +7,7 @@ import { clsx } from "@/lib/utils/clsx";
 import { COMPANY } from "@/lib/data/seed";
 import { generateBusinessAlerts } from "@/lib/insights/alerts";
 import { useAppStore } from "@/lib/store";
-import { SunjinMark } from "./BrandMark";
+import { SunjinLogo } from "./BrandMark";
 import {
   isActivePath,
   MOBILE_MORE_ITEMS,
@@ -36,19 +36,16 @@ export function MobileHeader() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-40 flex h-[var(--mobile-header-height)] items-center justify-between bg-navy-925 px-4 lg:hidden">
+      {/* 로고에 사명이 들어 있어 텍스트를 따로 두지 않는다.
+          우측 아이콘이 늘어난 375px에서도 자리가 넉넉해진다. */}
       <Link
         href="/dashboard"
-        className="flex min-w-0 items-center gap-1.5 sm:gap-2"
-        aria-label="선진산업 AX 홈"
+        className="flex min-w-0 items-center gap-2"
+        aria-label="선진산업 Leather Business AX 홈"
       >
-        <SunjinMark className="h-7 w-7 shrink-0 sm:h-8 sm:w-8" />
-        <span className="truncate text-[0.96rem] font-extrabold tracking-[-0.01em] text-white sm:text-[1.02rem]">
-          선진산업
-          {/* 우측 아이콘이 늘어나 375px에서는 자리가 부족하다.
-              브랜드명이 잘리는 것보다 AX 표기를 접는 편이 낫다. */}
-          <span className="ml-1 hidden text-[0.8rem] font-semibold uppercase tracking-[0.12em] text-navy-300 sm:inline">
-            AX
-          </span>
+        <SunjinLogo plate className="h-[20px]" plateClassName="px-1.5 py-1" />
+        <span className="hidden truncate text-[0.8rem] font-semibold uppercase tracking-[0.1em] text-navy-300 sm:block">
+          Business AX
         </span>
       </Link>
       <div className="flex shrink-0 items-center gap-0.5">
@@ -230,7 +227,12 @@ export function BottomNav() {
           </p>
         </div>
         <p className="mt-5 border-t border-surface-line pt-4 text-center text-[0.84rem] text-ink-400">
-          {COMPANY.ceoTitle} · {COMPANY.credit}
+          {COMPANY.ceoTitle}
+          <br />
+          <span className="font-semibold uppercase tracking-[0.1em] text-ink-400">
+            {COMPANY.creditRole}
+          </span>{" "}
+          {COMPANY.credit}
         </p>
       </Sheet>
     </>

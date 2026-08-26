@@ -8,6 +8,7 @@ import { clsx } from "@/lib/utils/clsx";
 import { COMPANY } from "@/lib/data/seed";
 import { generateBusinessAlerts } from "@/lib/insights/alerts";
 import { useAppStore, type PeriodYear } from "@/lib/store";
+import { LiveClock } from "@/components/shared/LiveClock";
 
 const PERIOD_LABELS: Record<PeriodYear, string> = {
   2025: "2025년 1월 ~ 12월 (누적)",
@@ -200,13 +201,10 @@ export function HeaderControls({ withPeriod = false }: { withPeriod?: boolean })
         <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-teal-500 text-[0.76rem] font-bold text-white">
           손
         </span>
-        <span className="leading-tight">
-          <span className="block text-[0.82rem] font-bold text-ink-900">
-            {COMPANY.ceoTitle}
-          </span>
-          <span className="block text-[0.84rem] text-ink-400">
-            {COMPANY.credit}
-          </span>
+        {/* 제작 표기는 사이드바 하단·푸터·설정에 있다. 사용자 칩에 함께 두면
+            손순옥 대표의 소속처럼 읽히고, 실시간 시계가 들어온 뒤로는 폭도 부족하다. */}
+        <span className="whitespace-nowrap text-[0.82rem] font-bold leading-tight text-ink-900">
+          {COMPANY.ceoTitle}
         </span>
       </div>
     </div>
@@ -232,11 +230,17 @@ export function PageHeader({
 }) {
   return (
     <header className="mb-7 lg:mb-8">
-      {/* 1행 — 우측 상단 유틸리티 (기간·업데이트·알림·기획의도·프로필) */}
-      <div className="mb-5 hidden items-center justify-end gap-2 lg:flex">
-        {actions}
-        <HeaderControls withPeriod={withPeriod} />
+      {/* 1행 — 좌측 실시간 시계 + 우측 유틸리티 (기간·업데이트·알림·기획의도·프로필) */}
+      {/* 1280px(모바일의 "PC 버전으로 보기" 폭)에서는 시계와 유틸리티가 한 줄에
+          들어가지 않는다. 폭이 모자라면 유틸리티가 아랫줄로 내려가게 둔다. */}
+      <div className="mb-5 hidden flex-wrap items-center gap-x-3 gap-y-2 lg:flex">
+        <LiveClock />
+        <div className="ml-auto flex shrink-0 items-center gap-2">
+          {actions}
+          <HeaderControls withPeriod={withPeriod} />
+        </div>
       </div>
+
 
       {/* 2행 — 페이지 제목. 확대된 타이포에서 줄바꿈 없이 전체 폭 사용 */}
       <div className="min-w-0">

@@ -17,7 +17,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 import { clsx } from "@/lib/utils/clsx";
-import { SunjinMark } from "@/components/layout/BrandMark";
+import { SunjinLogo } from "@/components/layout/BrandMark";
 import {
   useAccount,
   useAppStore,
@@ -152,14 +152,13 @@ export function ShopShell({ children }: { children: ReactNode }) {
             className="flex shrink-0 items-center gap-2 sm:gap-2.5"
             aria-label={`${COMPANY.name} 홈`}
           >
-            <SunjinMark className="h-[34px] w-[34px]" />
-            <span className="hidden sm:block">
-              <span className="block text-[1.02rem] font-extrabold leading-tight tracking-[-0.01em]">
-                {COMPANY.name}
-              </span>
-              <span className="block text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-navy-300">
-                Sunjin Industry
-              </span>
+            <SunjinLogo
+              plate
+              className="h-[18px] sm:h-[22px]"
+              plateClassName="px-1.5 py-1 sm:px-2 sm:py-1.5"
+            />
+            <span className="hidden text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-navy-300 sm:block">
+              Leather
             </span>
           </Link>
 
@@ -272,10 +271,7 @@ export function ShopShell({ children }: { children: ReactNode }) {
             >
               <div className="flex h-[var(--shop-header-h)] items-center justify-between px-4">
                 <span className="flex items-center gap-2.5">
-                  <SunjinMark className="h-[30px] w-[30px]" />
-                  <span className="text-[1rem] font-extrabold text-white">
-                    {COMPANY.name}
-                  </span>
+                  <SunjinLogo plate className="h-[20px]" plateClassName="px-2 py-1.5" />
                 </span>
                 <button
                   type="button"
@@ -317,15 +313,10 @@ export function ShopShell({ children }: { children: ReactNode }) {
         <div className="mx-auto w-full max-w-shop px-4 py-10 sm:px-6 lg:px-8 lg:py-12">
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1.4fr)_repeat(3,minmax(0,1fr))]">
             <div className="min-w-0">
-              <span className="flex items-center gap-2.5">
-                <SunjinMark className="h-[34px] w-[34px]" />
-                <span>
-                  <span className="block text-[1rem] font-extrabold text-white">
-                    {COMPANY.name}
-                  </span>
-                  <span className="block text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-navy-300">
-                    Sunjin Industry
-                  </span>
+              <span className="flex flex-wrap items-center gap-x-3 gap-y-2">
+                <SunjinLogo plate className="h-[24px]" plateClassName="px-2.5 py-1.5" />
+                <span className="text-[0.76rem] font-semibold uppercase tracking-[0.16em] text-navy-300">
+                  {COMPANY.industryEn} Materials
                 </span>
               </span>
               <dl className="mt-4 space-y-1 text-[0.86rem] leading-relaxed">
@@ -393,7 +384,12 @@ export function ShopShell({ children }: { children: ReactNode }) {
 
           <div className="mt-9 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-t border-white/[0.08] pt-5 text-[0.82rem] text-navy-400">
             <span>© {COMPANY.name}. All rights reserved.</span>
-            <span>{COMPANY.credit}</span>
+            <span>
+              <span className="font-semibold uppercase tracking-[0.1em] text-navy-300">
+                {COMPANY.creditRole}
+              </span>{" "}
+              {COMPANY.credit}
+            </span>
           </div>
         </div>
       </footer>

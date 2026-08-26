@@ -695,7 +695,11 @@ export default function IntentPage() {
               </Link>
             </div>
             <p className="mt-7 text-[0.84rem] text-navy-300">
-              {COMPANY.productName} · {COMPANY.credit}
+              {COMPANY.name} {COMPANY.industryEn} Business AX ·{" "}
+              <span className="font-semibold uppercase tracking-[0.1em] text-navy-200">
+                {COMPANY.creditRole}
+              </span>{" "}
+              {COMPANY.credit}
             </p>
           </div>
         </motion.section>

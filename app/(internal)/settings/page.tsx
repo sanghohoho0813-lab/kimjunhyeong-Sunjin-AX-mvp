@@ -62,7 +62,12 @@ export default function SettingsPage() {
               <p className="text-[1.02rem] font-extrabold text-ink-900">
                 {COMPANY.ceoTitle}
               </p>
-              <p className="text-[0.75rem] text-ink-400">{COMPANY.credit}</p>
+              <p className="text-[0.8rem] text-ink-400">
+                <span className="font-semibold uppercase tracking-[0.1em]">
+                  {COMPANY.creditRole}
+                </span>{" "}
+                {COMPANY.credit}
+              </p>
             </div>
           </div>
         </motion.section>
@@ -234,7 +239,12 @@ export default function SettingsPage() {
             </div>
             <div className="flex items-center gap-3">
               <dt className="w-24 shrink-0 text-ink-400">기획·구축</dt>
-              <dd className="font-semibold text-ink-800">{COMPANY.credit}</dd>
+              <dd className="min-w-0 font-semibold text-ink-800">
+                <span className="text-[0.86rem] font-bold uppercase tracking-[0.1em] text-ink-400">
+                  {COMPANY.creditRole}
+                </span>{" "}
+                {COMPANY.credit}
+              </dd>
             </div>
           </dl>
           <div className="mt-4 flex items-center justify-center rounded-card border border-surface-line bg-white px-4 py-3">
