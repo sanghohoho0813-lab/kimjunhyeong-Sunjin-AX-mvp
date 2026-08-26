@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Bell, MoreHorizontal, Sparkles } from "lucide-react";
+import { Bell, Globe, MoreHorizontal, Sparkles } from "lucide-react";
 import { clsx } from "@/lib/utils/clsx";
 import { COMPANY } from "@/lib/data/seed";
 import { generateBusinessAlerts } from "@/lib/insights/alerts";
@@ -38,22 +38,34 @@ export function MobileHeader() {
     <header className="fixed inset-x-0 top-0 z-40 flex h-[var(--mobile-header-height)] items-center justify-between bg-navy-925 px-4 lg:hidden">
       <Link
         href="/dashboard"
-        className="flex min-w-0 items-center gap-2"
+        className="flex min-w-0 items-center gap-1.5 sm:gap-2"
         aria-label="선진산업 AX 홈"
       >
-        <SunjinMark className="h-8 w-8" />
-        <span className="truncate text-[1.02rem] font-extrabold tracking-[-0.01em] text-white">
+        <SunjinMark className="h-7 w-7 shrink-0 sm:h-8 sm:w-8" />
+        <span className="truncate text-[0.96rem] font-extrabold tracking-[-0.01em] text-white sm:text-[1.02rem]">
           선진산업
-          <span className="ml-1 text-[0.82rem] font-semibold uppercase tracking-[0.14em] text-navy-300">
+          {/* 우측 아이콘이 늘어나 375px에서는 자리가 부족하다.
+              브랜드명이 잘리는 것보다 AX 표기를 접는 편이 낫다. */}
+          <span className="ml-1 hidden text-[0.8rem] font-semibold uppercase tracking-[0.12em] text-navy-300 sm:inline">
             AX
           </span>
         </span>
       </Link>
       <div className="flex shrink-0 items-center gap-0.5">
+        {/* 고객 화면 열기 — 더보기 시트 안쪽에만 두면 찾기 어렵다.
+            어느 페이지에서든 같은 자리에 있도록 헤더 우측에도 둔다. */}
+        <Link
+          href="/"
+          aria-label="고객이 보는 화면 열기"
+          title="고객 화면"
+          className="flex h-10 w-9 shrink-0 items-center justify-center rounded-full border border-teal-400/35 bg-teal-400/12 text-teal-200 transition-colors active:bg-teal-400/24 sm:w-10"
+        >
+          <Globe className="h-[1.15rem] w-[1.15rem]" strokeWidth={2.1} aria-hidden />
+        </Link>
         <Link
           href="/intent"
           aria-label="기획의도 보기"
-          className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-teal-300"
+          className="relative flex h-10 w-9 shrink-0 items-center justify-center rounded-full text-teal-300 sm:w-10"
         >
           <span
             aria-hidden
@@ -65,7 +77,7 @@ export function MobileHeader() {
         <button
           onClick={() => setAlertsOpen(true)}
           aria-label={`알림 ${unread}건`}
-          className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-navy-200 transition-colors active:text-white"
+          className="relative flex h-10 w-9 shrink-0 items-center justify-center rounded-full text-navy-200 transition-colors active:text-white sm:w-10"
         >
           <Bell className="h-[1.2rem] w-[1.2rem]" strokeWidth={1.9} aria-hidden />
           {unread > 0 ? (
@@ -77,7 +89,7 @@ export function MobileHeader() {
         <Link
           href="/settings"
           aria-label="설정 및 프로필"
-          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-teal-500 text-[0.8rem] font-bold text-white"
+          className="ml-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-teal-500 text-[0.8rem] font-bold text-white"
         >
           손
         </Link>
@@ -173,7 +185,7 @@ export function BottomNav() {
         side="bottom-only"
       >
         {/* 사이드바의 고객 Front CTA는 lg 이상에서만 보인다.
-            모바일에서는 여기가 유일한 진입점이므로 맨 위에 둔다. */}
+            모바일에서는 헤더 아이콘과 이 카드가 진입점이므로 맨 위에 둔다. */}
         <div className="mb-5 border-b border-surface-line pb-5">
           <CustomerFrontCta
             variant="light"

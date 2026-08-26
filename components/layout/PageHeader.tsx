@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell, CalendarDays, ChevronDown, RefreshCw, Sparkles } from "lucide-react";
+import { ArrowRight, Bell, CalendarDays, ChevronDown, Globe, RefreshCw, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
@@ -133,6 +133,30 @@ export function IntentButton({ compact = false }: { compact?: boolean }) {
 }
 
 /** 데스크톱 헤더 우측 컨트롤 */
+/**
+ * 내부 AX 헤더 우측 — 고객 화면 열기.
+ *
+ * 사이드바 CTA는 스크롤 위치에 따라 시야 밖으로 나갈 수 있고 모바일에서는
+ * 아예 보이지 않는다. 헤더는 어느 화면에서든 같은 자리에 있으므로
+ * 여기에도 진입점을 둔다.
+ */
+function CustomerFrontButton() {
+  return (
+    <Link
+      href="/"
+      title="고객이 보는 화면 열기"
+      className="group flex h-10 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-btn border border-brand-200 bg-gradient-to-br from-brand-50 to-teal-50 px-3 text-[0.9rem] font-bold text-brand-700 transition-all duration-200 hover:border-teal-300 hover:shadow-card"
+    >
+      <Globe className="h-[1.05rem] w-[1.05rem] shrink-0" strokeWidth={2.1} aria-hidden />
+      <span className="hidden xl:inline">고객 화면</span>
+      <ArrowRight
+        className="hidden h-3.5 w-3.5 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5 xl:inline"
+        aria-hidden
+      />
+    </Link>
+  );
+}
+
 export function HeaderControls({ withPeriod = false }: { withPeriod?: boolean }) {
   const pushToast = useAppStore((s) => s.pushToast);
   const setAlertsOpen = useAppStore((s) => s.setAlertsOpen);
@@ -167,6 +191,8 @@ export function HeaderControls({ withPeriod = false }: { withPeriod?: boolean })
       >
         <Bell className="h-[1.05rem] w-[1.05rem]" aria-hidden />
       </IconButton>
+
+      <CustomerFrontButton />
 
       <IntentButton />
 
